@@ -7,45 +7,87 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C437E6E7-11FE-401A-BA50-A385BAF6B51A"
+            uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YourLawyer/Controller/SignUpViewController.swift"
+            filePath = "YourLawyer/Model/NetworkMonitor.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "signUpAction()"
-            landmarkType = "7">
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "NetworkMonitor"
+            landmarkType = "3">
             <Locations>
                <Location
-                  uuid = "C437E6E7-11FE-401A-BA50-A385BAF6B51A - 4a988f7e6c4afb8b"
+                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - 86f2832405c0e6ee"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.SignUpViewController.signUpAction() -&gt; ()"
+                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.getter : Swift.Bool"
                   moduleName = "YourLawyer.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Controller/SignUpViewController.swift"
+                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "142"
-                  endingLineNumber = "142">
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
                </Location>
                <Location
-                  uuid = "C437E6E7-11FE-401A-BA50-A385BAF6B51A - 4a988f7e6c4afb8b"
+                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - da10643d029531c8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.SignUpViewController.signUpAction() -&gt; ()"
+                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.setter : Swift.Bool"
                   moduleName = "YourLawyer.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Controller/SignUpViewController.swift"
+                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "142"
-                  endingLineNumber = "142">
+                  startingLineNumber = "14"
+                  endingLineNumber = "14">
+               </Location>
+               <Location
+                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - fe2cfbbff5a03739"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.modify : Swift.Bool"
+                  moduleName = "YourLawyer.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14">
+               </Location>
+               <Location
+                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - 442fdafc49a1c1dc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.modify : Swift.Bool with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "YourLawyer.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///%3Ccompiler-generated%3E"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0">
+               </Location>
+               <Location
+                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - 25fcf52a3aaf1986"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "YourLawyer.NetworkMonitor.() -&gt; YourLawyer.NetworkMonitor.init() -&gt; YourLawyer.NetworkMonitor"
+                  moduleName = "YourLawyer.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -53,16 +95,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6147468E-EB22-4D3F-B81C-E5AF1E53C983"
-            shouldBeEnabled = "Yes"
+            uuid = "1D71A79F-5573-43DC-8C7A-4D649F0239A3"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YourLawyer/Controller/SignUpViewController.swift"
+            filePath = "YourLawyer/Controller/AllLawyersViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "signUpAction()"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "ProfileButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

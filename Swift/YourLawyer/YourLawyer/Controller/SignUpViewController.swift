@@ -22,7 +22,7 @@ class SignUpViewController: UIViewController {
             let passwordLabel = UILabel()
             let passwordField = UITextField()
             let chooseTypeLabel = UILabel()
-            let typeSegmentedControl = UISegmentedControl(items: ["Cliente", "Abogado"])
+            let typeSegmentedControl = UISegmentedControl(items: ["Busco un Abogado", "Soy Abogado"])
             let termsCheckbox = UIButton(type: .system)
             let termsLabel = UILabel()
             let joinButton = UIButton(type: .system)
@@ -45,17 +45,17 @@ class SignUpViewController: UIViewController {
                 subtitleLabel.textAlignment = .center
                 
                 // Labels and TextFields
-                configureLabel(firstNameLabel, text: "First Name")
-                configureTextField(firstNameField, placeholder: "First name*")
+                configureLabel(firstNameLabel, text: "Nombre")
+                configureTextField(firstNameField, placeholder: "Nombre*")
                 
-                configureLabel(lastNameLabel, text: "Last Name")
-                configureTextField(lastNameField, placeholder: "Last name*")
+                configureLabel(lastNameLabel, text: "Apellido")
+                configureTextField(lastNameField, placeholder: "Apellido*")
                 
                 configureLabel(emailLabel, text: "Email")
-                configureTextField(emailField, placeholder: "Your email address*")
+                configureTextField(emailField, placeholder: "Correo electronico*")
                 
-                configureLabel(passwordLabel, text: "Password")
-                configureTextField(passwordField, placeholder: "Enter password*", isSecure: true)
+                configureLabel(passwordLabel, text: "Contraseña")
+                configureTextField(passwordField, placeholder: "Ingresa tu contraseña*", isSecure: true)
                 
                 // Choose Type
                 chooseTypeLabel.text = "Escoge una opción"
