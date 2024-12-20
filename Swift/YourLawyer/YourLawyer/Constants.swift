@@ -30,19 +30,31 @@ public let colorAccent:UInt = 0xD9E933
 public let regularFont:String = "San Francisco"
 
 class Utils {
-    class func showMessage(_ message:String) {
-        let ac = UIAlertController(title: "", message:message, preferredStyle:.alert)
-        let aa = UIAlertAction(title: "ok", style:.default, handler: nil)
-        ac.addAction(aa)
-        for w in UIApplication.shared.windows {
-          if w.isKeyWindow {
-              DispatchQueue.main.async {
-                  w.rootViewController?.present(ac, animated: true)
-              }
-              break;
-          }
+    class func showMessage(_ message: String) {
+        let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(alertAction)
+
+        // Obtener la escena activa
+        guard let keyWindow = UIApplication.shared.connectedScenes
+                .compactMap({ $0 as? UIWindowScene })
+                .flatMap({ $0.windows })
+                .first(where: { $0.isKeyWindow }),
+              let rootViewController = keyWindow.rootViewController else {
+            print("No se encontró una ventana o un controlador de vista raíz")
+            return
+        }
+
+        // Presentar el alerta desde el controlador de vista más visible
+        DispatchQueue.main.async {
+            var topController = rootViewController
+            while let presentedController = topController.presentedViewController {
+                topController = presentedController
+            }
+            topController.present(alertController, animated: true)
         }
     }
+
     
     class func UIColorFromRGB(rgbValue: UInt) -> UIColor {
             return UIColor(

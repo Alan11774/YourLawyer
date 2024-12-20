@@ -1,8 +1,8 @@
 //
 //  CustomLoginViewController.swift
-//  Loginzes
+//  YourLawyer
 //
-//  Created by Angel Gonzalez Torres on 22/11/23.
+//  Created by Alan Ulises on 18/12/24.
 //
 
 import UIKit
@@ -87,7 +87,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         view.addSubview(titleLabel)
 
         // Subtitle Label
-        subtitleLabel.text = "Please enter your email & password to access"
+        subtitleLabel.text = "Ingresa tu correo y contraseña para acceder a tu cuenta"
         subtitleLabel.font = UIFont.systemFont(ofSize: 14)
         subtitleLabel.textColor = .gray
         subtitleLabel.textAlignment = .center
@@ -95,21 +95,21 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         view.addSubview(subtitleLabel)
 
         // Email Field
-        emailField.placeholder = "email address"
+        emailField.placeholder = "correo"
         emailField.borderStyle = .roundedRect
         emailField.autocapitalizationType = .none
         emailField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(emailField)
 
         // Password Field
-        passwordField.placeholder = "password"
+        passwordField.placeholder = "contraseña"
         passwordField.borderStyle = .roundedRect
         passwordField.isSecureTextEntry = true
         passwordField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(passwordField)
 
         // Remember Me Checkbox
-        rememberMeCheckbox.setTitle(" Remember me", for: .normal)
+        rememberMeCheckbox.setTitle("Recordar sesión", for: .normal)
         rememberMeCheckbox.setTitleColor(.black, for: .normal)
         rememberMeCheckbox.setImage(UIImage(systemName: "square"), for: .normal)
         rememberMeCheckbox.setImage(UIImage(systemName: "checkmark.square"), for: .selected)
@@ -238,7 +238,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
 // *********************************************************************
 // Toggle Action response
 // *********************************************************************
-    @objc private func toggleCheckbox(sender: UISwitch) {
+    @objc private func toggleCheckbox() {
         rememberMeCheckbox.isSelected.toggle()
     }
 
