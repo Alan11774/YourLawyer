@@ -328,6 +328,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
     @objc private func handleGoogleLogin() {
         LoginManager.shared.googleSignIn(presenting: self) { success, error in
             if success {
+                //self.rememberMeCheckbox.isSelected toggle condition
                     UserDefaults.standard.set(self.rememberMeCheckbox.isSelected, forKey: "isLoggedIn")
                     UserDefaults.standard.synchronize()
                 self.delegate?.didCompleteLogin()

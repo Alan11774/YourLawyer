@@ -12,23 +12,23 @@ import AuthenticationServices
 class LoginManager {
     static let shared = LoginManager()
 
-    func customLogin(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
-        Services().loginService(email, password) { dict in
-            DispatchQueue.main.async {
-                guard let code = dict?["code"] as? Int,
-                      let message = dict?["message"] as? String else {
-                    completion(false, "Error desconocido.")
-                    return
-                }
-                if code == 200 {
-                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
-                    completion(true, nil)
-                } else {
-                    completion(false, message)
-                }
-            }
-        }
-    }
+//    func customLogin(email: String, password: String, completion: @escaping (Bool, String?) -> Void) {
+//        Services().loginService(email, password) { dict in
+//            DispatchQueue.main.async {
+//                guard let code = dict?["code"] as? Int,
+//                      let message = dict?["message"] as? String else {
+//                    completion(false, "Error desconocido.")
+//                    return
+//                }
+//                if code == 200 {
+//                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+//                    completion(true, nil)
+//                } else {
+//                    completion(false, message)
+//                }
+//            }
+//        }
+//    }
 
     func googleSignIn(presenting viewController: UIViewController, completion: @escaping (Bool, String?) -> Void) {
         GIDSignIn.sharedInstance.signIn(withPresenting: viewController) { result, error in

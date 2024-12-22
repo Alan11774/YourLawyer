@@ -19,7 +19,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <segue destination="L9c-vY-ktr" kind="show" identifier="loginOK" id="d0w-Gu-qcO"/>
+                        <segue destination="L9c-vY-ktr" kind="presentation" identifier="loginOK" modalPresentationStyle="fullScreen" id="d0w-Gu-qcO"/>
                         <segue destination="d1R-AR-tBO" kind="show" identifier="signUpSegue" id="MDq-7A-qEw"/>
                     </connections>
                 </viewController>
@@ -32,19 +32,8 @@
             <objects>
                 <viewController id="L9c-vY-ktr" customClass="AllLawyersViewController" customModule="YourLawyer" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9p7-s0-o2r">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pbd-1L-pX5">
-                                <rect key="frame" x="160" y="255" width="73" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Profile"/>
-                                <connections>
-                                    <action selector="ProfileButton:" destination="L9c-vY-ktr" eventType="touchUpInside" id="pHF-Qu-cUP"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="47l-7l-0Xn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -69,7 +58,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="sEj-kS-Xm2"/>
                     <connections>
-                        <segue destination="L9c-vY-ktr" kind="show" identifier="loginOKSignUp" id="bnJ-9x-Pa1"/>
+                        <segue destination="L9c-vY-ktr" kind="presentation" identifier="loginOKSignUp" modalPresentationStyle="fullScreen" id="bnJ-9x-Pa1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjW-Wf-X8B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -93,7 +82,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="d0w-Gu-qcO"/>
+        <segue reference="bnJ-9x-Pa1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

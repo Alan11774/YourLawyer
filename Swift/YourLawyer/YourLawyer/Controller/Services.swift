@@ -19,28 +19,28 @@ class Services {
         return newPass
     }
     
-    func loginService (_ username:String, _ password:String, completion:@escaping (Dictionary<String, Any>?) -> Void) {
-        if let laURL = URL(string: baseUrl + "/WS/login.php") {
-            let sesion = URLSession(configuration: .default)
-            var elRequest = URLRequest(url: laURL)
-            elRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField:"Content-Type")
-            elRequest.httpMethod = "POST"
-            let cifPassword = encriptarPassword(password)
-            let paramString = "username=\(username)&password=\(cifPassword)"
-            elRequest.httpBody = paramString.data(using: .utf8)
-            let elTask = sesion.dataTask(with: elRequest) { (datos, response, error) in
-                if let bytes = datos {
-                    do {
-                        let diccionario = try JSONSerialization.jsonObject(with: bytes) as! Dictionary<String,Any>
-                        completion(diccionario)
-                    }
-                    catch {
-                        print ("ocurrió un error en el response \(error.localizedDescription)")
-                        completion(nil)
-                    }
-                }
-            }
-            elTask.resume()
-        }
-    }
+//    func loginService (_ username:String, _ password:String, completion:@escaping (Dictionary<String, Any>?) -> Void) {
+//        if let laURL = URL(string: baseUrl + "/WS/login.php") {
+//            let sesion = URLSession(configuration: .default)
+//            var elRequest = URLRequest(url: laURL)
+//            elRequest.addValue("application/x-www-form-urlencoded", forHTTPHeaderField:"Content-Type")
+//            elRequest.httpMethod = "POST"
+//            let cifPassword = encriptarPassword(password)
+//            let paramString = "username=\(username)&password=\(cifPassword)"
+//            elRequest.httpBody = paramString.data(using: .utf8)
+//            let elTask = sesion.dataTask(with: elRequest) { (datos, response, error) in
+//                if let bytes = datos {
+//                    do {
+//                        let diccionario = try JSONSerialization.jsonObject(with: bytes) as! Dictionary<String,Any>
+//                        completion(diccionario)
+//                    }
+//                    catch {
+//                        print ("ocurrió un error en el response \(error.localizedDescription)")
+//                        completion(nil)
+//                    }
+//                }
+//            }
+//            elTask.resume()
+//        }
+//    }
 }

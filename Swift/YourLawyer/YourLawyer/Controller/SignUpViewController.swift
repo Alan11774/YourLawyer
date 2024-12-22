@@ -146,10 +146,14 @@ class SignUpViewController: UIViewController {
     }
     @objc func signUpAction() {
         self.activityIndicator.startAnimating()
+        if !termsCheckbox.isSelected {
+            self.activityIndicator.stopAnimating()
+            Utils.showMessage("Selecciona los terminos y condiciones.")
+            return
+        }
         guard let email = emailField.text, !email.isEmpty,
               let password = passwordField.text, !password.isEmpty else {
             self.activityIndicator.stopAnimating()
-            print("Completa campos")
             Utils.showMessage("Por favor, completa todos los campos.")
             return
         }
@@ -161,6 +165,7 @@ class SignUpViewController: UIViewController {
             } else {
                 self.activityIndicator.stopAnimating()
                 Utils.showMessage("Usuario registrado exitosamente. Por favor, inicia sesión.")
+                self.performSegue(withIdentifier: "loginOKSignUp", sender: nil)
             }
         }
     }
