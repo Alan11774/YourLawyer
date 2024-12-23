@@ -118,7 +118,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         view.addSubview(rememberMeCheckbox)
 
         // Forget Password Button
-        forgetPasswordButton.setTitle("Forget password?", for: .normal)
+        forgetPasswordButton.setTitle("¿Olvido su contraseña?", for: .normal)
         forgetPasswordButton.setTitleColor(.systemBlue, for: .normal)
         forgetPasswordButton.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         forgetPasswordButton.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +136,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         
         
         // Sign In Button
-        signInButton.setTitle("Sign In", for: .normal)
+        signInButton.setTitle("Ingresar", for: .normal)
         signInButton.backgroundColor = UIColor.systemBlue
         signInButton.layer.cornerRadius = 10
         signInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -144,14 +144,14 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         view.addSubview(signInButton)
 
         // Sign Up Label
-        signUpLabel.text = "Don't have an account?"
+        signUpLabel.text = "¿No tienes una cuenta?"
         signUpLabel.font = UIFont.systemFont(ofSize: 14)
         signUpLabel.textColor = .gray
         signUpLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(signUpLabel)
 
         // Sign Up Button
-        signUpButton.setTitle("Sign up", for: .normal)
+        signUpButton.setTitle("Registrarse", for: .normal)
         signUpButton.setTitleColor(.systemBlue, for: .normal)
         signUpButton.translatesAutoresizingMaskIntoConstraints = false
         signUpButton.addTarget(self, action: #selector(signUpAction), for: .touchUpInside)

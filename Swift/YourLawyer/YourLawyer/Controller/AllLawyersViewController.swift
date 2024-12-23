@@ -18,6 +18,7 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         private let resultsLabel = UILabel()
         private let tableView = UITableView()
         private let logoutButton = UIButton(type: .system)
+        private let userProfileImageView = UIButton()
     
         
         // Data Source
@@ -36,6 +37,22 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         }
         
         private func setupUI() {
+            // Profle
+            userProfileImageView.setImage(UIImage(systemName: "person.circle"),for: .normal) // Imagen de ejemplo
+            userProfileImageView.contentMode = .scaleAspectFill
+            userProfileImageView.layer.cornerRadius = 25 // Ajusta el radio según el tamaño deseado
+            userProfileImageView.clipsToBounds = true
+            userProfileImageView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(userProfileImageView)
+            userProfileImageView.addTarget(self, action: #selector(profileView), for: .touchUpInside)
+
+            
+            // Logout
+            logoutButton.setImage(UIImage(systemName: "iphone.and.arrow.right.outward"), for: .normal)
+            logoutButton.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(logoutButton)
+            logoutButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
+            
             // Configurar campo de búsqueda
             searchTextField.placeholder = "Ingresa un texto para buscar"
             searchTextField.borderStyle = .roundedRect
@@ -73,7 +90,15 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
             
             // Agregar constraints
             NSLayoutConstraint.activate([
-                searchTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                userProfileImageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+                userProfileImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                userProfileImageView.widthAnchor.constraint(equalToConstant: 50),
+                userProfileImageView.heightAnchor.constraint(equalTo: userProfileImageView.widthAnchor),
+                
+                logoutButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+                
+                searchTextField.topAnchor.constraint(equalTo: userProfileImageView.bottomAnchor, constant: 16), // Ajusta el valor según sea necesario
                 searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
                 searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
                 
@@ -128,7 +153,7 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
                        case .success(let projects):
                            self?.lawyers = projects
                            self?.tableView.reloadData()
-                           self?.resultsLabel.text = self?.lawyers.count.description
+                           self?.resultsLabel.text = "\(self?.lawyers.count.description ?? "0") Resultdos encontrados"
                            
                        case .failure(let error):
                            print("Error al obtener proyectos: \(error)")
@@ -146,7 +171,27 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         }
     
         @objc private func handleLogout() {
-            // Present confirmation dialog or handle logout logic here
-            print("Logout button pressed")
+            
+            let alert = UIAlertController(title: "Cerrar sesión", message: "¿Estás seguro de que desea cerrar sesión?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: {_ in
+                
+                UserDefaults.standard.set(false, forKey: "isLoggedIn")
+                UserDefaults.standard.removeObject(forKey: "loggedInUserEmail")
+                UserDefaults.standard.synchronize()
+                
+                
+                    // si esta loggeado con Google
+//                GIDSignIn.sharedInstance.signOut()
+                self.dismiss(animated: true)
+                    }
+                 )
+                )
+            alert.addAction(UIAlertAction(title: "No", style: .cancel))
+            present(alert,animated: true)
+
           }
+    
+    @objc private func profileView(){
+        self.performSegue(withIdentifier: "profileSegue", sender: nil)
+    }
 }
