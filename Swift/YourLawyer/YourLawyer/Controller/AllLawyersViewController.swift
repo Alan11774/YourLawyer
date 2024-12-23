@@ -23,7 +23,7 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         
         // Data Source
         private var lawyers: [Lawyer] = []
-//        private var results: [String] = ["Result 1", "Result 2", "Result 3", "Result 4", "Result 5", "Result 6", "Result 7", "Result 8", "Result 9", "Result 10", "Result 11", "Result 12", "Result 13", "Result 14", "Result 15", "Result 16", "Result 17", "Result 18", "Result 19", "Result 20", "Result 21", "Result 22", "Result 23", "Result 24", "Result 25", "Result 26", "Result 27"] // Datos de ejemplo
+        private var filteredLawyers: [Lawyer] = []
         
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -119,6 +119,7 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
                 tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
         }
+    
         override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
                if segue.identifier == "detailLawyerSegue" {
                    if let indexPath = tableView.indexPathForSelectedRow {
@@ -132,55 +133,66 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             self.performSegue(withIdentifier: "detailLawyerSegue", sender: nil)
         }
-        
         // MARK: - UITableViewDataSource
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return lawyers.count
+            return filteredLawyers.count // Mostrar solo los abogados filtrados
         }
-        
+
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            // Reutilizar la celda personalizada
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AllLawyersTableViewCell", for: indexPath) as? AllLawyersTableViewCell else {
                 return UITableViewCell()
             }
 
-            // Configurar la celda con datos de ejemplo
-            let lawyer = lawyers[indexPath.row]
-            cell.titleLabel.text = lawyer.name//"Project Title \(indexPath.row + 1)"
-            cell.subtitleLabel.text = lawyer.description//"This is the description of project \(indexPath.row + 1)."
-            
-            // Imagen de ejemplo
+            // Configurar la celda con los datos filtrados
+            let lawyer = filteredLawyers[indexPath.row]
+            cell.titleLabel.text = lawyer.name
+            cell.subtitleLabel.text = lawyer.description
+
+            // Configurar imagen
             if let imageUrlString = lawyer.imageURL, let imageUrl = URL(string: imageUrlString) {
-                  cell.profileImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "person.crop.circle.fill"))
-                } else {
-                  cell.profileImageView.image = UIImage(named: "person.crop.circle.fill")
-                }
+                cell.profileImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "person.crop.circle.fill"))
+            } else {
+                cell.profileImageView.image = UIImage(named: "person.crop.circle.fill")
+            }
 
             return cell
         }
-    
+
         private func fetchLawyers() {
             LawyersService.shared.fetchLawyers { [weak self] result in
-                   DispatchQueue.main.async {
-                       switch result {
-                       case .success(let projects):
-                           self?.lawyers = projects
-                           self?.tableView.reloadData()
-                           self?.resultsLabel.text = "\(self?.lawyers.count.description ?? "0") Resultdos encontrados"
-                           
-                       case .failure(let error):
-                           print("Error al obtener proyectos: \(error)")
-                       }
-                   }
-               }
-           }
-    
-        private func updateResultsLabel(count: Int) {
-          resultsLabel.text = "\(count) search result(s) found"
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let lawyers):
+                        self?.lawyers = lawyers
+                        self?.filteredLawyers = lawyers // Mostrar todos inicialmente
+                        self?.tableView.reloadData()
+                        self?.resultsLabel.text = "\(self?.filteredLawyers.count ?? 0) Resultados encontrados"
+                        
+                    case .failure(let error):
+                        print("Error al obtener abogados: \(error)")
+                    }
+                }
+            }
         }
-    
-        @objc private func searchFilter(){
-            print(searchTextField.text!)
+
+        @objc private func searchFilter() {
+            guard let searchText = searchTextField.text, !searchText.isEmpty else {
+                // Mostrar todos los abogados si no hay texto de búsqueda
+                filteredLawyers = lawyers
+                resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados"
+                tableView.reloadData()
+                return
+            }
+
+            // Filtrar los abogados según el texto ingresado
+            filteredLawyers = lawyers.filter { lawyer in
+                lawyer.name.lowercased().contains(searchText.lowercased()) ||
+                lawyer.description.lowercased().contains(searchText.lowercased())
+            }
+
+            // Actualizar etiqueta de resultados
+            resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
+            tableView.reloadData()
         }
     
         @objc private func handleLogout() {
