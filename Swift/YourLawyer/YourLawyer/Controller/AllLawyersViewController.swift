@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 
 
-class AllLawyersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class AllLawyersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
         
         // UI Components
         private let searchTextField = UITextField()
@@ -39,8 +39,8 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         private func setupUI() {
             // Profle
             userProfileImageView.setImage(UIImage(systemName: "person.circle"),for: .normal) // Imagen de ejemplo
-            userProfileImageView.contentMode = .scaleAspectFill
-            userProfileImageView.layer.cornerRadius = 25 // Ajusta el radio según el tamaño deseado
+            userProfileImageView.contentMode = .scaleToFill
+            userProfileImageView.layer.cornerRadius = 30 // Ajusta el radio según el tamaño deseado
             userProfileImageView.clipsToBounds = true
             userProfileImageView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(userProfileImageView)
@@ -118,6 +118,19 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
                 tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                 tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             ])
+        }
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+               if segue.identifier == "detailLawyerSegue" {
+                   if let indexPath = tableView.indexPathForSelectedRow {
+                       let lawyer = lawyers[indexPath.row]
+                       let destinationVC = segue.destination as! DetailLawyerViewController
+                       destinationVC.lawyer = lawyer
+                   }
+               }
+           }
+    
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            self.performSegue(withIdentifier: "detailLawyerSegue", sender: nil)
         }
         
         // MARK: - UITableViewDataSource
