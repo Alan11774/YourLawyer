@@ -9,6 +9,7 @@ import UIKit
 import AuthenticationServices
 import GoogleSignIn
 import FirebaseAuth
+import FirebaseCore
 
 // *********************************************************************
 // Delegado para usar 
@@ -246,97 +247,53 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
 // *********************************************************************
 // Login Action
 // *********************************************************************
-//    @objc func loginAction() {
-//        activityIndicator.startAnimating()
-//        self.view.endEditing(true)
-//        var message = ""
-//        guard let account = self.emailField.text,
-//              let pass = self.passwordField.text
-//        else {
-//            return
-//        }
-//        if account.isEmpty {
-//            message = "Por favor ingrese su correo"
-//        }
-//        else if pass.isEmpty {
-//            message = "Por favor ingrese su password"
-//        }
-//        if message.isEmpty {
-//            Services().loginService(account, pass) { dict in
-//                DispatchQueue.main.async {  // hay que volver al thread principal para hacer cambios en la UI
-//                    // TODO: agregar un activity indicator, y desactivarlo aqui
-//                    guard let codigo = dict?["code"] as? Int,
-//                          let mensaje = dict?["message"] as? String
-//                    else {
-//                        Utils.showMessage("Ocurrió un error. Reintente más tarde o contacte a servicio al cliente")
-//                        self.activityIndicator.stopAnimating()
-//                        return
-//                    }
-//                    if codigo == 200 {
-//                        // TODO: Implementar con UserDefaults la comprobación de sesión iniciada
-//                        UserDefaults.standard.set(self.rememberMeCheckbox.isSelected, forKey: "isLoggedIn")
-//                        UserDefaults.standard.set(account, forKey: "loggedInUserEmail") // Opcional: Guarda el email
-//                        UserDefaults.standard.synchronize()
-//                        self.view.willRemoveSubview(self.signInButton)
-//                        self.activityIndicator.stopAnimating()
-//                        self.delegate?.didPressSignIn()
-//                    }
-//                    else {
-//                        Utils.showMessage(mensaje)
-//                    }
-//                }
-//            }
-//            if parent != nil {
-//                //let localParent = parent as! LoginInterface
-//                //localParent.customLogin(mail:account, password:pass)
-//            }
-//        }
-//        else {
-//            self.activityIndicator.stopAnimating()
-//            Utils.showMessage(message)
-//        }
-//    }
-    
     
     @objc func loginAction() {
         activityIndicator.startAnimating()
         self.view.endEditing(true)
 
-        guard let email = emailField.text, !email.isEmpty,
-              let password = passwordField.text, !password.isEmpty else {
-            Utils.showMessage("Por favor, completa todos los campos.")
-            activityIndicator.stopAnimating()
-            return
-        }
-
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-            DispatchQueue.main.async {
-                self?.activityIndicator.stopAnimating()
-                if let error = error {
-                    Utils.showMessage("Error al iniciar sesión: \(error.localizedDescription)")
-                } else {
-                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
-                    self?.delegate?.didPressSignIn()
+                guard let email = emailField.text, !email.isEmpty,
+                      let password = passwordField.text, !password.isEmpty else {
+                    Utils.showMessage("Por favor, completa todos los campos.")
+                    return
+                }
+                
+        LoginManager.shared.loginWithEmail(email: email, password: password) { result in
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let user):
+                            print("Usuario autenticado: \(user.email ?? "Sin email")")
+                            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                            self.activityIndicator.stopAnimating()
+                            self.delegate?.didCompleteLogin()
+                        case .failure(let error):
+                            self.activityIndicator.stopAnimating()
+                            Utils.showMessage("Error: \(error.localizedDescription)")
+                        }
+                    }
                 }
             }
-        }
-    }
     
 // *********************************************************************
 // Hanlde Google login to Login Interface
 // *********************************************************************
-    @objc private func handleGoogleLogin() {
-        LoginManager.shared.googleSignIn(presenting: self) { success, error in
-            if success {
-                //self.rememberMeCheckbox.isSelected toggle condition
-                    UserDefaults.standard.set(self.rememberMeCheckbox.isSelected, forKey: "isLoggedIn")
-                    UserDefaults.standard.synchronize()
-                self.delegate?.didCompleteLogin()
-            } else {
-                Utils.showMessage("Google Login Error: \(error ?? "Unknown")")
+    
+    @objc func handleGoogleLogin() {
+        LoginManager.shared.loginWithGoogle(presenting: self){ result in
+            DispatchQueue.main.async {
+                switch result {
+                 case .success(let user):
+                     print("Usuario autenticado: \(user.email ?? "Sin email")")
+                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                     self.delegate?.didCompleteLogin()
+                 case .failure(let error):
+                    Utils.showMessage("Error: \(error.localizedDescription)")
+                 }
             }
+            
         }
     }
+        
     
 // *********************************************************************
 // Handle Apple login to Login Interface
@@ -369,16 +326,6 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
     
     func showNoConnectionAlert() {
         Utils.showMessage("No tienes conexión a internet. Verifica tu red.")
-//         let alert = UIAlertController(title: "Sin conexión",
-//                                       message: "No tienes conexión a internet. Verifica tu red.",
-//                                       preferredStyle: .alert)
-//         alert.addAction(UIAlertAction(title: "OK", style: .default))
-//         self.present(alert, animated: true, completion: nil)
-//            if !self.networkMonitor.isConnected {
-//                self.showNoConnectionAlert()
-//            } else {
-//                self.detectaEstado()
-//            }
      }
     
 // *********************************************************************
@@ -400,7 +347,6 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
             UserDefaults.standard.set(true, forKey: "isLoggedIn")
             UserDefaults.standard.synchronize()
             self.delegate?.didCompleteLogin()
-//            self.performSegue(withIdentifier: "loginOK", sender: nil)
         }
     }
     

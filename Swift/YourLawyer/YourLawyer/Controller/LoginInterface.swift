@@ -28,10 +28,10 @@
             // si está loggeado con Google
             GIDSignIn.sharedInstance.restorePreviousSignIn { usuario, error in
                 guard let perfil = usuario else { return }
-                print("usuario: \(perfil.profile?.name ?? ""), correo: \(perfil.profile?.email ?? "")")
-                UserDefaults.standard.set(true, forKey: "isLoggedIn")
-                UserDefaults.standard.synchronize()
+                print("Sesion Iniciada con Google usuario: \(perfil.profile?.name ?? ""), correo: \(perfil.profile?.email ?? "")")
                 self.performSegue(withIdentifier: "loginOK", sender: nil)
+                return
+
             }
         }
         
@@ -67,40 +67,7 @@
         func didPressSignIn() {
             changeSegue()
         }
-
-        // MARK: - Apple ID Login
-        @objc func appleBtnTouch() {
-            if !networkMonitor.isConnected {
-                showNoConnectionAlert()
-                return
-            }
-            
-            let provider = ASAuthorizationAppleIDProvider()
-            let request = provider.createRequest()
-            request.requestedScopes = [.fullName, .email]
-            let authController = ASAuthorizationController(authorizationRequests: [request])
-            authController.presentationContextProvider = self
-            authController.performRequests()
-        }
-
-        // MARK: - Google Login
-        @objc func googleBtnTouch() {
-            if !networkMonitor.isConnected {
-                showNoConnectionAlert()
-                return
-            }
-            
-            GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
-                if let error = error {
-                    Utils.showMessage("Error: \(error.localizedDescription)")
-                } else {
-                    guard let user = result?.user else { return }
-                    print("Google User: \(user.profile?.name ?? ""), Email: \(user.profile?.email ?? "")")
-                    self.changeSegue()
-                }
-            }
-        }
-
+        
         // MARK: - Mostrar Alerta Sin Conexión
         func showNoConnectionAlert() {
             let alert = UIAlertController(title: "Sin conexión",

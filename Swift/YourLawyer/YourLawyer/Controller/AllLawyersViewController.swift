@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import GoogleSignIn
 
 
 class AllLawyersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -198,23 +199,24 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         @objc private func handleLogout() {
             
             let alert = UIAlertController(title: "Cerrar sesión", message: "¿Estás seguro de que desea cerrar sesión?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: {_ in
-                
-                UserDefaults.standard.set(false, forKey: "isLoggedIn")
-                UserDefaults.standard.removeObject(forKey: "loggedInUserEmail")
-                UserDefaults.standard.synchronize()
-                
-                
-                    // si esta loggeado con Google
-//                GIDSignIn.sharedInstance.signOut()
-                self.dismiss(animated: true)
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+
+                    LoginManager.shared.logout{ result  in
+                        switch result {
+                        case .success:
+                            Utils.showMessage("Sesion cerrada Exitosamente")
+                            self.dismiss(animated: true)
+                        case .failure(let error):
+                            Utils.showMessage("Ocurrio un error al cerrar la sesión \(error.localizedDescription)")
                     }
-                 )
-                )
+                    
+                }
+                
+            }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel))
             present(alert,animated: true)
 
-          }
+      }
     
     @objc private func profileView(){
         self.performSegue(withIdentifier: "profileSegue", sender: nil)

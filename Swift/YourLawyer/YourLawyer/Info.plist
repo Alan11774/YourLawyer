@@ -4,8 +4,19 @@
 <dict>
 	<key>CFBundleURLSchemes</key>
 	<string>com.googleusercontent.apps.904082837870-o4m357kfrig9bam4tv1scgsto1cdqbqp</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.486843470199-hjpmtdv429cdvi4l5t8p9j95edmvvlh3</string>
+			</array>
+		</dict>
+	</array>
 	<key>GIDClientID</key>
-	<string>904082837870-o4m357kfrig9bam4tv1scgsto1cdqbqp.apps.googleusercontent.com</string>
+	<string>486843470199-hjpmtdv429cdvi4l5t8p9j95edmvvlh3.apps.googleusercontent.com</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
