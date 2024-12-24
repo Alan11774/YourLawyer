@@ -31,7 +31,7 @@ class LawyersService {
 
           do {
             let lawyersResponse = try JSONDecoder().decode(LawyersResponse.self, from: data)
-            completion(.success(lawyersResponse.abogados))
+              completion(.success(lawyersResponse.lawyers))
           } catch {
             completion(.failure(error))
           }

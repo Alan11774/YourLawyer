@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 
-public let lawyersApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/lawyers"
+//public let lawyersApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/lawyers"
+public let lawyersApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/all/lawyers"
 
 class Utils {
     class func showMessage(_ message: String) {

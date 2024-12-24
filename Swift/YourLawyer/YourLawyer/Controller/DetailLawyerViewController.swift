@@ -25,6 +25,14 @@ class DetailLawyerViewController: UIViewController {
         if let lawyer = lawyer {
             titleLabel.text = lawyer.name
             descriptionLabel.text = lawyer.description
+            print(lawyer.hourlyRate)
+            print(lawyer.numberOfHirings)
+            print(lawyer.profileViews)
+            print(lawyer.projectsWorkedOn)
+            print(lawyer.rating)
+            print(lawyer.userDescription)
+            print(lawyer.skills)
+            
             if let imageUrlString = lawyer.imageURL, let imageUrl = URL(string: imageUrlString) {
                 profileImageView.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "person.circle"))
             } else {
