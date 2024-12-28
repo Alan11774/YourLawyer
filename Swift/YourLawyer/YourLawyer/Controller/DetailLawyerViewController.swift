@@ -88,12 +88,23 @@ class DetailLawyerViewController: UIViewController {
         let languagesStack = createInfoStack(iconName: "globe", text: "Idiomas: Español, Ingles")
         let profileViewsStack = createInfoStack(iconName: "eyes.inverse", text: "Vistas en el perfil: \(lawyer?.profileViews ?? 0)")
         let hourlyRateStack = createInfoStack(iconName: "hourglass.circle", text: "Cobro por hora: $ \(lawyer?.hourlyRate ?? 0)")
+//        let skillsStack = createInfoStack(iconName: "list.bullet", text: "Habilidades: \(skillsLabel.text ?? "")")
+
+        
         if let lawyerSkills = lawyer?.skills {
-            // Generar una cadena con bullet points
-            let bulletPoints = lawyerSkills.map { " \($0)" }.joined(separator: "\n")
+            // Generar una cadena con viñetas
+            let bulletPoints = lawyerSkills.map { "• \($0)" }.joined(separator: "\n")
             skillsLabel.text = bulletPoints
         }
-        let skillsStack = createInfoStack(iconName: "list.bullet", text: "Habilidades: \(skillsLabel.text ?? "")")
+        skillsLabel.translatesAutoresizingMaskIntoConstraints = false
+        skillsLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        skillsLabel.numberOfLines = 0
+        skillsLabel.textAlignment = .left // Alinear a la izquierda para parecer una lista
+        skillsLabel.textColor = .systemBlue
+
+        // Crear fila para el título de habilidades
+        let skillsTitleStack = createInfoStack(iconName: "list.bullet", text: "Habilidades:")
+        
 
         let infoStack = UIStackView(arrangedSubviews: [
             locationStack,
@@ -102,16 +113,17 @@ class DetailLawyerViewController: UIViewController {
             languagesStack,
             profileViewsStack,
             hourlyRateStack,
-            skillsStack])
+            skillsTitleStack,
+            skillsLabel])
         infoStack.axis = .vertical
         infoStack.spacing = 10
         infoStack.translatesAutoresizingMaskIntoConstraints = false
         
         
-        skillsLabel.translatesAutoresizingMaskIntoConstraints = false
-        skillsLabel.font = UIFont.systemFont(ofSize: 14)
-        skillsLabel.numberOfLines = 0
-        skillsLabel.textAlignment = .left // Alinear a la izquierda para parecer una lista
+//        skillsLabel.translatesAutoresizingMaskIntoConstraints = false
+//        skillsLabel.font = UIFont.systemFont(ofSize: 14)
+//        skillsLabel.numberOfLines = 0
+//        skillsLabel.textAlignment = .left // Alinear a la izquierda para parecer una lista
 
         
 
@@ -142,7 +154,7 @@ class DetailLawyerViewController: UIViewController {
         
         view.addSubview(infoStack)
         
-        view.addSubview(skillsLabel)
+//        view.addSubview(skillsLabel)
         
         view.addSubview(contactButton)
         view.addSubview(contractButton)
@@ -184,13 +196,13 @@ class DetailLawyerViewController: UIViewController {
             infoStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             infoStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-            // User Descripción
-            skillsLabel.topAnchor.constraint(equalTo: infoStack.bottomAnchor, constant: 10),
-            skillsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            skillsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+//            // User Descripción
+//            skillsLabel.topAnchor.constraint(equalTo: infoStack.bottomAnchor, constant: 10),
+//            skillsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+//            skillsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
             // Botón de contacto
-            contactButton.topAnchor.constraint(equalTo: skillsLabel.bottomAnchor, constant: 20),
+            contactButton.topAnchor.constraint(equalTo: infoStack.bottomAnchor, constant: 20),
             contactButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contactButton.widthAnchor.constraint(equalToConstant: 150),
             contactButton.heightAnchor.constraint(equalToConstant: 44),
@@ -225,11 +237,27 @@ class DetailLawyerViewController: UIViewController {
         return stack
     }
     @objc private func contactAction(){
-        print("Contact Press")
+        self.performSegue(withIdentifier: "contactSegue", sender: nil)
     }
     
     @objc private func contractAction(){
         print("Contract Press")
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+            
+        case "contactSegue":
+            let destination =  segue.destination as! ContactViewController
+            destination.lawyer = lawyer
+        case "contractSegue":
+            let destination =  segue.destination as! ContractViewController
+            destination.lawyer = lawyer
+        default:
+            print("Segue not found")
+            
+        }
     }
     
 }

@@ -25,7 +25,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-19" y="4"/>
+            <point key="canvasLocation" x="-454" y="-44"/>
         </scene>
         <!--All Lawyers View Controller-->
         <scene sceneID="wV8-t0-wyS">
@@ -45,7 +45,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzF-PT-PGb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1851" y="58"/>
+            <point key="canvasLocation" x="1531" y="-44"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="0rN-TA-AOd">
@@ -64,7 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjW-Wf-X8B" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1025" y="736"/>
+            <point key="canvasLocation" x="596" y="342"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="caX-WT-WjG">
@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Gt-eB-z9G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2769" y="-585"/>
+            <point key="canvasLocation" x="3100" y="-631"/>
         </scene>
         <!--Detail Lawyer View Controller-->
         <scene sceneID="S4B-pk-16Z">
@@ -91,10 +91,44 @@
                         <viewLayoutGuide key="safeArea" id="EEp-u9-vK9"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <segue destination="Fbg-ZS-deK" kind="presentation" identifier="contactSegue" modalPresentationStyle="fullScreen" id="cwZ-se-iax"/>
+                        <segue destination="b1g-vn-yvo" kind="presentation" identifier="contractSegue" id="3cO-se-tPj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ayh-GS-IAk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2912" y="120"/>
+            <point key="canvasLocation" x="3001" y="124"/>
+        </scene>
+        <!--Contact View Controller-->
+        <scene sceneID="agG-KJ-bNA">
+            <objects>
+                <viewController id="Fbg-ZS-deK" customClass="ContactViewController" customModule="YourLawyer" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Vte-e1-bvQ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="0rD-Y5-I1a"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DDd-pf-lHh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4405" y="-121"/>
+        </scene>
+        <!--Contract View Controller-->
+        <scene sceneID="D6Y-ca-QDc">
+            <objects>
+                <viewController id="b1g-vn-yvo" customClass="ContractViewController" customModule="YourLawyer" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aTW-Ef-V6s">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Qm9-at-asq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Nz-Wj-Alr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4438" y="654"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
