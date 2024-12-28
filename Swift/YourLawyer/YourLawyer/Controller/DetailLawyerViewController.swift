@@ -35,6 +35,7 @@ class DetailLawyerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        lawyer = LawyerManager.shared.selectedLawyer
         view.backgroundColor = .white
         setupUI()
     }
@@ -245,19 +246,19 @@ class DetailLawyerViewController: UIViewController {
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-            
-        case "contactSegue":
-            let destination =  segue.destination as! ContactViewController
-            destination.lawyer = lawyer
-        case "contractSegue":
-            let destination =  segue.destination as! ContractViewController
-            destination.lawyer = lawyer
-        default:
-            print("Segue not found")
-            
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        switch segue.identifier {
+//            
+//        case "contactSegue":
+//            let destination =  segue.destination as! ContactViewController
+//            destination.lawyer = lawyer
+//        case "contractSegue":
+//            let destination =  segue.destination as! ContractViewController
+//            destination.lawyer = lawyer
+//        default:
+//            print("Segue not found")
+//            
+//        }
+//    }
     
 }

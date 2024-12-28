@@ -24,3 +24,11 @@ struct Lawyer: Decodable {
     let skills: [String]
     let hourlyRate: Double
 }
+
+class LawyerManager {
+    static let shared = LawyerManager()
+    
+    var selectedLawyer: Lawyer?
+    
+    private init() {} // Una sola instancia 
+}

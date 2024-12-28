@@ -15,6 +15,8 @@
 		646085592D13EDF400958146 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 646085582D13EDF400958146 /* FirebaseAppCheck */; };
 		6460855B2D13EDF400958146 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 6460855A2D13EDF400958146 /* FirebaseAppDistribution-Beta */; };
 		6460855D2D13F14F00958146 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6460855C2D13F14F00958146 /* FirebaseAuth */; };
+		64BEEF192D2095150013E409 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 64BEEF182D2095150013E409 /* FirebaseFirestore */; };
+		64BEEF1B2D2095150013E409 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 64BEEF1A2D2095150013E409 /* FirebaseStorage */; };
 		64C827002D18BFF00050E370 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 64C826FF2D18BFF00050E370 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
@@ -51,10 +53,12 @@
 				6460855B2D13EDF400958146 /* FirebaseAppDistribution-Beta in Frameworks */,
 				646085342D13D47100958146 /* GoogleSignIn in Frameworks */,
 				646085572D13EDF400958146 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				64BEEF192D2095150013E409 /* FirebaseFirestore in Frameworks */,
 				64C827002D18BFF00050E370 /* Kingfisher in Frameworks */,
 				646085362D13D47100958146 /* GoogleSignInSwift in Frameworks */,
 				646085532D13EDF400958146 /* FirebaseAnalytics in Frameworks */,
 				646085592D13EDF400958146 /* FirebaseAppCheck in Frameworks */,
+				64BEEF1B2D2095150013E409 /* FirebaseStorage in Frameworks */,
 				646085552D13EDF400958146 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				6460855D2D13F14F00958146 /* FirebaseAuth in Frameworks */,
 			);
@@ -108,6 +112,8 @@
 				6460855A2D13EDF400958146 /* FirebaseAppDistribution-Beta */,
 				6460855C2D13F14F00958146 /* FirebaseAuth */,
 				64C826FF2D18BFF00050E370 /* Kingfisher */,
+				64BEEF182D2095150013E409 /* FirebaseFirestore */,
+				64BEEF1A2D2095150013E409 /* FirebaseStorage */,
 			);
 			productName = YourLawyer;
 			productReference = 646085142D13D31400958146 /* YourLawyer.app */;
@@ -446,6 +452,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 646085512D13EDF400958146 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		64BEEF182D2095150013E409 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 646085512D13EDF400958146 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		64BEEF1A2D2095150013E409 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 646085512D13EDF400958146 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 		64C826FF2D18BFF00050E370 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

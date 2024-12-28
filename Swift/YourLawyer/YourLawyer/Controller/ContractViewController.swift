@@ -13,7 +13,7 @@ class ContractViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        lawyer = LawyerManager.shared.selectedLawyer
         // Do any additional setup after loading the view.
     }
     

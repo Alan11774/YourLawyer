@@ -125,8 +125,9 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
                if segue.identifier == "detailLawyerSegue" {
                    if let indexPath = tableView.indexPathForSelectedRow {
                        let lawyer = lawyers[indexPath.row]
-                       let destinationVC = segue.destination as! DetailLawyerViewController
-                       destinationVC.lawyer = lawyer
+//                       let destinationVC = segue.destination as! DetailLawyerViewController // Sender encapsulado
+                       LawyerManager.shared.selectedLawyer = lawyer // Singleton
+//                       destinationVC.lawyer = lawyer
                    }
                }
            }
