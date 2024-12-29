@@ -120,11 +120,6 @@ class DetailLawyerViewController: UIViewController {
         infoStack.spacing = 10
         infoStack.translatesAutoresizingMaskIntoConstraints = false
         
-        
-//        skillsLabel.translatesAutoresizingMaskIntoConstraints = false
-//        skillsLabel.font = UIFont.systemFont(ofSize: 14)
-//        skillsLabel.numberOfLines = 0
-//        skillsLabel.textAlignment = .left // Alinear a la izquierda para parecer una lista
 
         
 
@@ -197,10 +192,6 @@ class DetailLawyerViewController: UIViewController {
             infoStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             infoStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
-//            // User Descripción
-//            skillsLabel.topAnchor.constraint(equalTo: infoStack.bottomAnchor, constant: 10),
-//            skillsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            skillsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
             // Botón de contacto
             contactButton.topAnchor.constraint(equalTo: infoStack.bottomAnchor, constant: 20),
@@ -245,20 +236,5 @@ class DetailLawyerViewController: UIViewController {
         print("Contract Press")
     }
     
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        switch segue.identifier {
-//            
-//        case "contactSegue":
-//            let destination =  segue.destination as! ContactViewController
-//            destination.lawyer = lawyer
-//        case "contractSegue":
-//            let destination =  segue.destination as! ContractViewController
-//            destination.lawyer = lawyer
-//        default:
-//            print("Segue not found")
-//            
-//        }
-//    }
     
 }

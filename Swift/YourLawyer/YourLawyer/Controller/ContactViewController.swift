@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseAuth
 
 
 class ContactViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -29,22 +30,11 @@ class ContactViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     private let db = Firestore.firestore()
     
-//    init(lawyer: Lawyer) {
-//        self.lawyer = lawyer
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         lawyer = LawyerManager.shared.selectedLawyer
         setupUI()
-//        tableView.register(MessageCell.self, forCellReuseIdentifier: "MessageCellTableViewCell")
         tableView.register(MessageCellTableViewCell.self, forCellReuseIdentifier: "MessageCellTableViewCell") 
         loadMessages()
         
@@ -89,18 +79,15 @@ class ContactViewController: UIViewController, UITableViewDelegate, UITableViewD
         view.addSubview(tableView)
         
         // Message Input Bar
-        messageInputBar.backgroundColor = .darkGray
         messageInputBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(messageInputBar)
         
-        messageTextField.placeholder = "Type a message..."
-        
+        messageTextField.placeholder = "Escribe tu mensaje..."
         messageTextField.layer.cornerRadius = 5
         messageTextField.translatesAutoresizingMaskIntoConstraints = false
         messageInputBar.addSubview(messageTextField)
         
-        sendButton.setTitle("Send", for: .normal)
-        sendButton.setTitleColor(.green, for: .normal)
+        sendButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         sendButton.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         messageInputBar.addSubview(sendButton)
@@ -146,44 +133,57 @@ class ContactViewController: UIViewController, UITableViewDelegate, UITableViewD
          ])
         }
         
-//    @objc private func sendMessage(){
-//    
-//        print("Message to send: \(messageTextField.text?.description ?? "")")
-//    }
+    
     @objc private func returnAction(){
         dismiss(animated: true, completion: nil)
     }
+    
     @objc private func sendMessage() {
-           guard let text = messageTextField.text, !text.isEmpty else { return }
-           let messageData: [String: Any] = [
-               "text": text,
-               "timestamp": Timestamp(),
-               "senderId": "user" // Identificador del usuario actual
-           ]
-           db.collection("messages").document(String(lawyer?.id ?? 0)).collection("chats").addDocument(data: messageData)
-           messageTextField.text = ""
-       }
+        guard let text = messageTextField.text, !text.isEmpty else { return }
+        guard let clientId = Auth.auth().currentUser?.email else { return } // Obtenemos el correo del cliente actual
+        guard let lawyerId = lawyer?.id else { return } // ID del abogado seleccionado
+        
+        let messageData: [String: Any] = [
+            "text": text,
+            "timestamp": Timestamp(),
+            "senderId": clientId, // Cliente que envía el mensaje
+            "receiverId": lawyerId // Abogado que recibe el mensaje
+        ]
+        
+        db.collection("messages").document(clientId).collection(String(lawyerId)).addDocument(data: messageData) { error in
+            if let error = error {
+                print("Error al enviar el mensaje: \(error.localizedDescription)")
+            } else {
+                self.messageTextField.text = ""
+            }
+        }
+    }
 
-       private func loadMessages() {
-           db.collection("messages").document(String(lawyer?.id ?? 0)).collection("chats")
-               .order(by: "timestamp")
-               .addSnapshotListener { [weak self] snapshot, error in
-                   guard let self = self else { return }
-                   if let error = error {
-                       print("Error loading messages: \(error)")
-                       return
-                   }
-                   self.messages = snapshot?.documents.compactMap { document in
-                       guard let text = document["text"] as? String,
-                             let senderId = document["senderId"] as? String else { return nil }
-                       return senderId == "user" ? "You: \(text)" : "Lawyer: \(text)"
-                   } ?? []
-                   self.tableView.reloadData()
-                   if !self.messages.isEmpty {
-                       self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
-                   }
-               }
-       }
+    private func loadMessages() {
+        guard let clientId = Auth.auth().currentUser?.email else { return } // Correo del cliente actual
+        guard let lawyerId = lawyer?.id else { return } // ID del abogado seleccionado
+        
+        db.collection("messages").document(clientId).collection(String(lawyerId))
+            .order(by: "timestamp")
+            .addSnapshotListener { [weak self] snapshot, error in
+                guard let self = self else { return }
+                if let error = error {
+                    print("Error al cargar los mensajes: \(error.localizedDescription)")
+                    return
+                }
+                
+                self.messages = snapshot?.documents.compactMap { document in
+                    guard let text = document["text"] as? String,
+                          let senderId = document["senderId"] as? String else { return nil }
+                    return senderId == clientId ? "Tú: \(text)" : "Abogado: \(text)"
+                } ?? []
+                
+                self.tableView.reloadData()
+                if !self.messages.isEmpty {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+                }
+            }
+    }
 
     
     // TableView Methods
@@ -199,33 +199,3 @@ class ContactViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 
 }
-
-
-
-    //    private func loadMessages() {
-    //        db.collection("messages").document(String(lawyer?.id ?? 0)).collection("chats")
-    //            .order(by: "timestamp")
-    //            .addSnapshotListener { [weak self] snapshot, error in
-    //                guard let self = self else { return }
-    //                if let error = error {
-    //                    print("Error loading messages: \(error)")
-    //                    return
-    //                }
-    //                self.messages = snapshot?.documents.compactMap { $0["text"] as? String } ?? []
-    //                self.tableView.reloadData()
-    //                if !self.messages.isEmpty {
-    //                    self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
-    //                }
-    ////                self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
-    //            }
-    //    }
-    //
-    //    @objc private func sendMessage() {
-    //        guard let text = messageTextField.text, !text.isEmpty else { return }
-    //        let messageData: [String: Any] = [
-    //            "text": text,
-    //            "timestamp": Timestamp()
-    //        ]
-    //        db.collection("messages").document(String(lawyer?.id ?? 0)).collection("chats").addDocument(data: messageData)
-    //        messageTextField.text = ""
-    //    }

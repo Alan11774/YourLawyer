@@ -42,7 +42,7 @@ class MessageCellTableViewCell: UITableViewCell {
 
     func configure(with message: String) {
         messageLabel.text = message
-        if message.starts(with: "You:") {
+        if message.starts(with: "Tú:") {
             bubbleBackgroundView.backgroundColor = UIColor.systemBlue
             messageLabel.textColor = .white
             messageLabel.textAlignment = .right
