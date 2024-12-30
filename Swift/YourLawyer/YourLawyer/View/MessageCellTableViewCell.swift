@@ -9,9 +9,10 @@ import UIKit
 
 class MessageCellTableViewCell: UITableViewCell {
 
-
     private let messageLabel = UILabel()
     private let bubbleBackgroundView = UIView()
+    private var leadingConstraint: NSLayoutConstraint!
+    private var trailingConstraint: NSLayoutConstraint!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,6 +24,9 @@ class MessageCellTableViewCell: UITableViewCell {
         messageLabel.numberOfLines = 0
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(messageLabel)
+
+        leadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+        trailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
 
         NSLayoutConstraint.activate([
             messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
@@ -42,15 +46,21 @@ class MessageCellTableViewCell: UITableViewCell {
 
     func configure(with message: String) {
         messageLabel.text = message
+
         if message.starts(with: "Tú:") {
             bubbleBackgroundView.backgroundColor = UIColor.systemBlue
             messageLabel.textColor = .white
             messageLabel.textAlignment = .right
+
+            leadingConstraint.isActive = false
+            trailingConstraint.isActive = true
         } else {
             bubbleBackgroundView.backgroundColor = UIColor.systemGray
             messageLabel.textColor = .white
             messageLabel.textAlignment = .left
+
+            trailingConstraint.isActive = false
+            leadingConstraint.isActive = true
         }
     }
-
 }
