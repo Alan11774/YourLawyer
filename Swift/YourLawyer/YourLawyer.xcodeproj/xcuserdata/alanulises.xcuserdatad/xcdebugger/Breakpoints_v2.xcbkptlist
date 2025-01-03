@@ -8,7 +8,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YourLawyer/Model/NetworkMonitor.swift"
@@ -18,78 +18,6 @@
             endingLineNumber = "14"
             landmarkName = "NetworkMonitor"
             landmarkType = "3">
-            <Locations>
-               <Location
-                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - 86f2832405c0e6ee"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.getter : Swift.Bool"
-                  moduleName = "YourLawyer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0">
-               </Location>
-               <Location
-                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - da10643d029531c8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.setter : Swift.Bool"
-                  moduleName = "YourLawyer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "14"
-                  endingLineNumber = "14">
-               </Location>
-               <Location
-                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - fe2cfbbff5a03739"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.modify : Swift.Bool"
-                  moduleName = "YourLawyer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "14"
-                  endingLineNumber = "14">
-               </Location>
-               <Location
-                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - 442fdafc49a1c1dc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.NetworkMonitor.internetStatus.modify : Swift.Bool with unmangled suffix &quot;.resume.0&quot;"
-                  moduleName = "YourLawyer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///%3Ccompiler-generated%3E"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "0"
-                  endingLineNumber = "0">
-               </Location>
-               <Location
-                  uuid = "410276A0-E30C-49C4-AF0D-D1B2DCEFFB4C - 25fcf52a3aaf1986"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.NetworkMonitor.() -&gt; YourLawyer.NetworkMonitor.init() -&gt; YourLawyer.NetworkMonitor"
-                  moduleName = "YourLawyer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Model/NetworkMonitor.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "14"
-                  endingLineNumber = "14">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -152,6 +80,28 @@
             endingLineNumber = "73"
             landmarkName = "logout(completion:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
+         <BreakpointContent
+            uuid = "1B3C30FB-268D-46C5-AB4A-5757504B81B6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            symbolName = "UIViewAlertForUnsatisfiableConstraints"
+            moduleName = "">
+            <Locations>
+               <Location
+                  uuid = "1B3C30FB-268D-46C5-AB4A-5757504B81B6 - ba3ad5676a792f38"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "UIViewAlertForUnsatisfiableConstraints"
+                  moduleName = "UIKitCore"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

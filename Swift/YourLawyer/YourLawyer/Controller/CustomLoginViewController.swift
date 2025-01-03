@@ -81,7 +81,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         view.addSubview(logoImageView)
 
         // Title Label
-        titleLabel.text = "Your Lawyer"
+        titleLabel.text = "Belaw"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

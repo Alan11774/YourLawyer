@@ -36,7 +36,7 @@ class SignUpViewController: UIViewController {
             
     func setupUI() {
         // Title
-        titleLabel.text = "Your Lawyer"
+        titleLabel.text = "YourLawyer"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
         titleLabel.textAlignment = .center
         

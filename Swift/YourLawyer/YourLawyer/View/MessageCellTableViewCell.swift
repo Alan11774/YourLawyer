@@ -16,7 +16,11 @@ class MessageCellTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
 
+
+    }
+    private func setupUI(){
         bubbleBackgroundView.layer.cornerRadius = 12
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(bubbleBackgroundView)

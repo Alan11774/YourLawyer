@@ -20,6 +20,7 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         private let tableView = UITableView()
         private let logoutButton = UIButton(type: .system)
         private let userProfileImageView = UIButton()
+        private let activityIndicator = UIActivityIndicatorView(style: .large)
     
         
         // Data Source
@@ -29,7 +30,6 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         override func viewDidLoad() {
             super.viewDidLoad()
             view.backgroundColor = .white
-            
             setupUI()
 
             fetchLawyers()
@@ -88,6 +88,11 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
             tableView.register(UITableViewCell.self, forCellReuseIdentifier: "AllLawyersTableViewCell")
             tableView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(tableView)
+            
+            activityIndicator.color = .gray
+            activityIndicator.style = .medium
+            activityIndicator.center = view.center
+            view.addSubview(activityIndicator)
             
             // Agregar constraints
             NSLayoutConstraint.activate([
@@ -161,6 +166,7 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         }
 
         private func fetchLawyers() {
+            activityIndicator.startAnimating()
             LawyersService.shared.fetchLawyers { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
@@ -169,9 +175,10 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
                         self?.filteredLawyers = lawyers // Mostrar todos inicialmente
                         self?.tableView.reloadData()
                         self?.resultsLabel.text = "\(self?.filteredLawyers.count ?? 0) Resultados encontrados"
-                        
+                        self?.activityIndicator.stopAnimating()
                     case .failure(let error):
                         print("Error al obtener abogados: \(error)")
+                        self?.activityIndicator.stopAnimating()
                     }
                 }
             }

@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppCheck.setAppCheckProviderFactory(providerFactory)
         
         FirebaseApp.configure()
+        
+//        UserDefaults.standard.set(true, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         return true
     }
 
@@ -88,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+
 
 }
 

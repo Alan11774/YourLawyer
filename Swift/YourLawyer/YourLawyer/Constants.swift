@@ -36,6 +36,58 @@ class Utils {
             topController.present(alertController, animated: true)
         }
     }
+    
+}
 
+
+struct UIHelpers {
+    static func createDropdownFieldWithAlert(options: [String], placeholder: String) -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle(placeholder, for: .normal)
+        button.setTitleColor(.lightGray, for: .normal)
+        button.contentHorizontalAlignment = .left
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.layer.cornerRadius = 8
+        button.translatesAutoresizingMaskIntoConstraints = false
+
+        button.addAction(UIAction(handler: { _ in
+            guard let viewController = button.findViewController() else {
+                print("No se encontró un ViewController para presentar el UIAlertController")
+                return
+            }
+
+            let alertController = UIAlertController(title: "Selecciona una opción", message: nil, preferredStyle: .actionSheet)
+
+            for option in options {
+                let action = UIAlertAction(title: option, style: .default) { _ in
+                    button.setTitle(option, for: .normal)
+                    button.setTitleColor(.black, for: .normal)
+                }
+                alertController.addAction(action)
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+
+            viewController.present(alertController, animated: true, completion: nil)
+        }), for: .touchUpInside)
+
+        return button
+    }
+}
+
+extension UIView {
+    /// Encuentra el ViewController asociado a la vista.
+    func findViewController() -> UIViewController? {
+        if let nextResponder = self.next as? UIViewController {
+            return nextResponder
+        } else if let nextResponder = self.next as? UIView {
+            return nextResponder.findViewController()
+        } else {
+            return nil
+        }
+    }
 }
 

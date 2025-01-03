@@ -64,7 +64,7 @@ class DetailLawyerViewController: UIViewController {
         
         ratingLabel.translatesAutoresizingMaskIntoConstraints = false
         ratingLabel.font = UIFont.systemFont(ofSize: 16)
-        ratingLabel.text = "⭐️ \(lawyer?.rating ?? 0) (120 reviews)"
+        ratingLabel.text = "⭐️ \(lawyer?.rating ?? 0)"
         ratingLabel.textAlignment = .center
         ratingLabel.textColor = .gray
         
@@ -101,7 +101,7 @@ class DetailLawyerViewController: UIViewController {
         skillsLabel.font = UIFont.boldSystemFont(ofSize: 14)
         skillsLabel.numberOfLines = 0
         skillsLabel.textAlignment = .left // Alinear a la izquierda para parecer una lista
-        skillsLabel.textColor = .systemBlue
+        skillsLabel.textColor = .systemGreen
 
         // Crear fila para el título de habilidades
         let skillsTitleStack = createInfoStack(iconName: "list.bullet", text: "Habilidades:")

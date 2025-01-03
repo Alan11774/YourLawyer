@@ -98,6 +98,7 @@ class ContractViewController: UIViewController {
     }
 
     private func showConfirmationAlert() {
+        Utils.showMessage("Contratación Exitosa")
         let alert = UIAlertController(title: "Contratación Exitosa", message: "Has contratado a \(lawyer?.name ?? "el abogado") correctamente.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Aceptar", style: .default, handler: { _ in
             self.navigationController?.popToRootViewController(animated: true)
