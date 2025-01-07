@@ -11,6 +11,7 @@ import Foundation
 struct Profile: Codable {
     let email: String
     let name: String
+    let lastName :String
     let userRole: String
     let imageURL: String?
     let userDescription: String

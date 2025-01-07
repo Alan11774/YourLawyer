@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "486843470199",
+    "project_id": "yourlawyer-a3d2b",
+    "storage_bucket": "yourlawyer-a3d2b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:486843470199:android:0825290cd1c4bb769d1172",
+        "android_client_info": {
+          "package_name": "mx.com.yourlawyer.yourlawyer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "486843470199-mo61bkr610ahtp710m5cm2vgep79fmhf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mx.com.yourlawyer.yourlawyer",
+            "certificate_hash": "67512a70b52d92e12f505c49dd75b6255092a39d"
+          }
+        },
+        {
+          "client_id": "486843470199-21v3e7j4autc4q6psbih0ll70r8fsqd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqg0vp0jwsdRFxjmWPsg8nIGGYVmHauHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "486843470199-21v3e7j4autc4q6psbih0ll70r8fsqd7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "486843470199-hjpmtdv429cdvi4l5t8p9j95edmvvlh3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "mx.com.yourlawyer.ddadm12.YourLawyer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -155,10 +155,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         fetchProfileFromFirebase(email: email) { [self] profile in
             if let profile = profile {
                 nameTextField.text = profile.name
+                nameTextField.textColor = .black
+                lastNameTextField.text = profile.lastName
+                lastNameTextField.textColor = .black
                 descriptionTextView.text = profile.userDescription
+                descriptionTextView.textColor = .black
                 skillsDropdown.setTitle(profile.skills.joined(separator: ", "), for: .normal)
                 languageDropdown.setTitle(profile.language.joined(separator: ", "), for: .normal)
                 hourlyRateTextField.text = profile.hourlyRate
+                hourlyRateTextField.textColor = .black
                 
             } else {
                 print("No se pudo obtener el perfil.")
@@ -212,6 +217,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let profile = Profile(
             email: email,
             name: nameTextField.text ?? "",
+            lastName: lastNameTextField.text ?? "",
             userRole: userRole,
             imageURL: nil,
             userDescription: descriptionTextView.text ?? "",

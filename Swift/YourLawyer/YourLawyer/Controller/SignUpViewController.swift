@@ -144,13 +144,17 @@ class SignUpViewController: UIViewController {
     @objc func toggleCheckbox() {
         termsCheckbox.isSelected.toggle()
     }
+    
     @objc func signUpAction() {
+        
         self.activityIndicator.startAnimating()
+        
         if !termsCheckbox.isSelected {
             self.activityIndicator.stopAnimating()
             Utils.showMessage("Selecciona los terminos y condiciones.")
             return
         }
+        
         guard let email = emailField.text, !email.isEmpty,
               let password = passwordField.text, !password.isEmpty else {
             self.activityIndicator.stopAnimating()
@@ -163,6 +167,16 @@ class SignUpViewController: UIViewController {
                 self.activityIndicator.stopAnimating()
                 Utils.showMessage("Error al registrar: \(error.localizedDescription)")
             } else {
+                var userRole : String
+                if self.typeSegmentedControl.selectedSegmentIndex == 0{
+                    userRole = "Cliente"
+                }else{
+                    userRole = "Abogado"
+                }
+                let profile = Profile(
+                    email: email, name: self.firstNameLabel.text ?? "", lastName: self.lastNameLabel.text ?? "",userRole: userRole, imageURL: nil, userDescription: "", skills: [""], language: [""], hourlyRate: ""
+                )
+                print("name \(profile.name)")
                 self.activityIndicator.stopAnimating()
                 Utils.showMessage("Usuario registrado exitosamente. Por favor, inicia sesión.")
                 self.performSegue(withIdentifier: "loginOKSignUp", sender: nil)

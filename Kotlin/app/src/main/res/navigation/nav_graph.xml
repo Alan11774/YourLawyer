@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/casesFragment">
+
+
+    <fragment
+        android:id="@+id/casesFragment"
+        android:name="CasesFragment"
+        android:label="Cases"
+        tools:layout="@layout/fragment_cases" >
+        <action
+            android:id="@+id/action_casesFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allLawyersFragment"
+        android:name="AllLawyersFragment"
+        android:label="AllLawyersFragment"
+        tools:layout="@layout/fragment_all_lawyers">
+
+        <action
+            android:id="@+id/action_allLawyersFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="mx.com.yourlawyer.yourlawyer.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>
