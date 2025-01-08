@@ -113,4 +113,11 @@
     <string name="sign_out">sign_out</string>
     <string name="Error">Error: %1$s</string>
     <string name="falla_al_cargar_los_datos">Falla al cargar los datos: %1$s</string>
+    <string name="Perfil">Configuración de perfil</string>
+    <string name="add_image">Cargar Imagen de perfil</string>
+    <string name="name">Nombre</string>
+    <string name="last_name">Apellido</string>
+    <string name="description_placeholder">Ingrese una breve descripción...</string>
+    <string name="select_skills">Selecciona tus habilidades</string>
+    <string name="save">Guardar</string>
 </resources>

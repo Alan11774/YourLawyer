@@ -1,13 +1,20 @@
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import mx.com.yourlawyer.yourlawyer.R
 import mx.com.yourlawyer.yourlawyer.databinding.ItemCaseBinding
 import mx.com.yourlawyer.yourlawyer.model.Case
+import mx.com.yourlawyer.yourlawyer.model.Profile
+import mx.com.yourlawyer.yourlawyer.model.ProfileManager
+
 
 class CasesAdapter(private var cases: List<Case>) :
+
+
     RecyclerView.Adapter<CasesAdapter.CaseViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CaseViewHolder {
@@ -45,5 +52,4 @@ class CasesAdapter(private var cases: List<Case>) :
         cases = newCases
         notifyDataSetChanged() // Notifica a RecyclerView que los datos han cambiado
     }
-
 }

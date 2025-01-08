@@ -1,22 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
-    <ImageButton
-        android:id="@+id/closeImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@null"
-        android:src="@drawable/close_resource"
-        android:scaleType="centerCrop"
-        android:layout_alignParentStart="true" />
-    <TextView
+    tools:context=".view.ProfileFragment">
+    <!-- User Profile Image -->
+
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/scroll_view"
+        android:padding="16dp"
+        android:background="@color/white">
 
-</FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/closeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/close_resource"
+                android:scaleType="centerCrop"
+                android:backgroundTint="@color/white"
+                android:layout_gravity="start"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Perfil"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/roleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usted es: Abogado"
+                android:textSize="24sp"
+                android:textStyle="italic"
+                android:layout_marginBottom="8dp"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/profileImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/person_resource"
+                android:layout_marginBottom="16dp" />
+            <Button
+                android:id="@+id/add_image_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_image"
+                android:backgroundTint="@color/blue"
+                android:textColor="@color/white"
+                android:layout_marginBottom="16dp" />
+
+            <EditText
+                android:id="@+id/name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:textColorHint="@color/gray"
+                android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:background="@drawable/edit_text_background"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/last_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/last_name"
+                android:textColorHint="@color/gray"
+                android:inputType="textPersonName"
+                android:textColor="@color/black"
+                android:background="@drawable/edit_text_background"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp" />
+
+            <EditText
+                android:id="@+id/description_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/description_placeholder"
+                android:gravity="start"
+                android:textColor="@color/black"
+                android:background="@drawable/edit_text_background"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:minLines="5"
+                android:maxLength="250"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp" />
+
+            <Spinner
+                android:id="@+id/skillsSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+
+                android:popupBackground="@color/blue"
+                android:padding="12dp"/>
+            <Spinner
+                android:id="@+id/languageSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:popupBackground="@color/blue"
+                android:padding="12dp"/>
+
+            <Button
+                android:id="@+id/saveBtn"
+                android:text="@string/save"
+                android:backgroundTint="@color/blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

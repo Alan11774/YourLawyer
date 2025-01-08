@@ -174,7 +174,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private func fetchProfileFromFirebase(email: String, completion: @escaping (Profile?) -> Void) {
         
         // Referencia al documento dentro de la colección
-        db.collection("profiles").document("cliente").collection(email).getDocuments { snapshot, error in
+//        db.collection("profiles").document("cliente").collection(email).getDocuments { snapshot, error in
+        db.collection("users").document(email).collection("profile").getDocuments { snapshot, error in
             DispatchQueue.main.async {
                 if let error = error {
                     print("Error al obtener el perfil: \(error.localizedDescription)")
@@ -236,7 +237,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             let profileData = try JSONEncoder().encode(profile)
             if let json = try JSONSerialization.jsonObject(with: profileData, options: []) as? [String: Any] {
                 // Obtén una referencia al documento basado en el email
-                let documentRef = db.collection("profiles").document("cliente").collection(email).document("profile")
+                let documentRef = db.collection("users").document(email).collection("profile").document("userInformation")
                 
                 // Usa `setData` con `merge: true` para actualizar o crear el documento
                 documentRef.setData(json, merge: true) { error in

@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="mx.com.yourlawyer.yourlawyer.ProfileFragment"
+        android:name="mx.com.yourlawyer.yourlawyer.view.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

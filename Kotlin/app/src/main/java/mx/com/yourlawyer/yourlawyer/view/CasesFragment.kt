@@ -1,24 +1,24 @@
-import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.firebase.auth.FirebaseAuth
-import mx.com.yourlawyer.yourlawyer.ProfileFragment
+import mx.com.yourlawyer.yourlawyer.view.ProfileFragment
 import mx.com.yourlawyer.yourlawyer.R
 import mx.com.yourlawyer.yourlawyer.databinding.FragmentCasesBinding
 import mx.com.yourlawyer.yourlawyer.model.CasesResponse
 import mx.com.yourlawyer.yourlawyer.model.ClientRetrofit
+import mx.com.yourlawyer.yourlawyer.model.ProfileManager
 import mx.com.yourlawyer.yourlawyer.view.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,9 +28,11 @@ class CasesFragment : Fragment() {
 
     private var _binding: FragmentCasesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var navController: NavController
 
     private lateinit var adapter: CasesAdapter
+    // Singleton
+    private val currentProfile = ProfileManager.getProfile()
+    private  var sendUriString:String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,17 +51,10 @@ class CasesFragment : Fragment() {
         // Llamar a la API
         fetchCases()
 
-
-        binding.logoutButton.setOnClickListener {
-            showLogoutConfirmationDialog()
-        }
-        binding.userProfileImageView.setOnClickListener{
-            showProfile()
-        }
+        actions()
 
         return binding.root
     }
-
     private fun fetchCases() {
         val api = ClientRetrofit.instance
 
@@ -78,6 +73,27 @@ class CasesFragment : Fragment() {
                 Toast.makeText(requireContext(), "Falla al cargar los datos: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun actions(){
+        val imageUriString = arguments?.getString("imageUri")
+        imageUriString?.let { uriString ->
+            val imageUri = Uri.parse(uriString)
+            sendUriString = imageUriString
+            Glide.with(binding.root.context)
+                .load(imageUri)
+                .circleCrop()
+                .error(R.drawable.person_resource)
+                .into(binding.userProfileImageView)
+        }
+
+        binding.logoutButton.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
+        binding.userProfileImageView.setOnClickListener{
+            showProfile()
+        }
+
     }
 
     private fun showLogoutConfirmationDialog() {
@@ -113,7 +129,21 @@ class CasesFragment : Fragment() {
     }
 
     private fun showProfile(){
-            findNavController().navigate(R.id.action_casesFragment_to_profileFragment)
+        val nextFragment = ProfileFragment()
+        val bundle = Bundle()
+        bundle.putString("imageUri", sendUriString)
+        nextFragment.arguments = bundle
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, nextFragment)
+            .addToBackStack(null)
+            .commit()
+
+
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.fragment_container, ProfileFragment())
+//            .addToBackStack(null)
+//            .commit()
+
 
     }
     override fun onDestroyView() {

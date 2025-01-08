@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import message
 import mx.com.yourlawyer.yourlawyer.databinding.ActivityMainBinding
 import mx.com.yourlawyer.yourlawyer.model.Profile
+import mx.com.yourlawyer.yourlawyer.view.adapters.SignUpFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private var contrasenia = ""
     //private lateinit var profileModel: Profile //"Abogado"
     private  var profileModel = "Cliente"
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,25 +77,29 @@ class MainActivity : AppCompatActivity() {
 
         // btn login Registrarse Sign Up
         binding.signUpTextView.setOnClickListener{
-            if (!validateFields()) return@setOnClickListener
-            binding.progressBar.visibility = View.VISIBLE
-            firebaseAuth.createUserWithEmailAndPassword(email,contrasenia).addOnCompleteListener { authResult ->
-                if(authResult.isSuccessful){
-                    message(getString(R.string.user_succesfully_registred))
-
-                    //Correo de verificación
-                    firebaseAuth.currentUser?.sendEmailVerification()?.addOnSuccessListener{
-                        message("${getString(R.string.email_has_been_sent_to)}$email")
-                    }?.addOnFailureListener{
-                        message(getString(R.string.error_has_been_occurred_sending_the_mail))
-                    }
-                    actionLoginSuccessful()
-                }else{
-                    binding.progressBar.visibility = View.GONE
-                    handleErrors(authResult)
-                }
-
-            }
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, SignUpFragment())
+                .addToBackStack(null)
+                .commit()
+//            if (!validateFields()) return@setOnClickListener
+//            binding.progressBar.visibility = View.VISIBLE
+//            firebaseAuth.createUserWithEmailAndPassword(email,contrasenia).addOnCompleteListener { authResult ->
+//                if(authResult.isSuccessful){
+//                    message(getString(R.string.user_succesfully_registred))
+//
+//                    //Correo de verificación
+//                    firebaseAuth.currentUser?.sendEmailVerification()?.addOnSuccessListener{
+//                        message("${getString(R.string.email_has_been_sent_to)}$email")
+//                    }?.addOnFailureListener{
+//                        message(getString(R.string.error_has_been_occurred_sending_the_mail))
+//                    }
+//                    actionLoginSuccessful()
+//                }else{
+//                    binding.progressBar.visibility = View.GONE
+//                    handleErrors(authResult)
+//                }
+//
+//            }
         }
 
 
@@ -254,11 +260,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchUserProfile(email: String) {
-        val db = FirebaseFirestore.getInstance()
-        val documentPath = "profiles/cliente/belaw_123/profiles"
 
-        db.document("profiles/cliente/belaw_123/profiles").get()
-        //db.document(documentPath).get()
+        db.collection("users")
+            .document(email)
+            .collection("profile")
+            .document("userInformation")
+            .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     // Extrae los datos del documento
