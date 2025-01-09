@@ -10,13 +10,17 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import message
 import mx.com.yourlawyer.yourlawyer.R
+import mx.com.yourlawyer.yourlawyer.controller.FirebaseManager
 import mx.com.yourlawyer.yourlawyer.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
+
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +83,20 @@ class SignUpFragment : Fragment() {
                     }
 
                     message("Usuario registrado exitosamente. Por favor, inicia sesión.")
-                    // Aquí podrías usar un Navigation Component para redirigir al LoginFragment
+
+                    db.collection("users").document(email).collection("profile")
+                        .document("userInformation").set(hashMapOf(
+                        "name" to firstName,
+                        "lastName" to lastName,
+                        "email" to email,
+                        "hourlyRate" to null,
+                        "language" to listOf<String>(),
+                        "skills" to listOf<String>(),
+                        "userRole" to selectedRole,
+                        "userDescription" to null,
+                    ))
+                    requireActivity().supportFragmentManager.popBackStack()
+
                 } else {
                     message("Error al registrar: ${task.exception?.message}")
                 }

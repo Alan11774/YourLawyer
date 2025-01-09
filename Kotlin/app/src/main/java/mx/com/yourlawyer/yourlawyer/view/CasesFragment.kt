@@ -16,9 +16,11 @@ import com.google.firebase.auth.FirebaseAuth
 import mx.com.yourlawyer.yourlawyer.view.ProfileFragment
 import mx.com.yourlawyer.yourlawyer.R
 import mx.com.yourlawyer.yourlawyer.databinding.FragmentCasesBinding
+import mx.com.yourlawyer.yourlawyer.model.Case
 import mx.com.yourlawyer.yourlawyer.model.CasesResponse
 import mx.com.yourlawyer.yourlawyer.model.ClientRetrofit
 import mx.com.yourlawyer.yourlawyer.model.ProfileManager
+import mx.com.yourlawyer.yourlawyer.view.DetailCaseFragment
 import mx.com.yourlawyer.yourlawyer.view.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,12 +43,14 @@ class CasesFragment : Fragment() {
         // Inflar el layout usando View Binding
         _binding = FragmentCasesBinding.inflate(inflater, container, false)
 
-        adapter = CasesAdapter(emptyList()) // Lista inicial vacía
+
+        adapter = CasesAdapter(emptyList()) { selectedCase ->
+            openCaseDetails(selectedCase)
+        }
+//        adapter = CasesAdapter(emptyList()) // Lista inicial vacía
         binding.tableView.layoutManager = LinearLayoutManager(requireContext())
         binding.tableView.adapter = adapter
 
-        // Configurar RecyclerView
-        binding.tableView.layoutManager = LinearLayoutManager(requireContext())
 
         // Llamar a la API
         fetchCases()
@@ -62,17 +66,46 @@ class CasesFragment : Fragment() {
             override fun onResponse(call: Call<CasesResponse>, response: Response<CasesResponse>) {
                 if (response.isSuccessful) {
                     val cases = response.body()?.cases ?: emptyList()
-                    val adapter = CasesAdapter(cases)
+                    adapter = CasesAdapter(cases) { selectedCase ->
+                        openCaseDetails(selectedCase)
+                    }
                     binding.tableView.adapter = adapter
                 } else {
-                    Toast.makeText(requireContext(), "Error: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    message("Error: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<CasesResponse>, t: Throwable) {
-                Toast.makeText(requireContext(), "Falla al cargar los datos: ${t.message}", Toast.LENGTH_SHORT).show()
+                message("Falla al cargar los datos: ${t.message}")
             }
         })
+    }
+
+    private fun openCaseDetails(case: Case) {
+        val nextFragment = DetailCaseFragment()
+        val bundle = Bundle().apply {
+            putString("caseId", case.caseId)
+            putString("caseImageUrl", case.imageURL)
+            putString("caseTitle", case.title)
+            putString("caseDescription", case.description)
+            putString("category", case.category)
+            putString("casePostedBy", case.postedBy)
+            putString("casePostedDate", case.postedDate)
+            putString("caseBudget", case.budget)
+            putString("caseLocation", case.location)
+            putString("caseStatus", case.status)
+            //putString("tags",case.details.tags.toString())
+            putStringArrayList("tags",ArrayList(case.details.tags))
+            //putString("requirements",case.details.requirements.toString())
+            putStringArrayList("requirements",ArrayList(case.details.requirements))
+            putString("urgency",case.details.urgency)
+        }
+        nextFragment.arguments = bundle
+
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, nextFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun actions(){
@@ -97,22 +130,17 @@ class CasesFragment : Fragment() {
     }
 
     private fun showLogoutConfirmationDialog() {
-        // Crear el AlertDialog
+        // Crear el AlertDialog para salior de sesion
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Cerrar sesión")
         builder.setMessage("¿Estás seguro de que deseas salir de la sesión actual?")
 
-        // Botón "Sí"
         builder.setPositiveButton("Sí") { _, _ ->
-            logout() // Llamar al método de logout
+            logout()
         }
-
-        // Botón "No"
         builder.setNegativeButton("No") { dialog, _ ->
             dialog.dismiss() // Cerrar el popup sin hacer nada
         }
-
-        // Mostrar el diálogo
         val dialog = builder.create()
         dialog.show()
     }
@@ -121,7 +149,7 @@ class CasesFragment : Fragment() {
         FirebaseAuth.getInstance().signOut()
         message( "Sesión cerrada")
 
-        // Redirige al usuario a la pantalla de inicio de sesión
+        // Redirige al usuario a la pantalla de inicio de sesión esta fiue hecha con el MainActivity
         val intent = Intent(requireContext(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
@@ -137,13 +165,6 @@ class CasesFragment : Fragment() {
             .replace(R.id.fragment_container, nextFragment)
             .addToBackStack(null)
             .commit()
-
-
-//        requireActivity().supportFragmentManager.beginTransaction()
-//            .replace(R.id.fragment_container, ProfileFragment())
-//            .addToBackStack(null)
-//            .commit()
-
 
     }
     override fun onDestroyView() {

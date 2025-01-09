@@ -97,6 +97,7 @@
                 android:id="@+id/description_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/gray"
                 android:hint="@string/description_placeholder"
                 android:gravity="start"
                 android:textColor="@color/black"
@@ -113,7 +114,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-
                 android:popupBackground="@color/blue"
                 android:padding="12dp"/>
             <Spinner
@@ -128,6 +128,7 @@
                 android:id="@+id/saveBtn"
                 android:text="@string/save"
                 android:backgroundTint="@color/blue"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

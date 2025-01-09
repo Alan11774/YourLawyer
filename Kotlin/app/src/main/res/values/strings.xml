@@ -120,4 +120,13 @@
     <string name="description_placeholder">Ingrese una breve descripción...</string>
     <string name="select_skills">Selecciona tus habilidades</string>
     <string name="save">Guardar</string>
+    <string name="ingresa_un_presupuesto_valido">Ingresa un presupuesto valido</string>
+    <string name="ingresa_un_presupuesto_en_rango">Ingresa un presupuesto valido en el rango especificado</string>
+    <string name="contrataci_n_publicadaa">Contratación publicadaa</string>
+    <string name="por_favor_ingresa_un_presupuesto_para_aplicar_a_este_proyecto">Por favor ingresa un presupuesto para aplicar a este proyecto</string>
+    <string name="publicar_propuesta">Publicar propuesta</string>
+    <string name="contacto">Contacto</string>
+    <string name="presupuesto">presupuesto</string>
+    <string name="esperando_confirmaci_n_del_cliente_presupuesto_ofertado">Esperando confirmación del cliente presupuesto ofertado : %1$s</string>
+    <string name="presupuesto_aceptado">Presupuesto aceptado</string>
 </resources>

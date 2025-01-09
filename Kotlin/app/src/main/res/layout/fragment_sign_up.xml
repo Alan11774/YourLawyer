@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/white"
     android:padding="16dp">
 
     <LinearLayout
@@ -13,6 +14,7 @@
             android:id="@+id/titleLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="YourLawyer"
             android:textAlignment="center"
             android:textSize="24sp"
@@ -22,6 +24,7 @@
             android:id="@+id/subtitleLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Encuentra el abogado a tu medida!"
             android:textAlignment="center"
             android:textSize="14sp"
@@ -31,6 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Nombre"
             android:textStyle="bold" />
 
@@ -38,11 +42,13 @@
             android:id="@+id/nameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/gray"
             android:hint="Nombre*" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Apellido"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -51,11 +57,13 @@
             android:id="@+id/lastNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/gray"
             android:hint="Apellido*" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Email"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -64,11 +72,13 @@
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/gray"
             android:hint="Correo electrónico*" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Contraseña"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -77,12 +87,14 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/gray"
             android:hint="Ingresa tu contraseña*"
             android:inputType="textPassword" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
             android:text="Escoge una opción"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -97,12 +109,14 @@
                 android:id="@+id/clientOption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="Busco un Abogado" />
 
             <RadioButton
                 android:id="@+id/lawyerOption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="Soy Abogado" />
         </RadioGroup>
 
@@ -121,6 +135,7 @@
                 android:id="@+id/termsLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 android:text="He leído los términos y condiciones"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
