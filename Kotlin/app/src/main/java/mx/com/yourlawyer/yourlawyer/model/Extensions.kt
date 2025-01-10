@@ -36,3 +36,21 @@ fun loadImage(uri: Any, imageView: ImageView, context: Context, placeholderResId
     }
     requestBuilder.into(imageView)
 }
+
+
+//************************************************************************
+// Guardar Uri en shared preferences (Sera usado para obtener siempre la
+// imagen de perfil incluso despues de cerrar la app.
+//************************************************************************
+fun saveUri(context:Context ,uri: Uri){
+    val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString("imageUri", uri.toString())
+    editor.apply()
+}
+
+fun getUri(context: Context): Uri? {
+    val sharedPreferences = context.getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+    val uriString = sharedPreferences.getString("imageUri", null)
+    return uriString?.let { Uri.parse(it) }
+}

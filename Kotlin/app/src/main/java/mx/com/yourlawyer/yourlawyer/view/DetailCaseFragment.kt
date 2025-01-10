@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -16,8 +17,10 @@ import com.google.firebase.firestore.firestore
 import loadImage
 import message
 import mx.com.yourlawyer.yourlawyer.R
+import mx.com.yourlawyer.yourlawyer.controller.UserViewModel
 import mx.com.yourlawyer.yourlawyer.databinding.FragmentDetailCaseBinding
 import mx.com.yourlawyer.yourlawyer.databinding.FragmentProfileBinding
+import mx.com.yourlawyer.yourlawyer.model.Case
 
 class DetailCaseFragment : Fragment() {
 
@@ -30,7 +33,10 @@ class DetailCaseFragment : Fragment() {
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
     private var casePurchasing = ""
+    private var caseId = ""
 
+    private val userViewModel by lazy {
+        ViewModelProvider(requireActivity())[UserViewModel::class.java] }
 
 
     override fun onCreateView(
@@ -38,6 +44,9 @@ class DetailCaseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailCaseBinding.inflate(inflater, container, false)
+        arguments?.getString("caseId")?.let {
+            caseId = it
+        }
         setupUI()
         getCaseStatus()
         // Configurar listeners para los botones
@@ -57,19 +66,22 @@ class DetailCaseFragment : Fragment() {
         }
 
         binding.apply {
-            titleLabel.text = arguments?.getString("caseTitle")
-            categoryLabel.text = arguments?.getString("category")
-            descriptionLabel.text = arguments?.getString("caseDescription")
-            caseLocationLabel.text = arguments?.getString("caseLocation")
-            budgetLabel.text = arguments?.getString("caseBudget")
-            postedByLabel.text = arguments?.getString("casePostedBy")
-            urgency.text = arguments?.getString("caseStatus")
-            requirements1.text = arguments?.getStringArrayList("requirements")?.first() ?: ""
-            requirements2.text = arguments?.getStringArrayList("requirements")?.get(1) ?: ""
-            tag1.text = arguments?.getStringArrayList("tags")?.first() ?: ""
-            tag2.text = arguments?.getStringArrayList("tags")?.get(1) ?: ""
-            tag3.text = arguments?.getStringArrayList("tags")?.last() ?: ""
-            budgetRangeLabel.text = "Budget Range: ${binding.budgetLabel.text}"
+            userViewModel.caseProfile.observe(viewLifecycleOwner){ caseProfile ->
+                titleLabel.text = caseProfile.title
+                categoryLabel.text = caseProfile.category
+                descriptionLabel.text = caseProfile.description
+                caseLocationLabel.text = caseProfile.location
+                budgetLabel.text = caseProfile.budget
+                postedByLabel.text = caseProfile.postedBy
+                urgency.text = caseProfile.status
+                requirements1.text = caseProfile.details.requirements[0]
+                requirements2.text = caseProfile.details.requirements[1]
+                tag1.text = caseProfile.details.tags[0]
+                tag2.text = caseProfile.details.tags[1]
+                tag3.text = caseProfile.details.tags[2]
+                budgetRangeLabel.text = "Budget Range: ${binding.budgetLabel.text}"
+
+            }
         }
     }
 
@@ -142,7 +154,9 @@ class DetailCaseFragment : Fragment() {
 
         // Datos a actualizar
         val updatedData = hashMapOf<String, Any?>(
-            "budget" to binding.finalBudgetProposalTextView.text.toString(),
+            "caseId" to caseId,
+            "budget" to binding.budgetLabel.text.toString(),
+            "proposedBudget" to binding.budgetEditText.text.toString(),
             "title" to binding.titleLabel.text.toString(),
             "caseDescription" to binding.descriptionLabel.text.toString(),
             "requirements" to listOf(binding.requirements1.text.toString(), binding.requirements2.text.toString()),
@@ -155,8 +169,8 @@ class DetailCaseFragment : Fragment() {
         // Referencia al documento del perfil
         val profileDocRef = db.collection("users")
             .document(userEmail)
-            .collection("profile")
-            .document("cases")
+            .collection("cases")
+            .document(caseId)
 
         profileDocRef.get()
             .addOnSuccessListener { document ->
@@ -194,8 +208,8 @@ class DetailCaseFragment : Fragment() {
         // Referencia al documento del perfil
         val profileDocRef = db.collection("users")
             .document(userEmail)
-            .collection("profile")
-            .document("cases")
+            .collection("cases")
+            .document(caseId)
 
         profileDocRef.get()
             .addOnSuccessListener { document ->
@@ -204,9 +218,19 @@ class DetailCaseFragment : Fragment() {
                     val clientEmail = document.getString("clientEmail")
                     if (casePurchasing == "Accepted" && clientEmail == binding.postedByLabel.text.toString()){
                         binding.finalBudgetProposalTextView.visibility = View.VISIBLE
-                        binding.finalBudgetProposalTextView.text = getString(R.string.presupuesto_aceptado)
+                        binding.finalBudgetProposalTextView.text = "Presupuesto aceptado"
+
                         binding.applyButton.visibility = View.GONE
                         binding.submitApplyButton.visibility = View.GONE
+                    }else if (casePurchasing == "Rejected" && clientEmail == binding.postedByLabel.text.toString()){
+                        binding.finalBudgetProposalTextView.visibility = View.VISIBLE
+                        binding.finalBudgetProposalTextView.text = "Presupuesto Rechazado"
+                        binding.applyButton.visibility = View.GONE
+                        binding.submitApplyButton.visibility = View.GONE
+                    } else if (casePurchasing == "Waiting Approval" && clientEmail == binding.postedByLabel.text.toString()){
+                        binding.finalBudgetProposalTextView.visibility = View.VISIBLE
+                        binding.finalBudgetProposalTextView.text = "Esperando aprovación del cliente"
+                        binding.applyButton.visibility = View.GONE
                     }
                 }
             }

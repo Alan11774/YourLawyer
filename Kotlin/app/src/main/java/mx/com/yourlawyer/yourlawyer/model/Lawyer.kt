@@ -4,11 +4,12 @@ data class LawyersResponse(
     val lawyers: List<Lawyer>
     )
 data class Lawyer(
+    val id: Int,
     val name: String,
     val description: String,
     val imageURL: String?,
     val projectsWorkedOn : Int,
-    val ratingVal : Double,
+    val rating : Double,
     val numberOfHirings: Int,
     val profileViews: Int,
     val userDescription: String,

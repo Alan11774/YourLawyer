@@ -12,10 +12,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -27,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.firestore.FirebaseFirestore
 import message
+import mx.com.yourlawyer.yourlawyer.controller.UserViewModel
 import mx.com.yourlawyer.yourlawyer.databinding.ActivityMainBinding
 import mx.com.yourlawyer.yourlawyer.model.Profile
 import mx.com.yourlawyer.yourlawyer.view.adapters.SignUpFragment
@@ -35,23 +38,24 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    val db = FirebaseFirestore.getInstance()
     private lateinit var navController: NavController
 
     private var email = ""
     private var contrasenia = ""
-    //private lateinit var profileModel: Profile //"Abogado"
     private  var profileModel = "Cliente"
-    val db = FirebaseFirestore.getInstance()
+
+    // Instancia del ViewModel para guardar datoos del eprfilll
+    private val userViewModel by lazy { ViewModelProvider(this)[UserViewModel::class.java] }
+
+//    private val userViewModel: UserViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
@@ -81,25 +85,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, SignUpFragment())
                 .addToBackStack(null)
                 .commit()
-//            if (!validateFields()) return@setOnClickListener
-//            binding.progressBar.visibility = View.VISIBLE
-//            firebaseAuth.createUserWithEmailAndPassword(email,contrasenia).addOnCompleteListener { authResult ->
-//                if(authResult.isSuccessful){
-//                    message(getString(R.string.user_succesfully_registred))
-//
-//                    //Correo de verificación
-//                    firebaseAuth.currentUser?.sendEmailVerification()?.addOnSuccessListener{
-//                        message("${getString(R.string.email_has_been_sent_to)}$email")
-//                    }?.addOnFailureListener{
-//                        message(getString(R.string.error_has_been_occurred_sending_the_mail))
-//                    }
-//                    actionLoginSuccessful()
-//                }else{
-//                    binding.progressBar.visibility = View.GONE
-//                    handleErrors(authResult)
-//                }
-//
-//            }
+
         }
 
 
@@ -228,18 +214,17 @@ class MainActivity : AppCompatActivity() {
         val email = firebaseAuth.currentUser?.email
         if (email != null) {
             // Llama a fetchUserProfile para obtener los datos del usuario
-            print("Fetch users")
-            //fetchUserProfile(email)
+            fetchUserProfile(email)
         } else {
             message("No se pudo obtener el correo del usuario autenticado.")
         }
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, if (profileModel == "Abogado") AllLawyersFragment() else CasesFragment() ) // Replace with your fragment
+//            .add(R.id.fragment_container, if (profileModel == "Cliente") AllLawyersFragment() else CasesFragment() ) // Replace with your fragment
+            .add(R.id.fragment_container,  AllLawyersFragment() ) // Replace with your fragment
             .commit()
 
-//            startActivity(Intent(this, LawyersListFragment::class.java))
-//            finish()
+
     }
 
     private fun authUser(usr: String, pwd: String){
@@ -250,7 +235,6 @@ class MainActivity : AppCompatActivity() {
                 actionLoginSuccessful()
             }else{
                 binding.progressBar.visibility = View.GONE
-//                message("Autenticación fallida")
                 handleErrors(authResult)
             }
 
@@ -268,30 +252,22 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    // Extrae los datos del documento
                     val userProfile = document.data
-//                    profileModel= Profile(
-//                        name = userProfile?.get("name") as? String ?: "",
-//                        email = userProfile?.get("email") as? String ?: "",
-//                        hourlyRate = (userProfile?.get("hourlyRate") as? Number)?.toDouble() ?: 0.0,
-//                        language = userProfile?.get("language") as? List<String> ?: emptyList(),
-//                        skills = userProfile?.get("skills") as? List<String> ?: emptyList(),
-//                        userRole = userProfile?.get("userRole") as? String ?: "",
-//                        userDescription = userProfile?.get("userDescription") as? String ?: ""
-//                    )
                     userProfile?.let {
-                        val name = it["name"] as? String
-                        val email = it["email"] as? String
-                        val hourlyRate = it["hourlyRate"] as? String
-                        val language = it["language"] as? List<String>
-                        val skills = it["skills"] as? List<String>
-                        val userRole = it["userRole"] as? String
-                        val userDescription = it["userDescription"] as? String
-
-                        // Haz algo con los datos (por ejemplo, mostrarlos en un fragmento)
-                        message("Nombre: $name, Email: $email, userRole: $userRole")
+                        val user = Profile(
+                            it["name"] as String,
+                            it["lastName"] as? String,
+                            email,
+                            it["hourlyRate"] as? Double,
+                            it["language"] as? List<String>,
+                            it["skills"] as? List<String>,
+                            it["userRole"] as String,
+                            it["userDescription"] as? String
+                        )
+                        userViewModel.setUserProfile(user)
+                    message("Usuario: $profileModel")
                     }
-                } else {
+                }else {
                     message("El perfil no existe en la base de datos.")
                 }
             }
@@ -300,3 +276,23 @@ class MainActivity : AppCompatActivity() {
             }
     }
 }
+
+//            if (!validateFields()) return@setOnClickListener
+//            binding.progressBar.visibility = View.VISIBLE
+//            firebaseAuth.createUserWithEmailAndPassword(email,contrasenia).addOnCompleteListener { authResult ->
+//                if(authResult.isSuccessful){
+//                    message(getString(R.string.user_succesfully_registred))
+//
+//                    //Correo de verificación
+//                    firebaseAuth.currentUser?.sendEmailVerification()?.addOnSuccessListener{
+//                        message("${getString(R.string.email_has_been_sent_to)}$email")
+//                    }?.addOnFailureListener{
+//                        message(getString(R.string.error_has_been_occurred_sending_the_mail))
+//                    }
+//                    actionLoginSuccessful()
+//                }else{
+//                    binding.progressBar.visibility = View.GONE
+//                    handleErrors(authResult)
+//                }
+//
+//            }

@@ -1,6 +1,8 @@
 package mx.com.yourlawyer.yourlawyer.view
+import AllLawyersFragment
 import CasesFragment
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,25 +13,30 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import getUri
 import loadImage
 import message
 import mx.com.yourlawyer.yourlawyer.R
+import mx.com.yourlawyer.yourlawyer.controller.UserViewModel
 import mx.com.yourlawyer.yourlawyer.databinding.FragmentProfileBinding
 import mx.com.yourlawyer.yourlawyer.model.Profile
-import mx.com.yourlawyer.yourlawyer.model.ProfileManager
+import saveUri
 
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private val PICK_IMAGE_REQUEST = 1
-    private var selectedImageUri: Uri = Uri.EMPTY
+    private var selectedImageUri: Uri? = Uri.EMPTY
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private lateinit var profileObj: Profile
+    private val userViewModel by lazy {
+        ViewModelProvider(requireActivity())[UserViewModel::class.java] }
 
     private val skills = arrayOf(
         "Selecciona tus habilidades",
@@ -55,16 +62,13 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val imageUriString = arguments?.getString("imageUri")
-        imageUriString?.let { uriString ->
-            val imageUri = Uri.parse(uriString)
 
-            loadImage(imageUri, binding.profileImageView, binding.root.context, R.drawable.person_resource)
-        }
         checkUserInfo()
         actions()
+
         return binding.root
     }
 
@@ -72,7 +76,9 @@ class ProfileFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
+//************************************************************************
+    //Return Previous fragment
+//************************************************************************
     private fun actions(){
         binding.closeImageView.setOnClickListener(){
             requireActivity().supportFragmentManager.popBackStack()
@@ -96,18 +102,18 @@ class ProfileFragment : Fragment() {
                 return@setOnClickListener
             } else {
                 saveProfileToFirebase()
-                val nextFragment = CasesFragment()
-                val bundle = Bundle()
-                bundle.putString("imageUri", selectedImageUri.toString())
-                nextFragment.arguments = bundle
+
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, nextFragment)
+                    .replace(R.id.fragment_container, AllLawyersFragment())
                     .addToBackStack(null)
                     .commit()
             }
         }
     }
 
+    //************************************************************************
+    //Select local image
+//************************************************************************
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -115,7 +121,8 @@ class ProfileFragment : Fragment() {
             data?.data?.let { imageUri ->
                 // Load the image using Glide
                 loadImage(imageUri, binding.profileImageView, binding.root.context, R.drawable.person_resource)
-                selectedImageUri = imageUri
+//                selectedImageUri = imageUri
+                saveUri(binding.root.context, imageUri)
 
             }
         }
@@ -175,39 +182,49 @@ class ProfileFragment : Fragment() {
                     // Si el documento ya existe, actualiza los datos
                     profileDocRef.update(updatedData)
                         .addOnSuccessListener {
-                            message("Perfil actualizado exitosamente")
+                            // Actualizar el perfil en el ViewModel
+                            val updatedProfile = profileObj.copy(
+                                name = binding.nameEditText.text.toString(),
+                                lastName = binding.lastNameEditText.text.toString(),
+                                userDescription = binding.descriptionEditText.text.toString(),
+                                skills = selectedSkills,
+                                language = selectedLanguages
+                            )
+                            userViewModel.setUserProfile(updatedProfile)
+
+                            message(getString(R.string.perfil_actualizado_exitosamente))
                         }
                         .addOnFailureListener { e ->
-                            message("Error al actualizar el perfil: ${e.message}")
+                            message(getString(R.string.error_al_actualizar_el_perfil, e.message))
                         }
                 } else {
                     // Si el documento no existe, crea uno nuevo
                     profileDocRef.set(updatedData)
                         .addOnSuccessListener {
-                            message("Perfil creado exitosamente")
+                            message(getString(R.string.perfil_creado_exitosamente))
                         }
                         .addOnFailureListener { e ->
-                            message("Error al crear el perfil: ${e.message}")
+                            message(getString(R.string.error_al_crear_el_perfil, e.message))
                         }
                 }
             }
             .addOnFailureListener { e ->
-                message("Error al verificar el perfil: ${e.message}")
+                message(getString(R.string.error_al_verificar_el_perfil, e.message))
             }
     }
 
     private fun checkUserInfo(){
         val userEmail = auth.currentUser?.email
         if (userEmail.isNullOrEmpty()) {
-            message("No se encontró el usuario autenticado")
+            message(getString(R.string.no_se_encontr_el_usuario_autenticado))
             return
         }
+        binding.emailTv.text = getString(R.string.tu_correo_es, userEmail)
+        selectedImageUri = getUri(binding.root.context)
 
-        val imageUriString = arguments?.getString("imageUri")
-        imageUriString?.let { uriString ->
-            val imageUri = Uri.parse(uriString)
-            selectedImageUri = imageUri
-            loadImage(imageUri, binding.profileImageView, binding.root.context, R.drawable.person_resource)
+
+        if (selectedImageUri != null) {
+            loadImage(selectedImageUri!!, binding.profileImageView, binding.root.context, R.drawable.person_resource)
         }
 
         db.collection("users")
@@ -217,8 +234,6 @@ class ProfileFragment : Fragment() {
             .get()
             .addOnSuccessListener { document ->
                 if(document.exists()) {
-
-
                     profileObj = Profile(
                         name = document.getString("name") ?: "",
                         lastName = document.getString("lastName") ?: "",
@@ -229,7 +244,8 @@ class ProfileFragment : Fragment() {
                         userRole = document.getString("userRole") ?: "",
                         userDescription = document.getString("userDescription")
                     )
-                    ProfileManager.setProfile(profileObj)
+                    userViewModel.setUserProfile(profileObj)
+//                    ProfileManager.setProfile(profileObj)
 
                     binding.roleTv.setText(profileObj.userRole)
                     binding.nameEditText.setText(profileObj.name)
@@ -249,13 +265,14 @@ class ProfileFragment : Fragment() {
                         }
                     }
                 }else{
-                    message("No se encontró el perfil")
+                    message(getString(R.string.no_se_encontr_el_perfil))
                 }
             }
             .addOnFailureListener { e ->
-                message("Error al guardar el perfil: ${e.message}")
+                message(getString(R.string.error_al_guardar_el_perfil, e.message))
             }
     }
+
 
 
 }

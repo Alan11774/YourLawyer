@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.DetailCaseFragment">
+    tools:context=".model.PostCaseFragment">
+
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,20 +24,30 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/legal"
+                android:src="@drawable/empty_image_resource"
                 android:layout_marginBottom="16dp" />
-
-            <!-- Nombre -->
-            <TextView
-                android:id="@+id/titleLabel"
+            <Button
+                android:id="@+id/uploadImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre del Caso"
+                android:text="Upload Image"
+                android:backgroundTint="@color/blue"
+                android:textColor="@android:color/white" />
+            <!-- Botón de contacto -->
+
+
+            <!-- Nombre -->
+            <EditText
+                android:id="@+id/name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:textColorHint="@color/gray"
+                android:inputType="textPersonName"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="8dp" />
+                android:background="@drawable/edit_text_background"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp" />
 
             <!-- Calificación -->
             <TextView
@@ -351,5 +362,6 @@
         </LinearLayout>
 
     </ScrollView>
+
 
 </FrameLayout>
