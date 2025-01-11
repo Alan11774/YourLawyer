@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".model.PostCaseFragment">
+    tools:context=".view.PostCaseFragment">
 
 
 
@@ -38,10 +38,10 @@
 
             <!-- Nombre -->
             <EditText
-                android:id="@+id/name_edit_text"
+                android:id="@+id/titleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/name"
+                android:hint="@string/titulo_del_caso"
                 android:textColorHint="@color/gray"
                 android:inputType="textPersonName"
                 android:textColor="@color/black"
@@ -49,27 +49,26 @@
                 android:layout_marginBottom="16dp"
                 android:padding="12dp" />
 
-            <!-- Calificación -->
-            <TextView
-                android:id="@+id/categoryLabel"
+            <Spinner
+                android:id="@+id/mySpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Categoria"
-                android:textSize="16sp"
-                android:textColor="@android:color/darker_gray"
-                android:gravity="center"
-                android:layout_marginBottom="16dp" />
+                android:spinnerMode="dropdown"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp"
+                android:background="@drawable/spinner_background" />
 
-            <!-- Descripción -->
-            <TextView
-                android:id="@+id/descriptionLabel"
+            <EditText
+                android:id="@+id/descriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción breve del abogado"
+                android:hint="@string/describe_tu_caso"
+                android:textColorHint="@color/gray"
+                android:inputType="textPersonName"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:layout_marginBottom="8dp" />
+                android:background="@drawable/edit_text_background"
+                android:layout_marginBottom="16dp"
+                android:padding="12dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -83,14 +82,14 @@
                     <ImageView
                         android:src="@drawable/location_resource"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
+                    <EditText
                         android:id="@+id/caseLocationLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Información detallada sobre el abogado."
+                        android:hint="@string/añade_tu_ubicacion"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -103,14 +102,14 @@
                     <ImageView
                         android:src="@drawable/money_resource"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
+                    <EditText
                         android:id="@+id/budgetLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Presupuesto"
+                        android:hint="@string/ingresa_tu_presupuesto"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -122,14 +121,14 @@
                     <ImageView
                         android:src="@drawable/person_resource"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
                     <TextView
                         android:id="@+id/postedByLabel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Posteado por : juan mecanico el dia 19/02/2024"
+                        android:text="@string/posteado_por_juan_mecanico_el_dia_19_02_2024"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -141,14 +140,14 @@
                     <ImageView
                         android:src="@drawable/fire_resource"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
+                    <EditText
                         android:id="@+id/urgency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Urgencia"
+                        android:hint="@string/urgencia_alta_media_o_baja"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -157,7 +156,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Entregables:"
+                    android:text="@string/ingresa_los_entregables_necesarios"
                     android:gravity="center"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -166,50 +165,46 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:src="@drawable/folder_resource"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
-                        android:id="@+id/requirements1"
+                    <Spinner
+                        android:id="@+id/spinnerRequirements1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:text="Derecho Penal"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="16dp" />
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background" />
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:src="@drawable/folder_resource"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
-                        android:id="@+id/requirements2"
+                    <Spinner
+                        android:id="@+id/spinnerRequirements2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:text="Derecho Penal"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="16dp" />
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background" />
 
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tags:"
+                    android:text="@string/ingresa_las_palabras_clave_que_describen_tu_caso"
                     android:gravity="left"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -218,146 +213,71 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:src="@drawable/baseline_radio_button_checked_24"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
-                        android:id="@+id/tag1"
+                    <Spinner
+                        android:id="@+id/spinnerTag1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/blue"
-                        android:textStyle="italic"
-                        android:text="tag1"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="16dp" />
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background" />
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:src="@drawable/baseline_radio_button_checked_24"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
-                        android:id="@+id/tag2"
+                    <Spinner
+                        android:id="@+id/spinnerTag2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/blue"
-                        android:textStyle="italic"
-                        android:text="tag2"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="16dp" />
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background" />
 
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:src="@drawable/baseline_radio_button_checked_24"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
 
-                    <TextView
-                        android:id="@+id/tag3"
+                    <Spinner
+                        android:id="@+id/spinnerTag3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/blue"
-                        android:textStyle="italic"
-                        android:text="tag3"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="16dp" />
+                        android:spinnerMode="dropdown"
+                        android:background="@drawable/spinner_background" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/finalBudgetProposalTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/green"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    android:gravity="center"
-                    android:text="Budget Proposed Range: "
-                    android:textSize="20sp"
-                    android:layout_marginBottom="16dp" />
-                <!-- Botón de contratar -->
                 <Button
-                    android:id="@+id/applyButton"
+                    android:id="@+id/publishButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Aplicar"
+                    android:text="@string/publicar"
                     android:backgroundTint="@color/blue"
                     android:textColor="@android:color/white" />
                 <!-- Botón de contacto -->
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/proposalLinearLayout"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/budgetProposalLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/blue"
-                    android:text="Please enter your budget "
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
-                <TextView
-                    android:id="@+id/budgetRangeLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="Budget Range: "
-                    android:textSize="14sp"
-                    android:layout_marginBottom="16dp" />
-
-                <EditText
-                    android:id="@+id/budgetEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/presupuesto"
-                    android:textColorHint="@color/gray"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/black"
-                    android:background="@drawable/edit_text_background"
-                    android:layout_marginBottom="16dp"
-                    android:padding="12dp" />
-                <Button
-                    android:id="@+id/cancelButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cancel"
-                    android:backgroundTint="@color/red"
-                    android:textColor="@android:color/white"
-                    android:layout_marginBottom="8dp" />
-
-                <!-- Botón de contratar -->
-                <Button
-                    android:id="@+id/submitApplyButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/publicar_propuesta"
-                    android:backgroundTint="@color/green"
-                    android:textColor="@android:color/white" />
-
-            </LinearLayout>
-
-
-
 
         </LinearLayout>
 

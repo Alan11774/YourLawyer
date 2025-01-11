@@ -138,4 +138,88 @@
     <string name="perfil_creado_exitosamente">Perfil creado exitosamente</string>
     <string name="error_al_actualizar_el_perfil">Error al actualizar el perfil: %1$s</string>
     <string name="perfil_actualizado_exitosamente">Perfil actualizado exitosamente</string>
+    <string name="describe_tu_caso">Describe tu caso</string>
+    <string name="añade_tu_ubicacion">Añade tu ubicación</string>
+    <string name="ingresa_tu_presupuesto">Ingresa tu presupuesto: 0 - 999999 MXN</string>
+    <string name="entregables">Entregables:</string>
+    <string name="urgencia_alta_media_o_baja">Urgencia: Alta,Media o Baja</string>
+    <string name="posteado_por_juan_mecanico_el_dia_19_02_2024">Posteado por : juan mecanico el dia 19/02/2024</string>
+    <string name="ingresa_los_entregables_necesarios">Ingresa los entregables necesarios</string>
+    <string name="ingresa_las_palabras_clave_que_describen_tu_caso">Ingresa las palabras clave que describen tu caso:</string>
+    <string name="publicar">Publicar</string>
+    <string name="titulo_del_caso">Titulo del caso</string>
+    <string name="nada_seleccionado_en_el_spinner">Nada seleccionado en el Spinner</string>
+    <string name="seleccionaste">Seleccionaste: %1$s</string>
+    <string name="llena_todos_los_campos">Llena todos los campos</string>
+
+    <string-array name="law_categories">
+        <item>Selecciona tu categoria</item>
+        <item>Derecho Penal</item>
+        <item>Derecho Laboral</item>
+        <item>Derecho Familiar</item>
+        <item>Derecho Administrativo</item>
+        <item>Derecho Civil</item>
+        <item>Derecho Comercial</item>
+        <item>Derecho Constitucional</item>
+        <item>Derecho de la Familia</item>
+        <item>Derecho de la Justicia</item>
+        <item>Derecho de la Constitución</item>
+    </string-array>
+    <string-array name="languages_categories">
+        <item>Selecciona tu idioma</item>
+        <item>Español</item>
+        <item>Inglés</item>
+        <item>Francés</item>
+        <item>Portugués</item>
+        <item>Alemán</item>
+        <item>Italiano</item>
+        <item>Japonés</item>
+        <item>China</item>
+        <item>Coreano</item>
+        <item>Indonesia</item>
+        <item>Filipino</item>
+        <item>Arabés</item>
+        <item>Ruso</item>
+        <item>Turco</item>
+        <item>Polaco</item>
+    </string-array>
+
+    <string-array name="tag_categories">
+        <item>Selecciona tu tag</item>
+        <item>Derecho civil</item>
+        <item>Derecho penal</item>
+        <item>Derecho laboral</item>
+        <item>Derecho de familia</item>
+        <item>Derecho inmobiliario</item>
+        <item>Derecho administrativo</item>
+        <item>Consultas generales</item>
+        <item>Asesoramiento legal</item>
+        <item>Resolución de conflictos</item>
+        <item>Representación legal</item>
+        <item>En proceso</item>
+        <item>Resuelto</item>
+        <item>Cerrado</item>
+        <item>Urgente</item>
+        <item>Gratuito</item>
+        <item>Pro bono</item>
+    </string-array>
+    <string-array name="requerimientos_cliente">
+        <item>Presupuesto detallado</item>
+        <item>Cronograma del caso</item>
+        <item>Informes periódicos sobre el avance del caso</item>
+        <item>Acceso a toda la documentación del caso</item>
+        <item>Explicaciones claras y sencillas sobre el proceso legal</item>
+        <item>Disponibilidad para responder preguntas</item>
+        <item>Representación en todas las audiencias</item>
+        <item>Asesoramiento personalizado</item>
+        <item>Confidencialidad absoluta</item>
+        <item>Comunicación efectiva y oportuna</item>
+        <item>Defensa de mis intereses de manera agresiva</item>
+        <item>Búsqueda de una solución negociada si es posible</item>
+        <item>Prioridad en mi caso</item>
+        <item>Facilidad para contactar al abogado</item>
+        <item>Flexibilidad en los horarios de atención</item>
+        <item>Garantía de resultados</item>
+        <item>Referencias de clientes anteriores</item>
+    </string-array>
 </resources>

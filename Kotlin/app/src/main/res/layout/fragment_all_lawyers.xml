@@ -4,34 +4,48 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/linearLayoutHeader"
+        android:orientation="horizontal">
+
     <!-- User Profile Image -->
     <ImageButton
         android:id="@+id/userProfileImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/person_resource"
-        android:layout_alignParentStart="true" />
 
-    <!-- Logout Button -->
+        android:backgroundTint="@color/white"
+        android:src="@drawable/person_resource" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+        <!-- Logout Button -->
+        <ImageButton
+            android:id="@+id/addCaseButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/add_resource"
+            android:background="@null" />
     <ImageButton
         android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/logout_resource"
-        android:background="@null"
-        android:layout_alignParentEnd="true" />
+        android:background="@null" />
+            </LinearLayout>
+    </LinearLayout>
 
     <!-- Search Field -->
     <EditText
         android:id="@+id/searchTextField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userProfileImageView"
+        android:layout_below="@id/linearLayoutHeader"
         android:layout_margin="16dp"
         android:hint="Ingresa un texto para buscar"
         android:background="@drawable/edit_text_background"

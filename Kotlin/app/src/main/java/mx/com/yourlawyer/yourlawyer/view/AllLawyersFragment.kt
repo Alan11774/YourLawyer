@@ -89,6 +89,7 @@ import mx.com.yourlawyer.yourlawyer.model.LawyersResponse
 import mx.com.yourlawyer.yourlawyer.view.DetailCaseFragment
 import mx.com.yourlawyer.yourlawyer.view.DetailLawyerFragment
 import mx.com.yourlawyer.yourlawyer.view.MainActivity
+import mx.com.yourlawyer.yourlawyer.view.PostCaseFragment
 import mx.com.yourlawyer.yourlawyer.view.ProfileFragment
 import retrofit2.Call
 import retrofit2.Callback
@@ -221,6 +222,9 @@ class AllLawyersFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             showLogoutConfirmationDialog()
         }
+        binding.addCaseButton.setOnClickListener {
+            addCase()
+        }
         binding.userProfileImageView.setOnClickListener {
             showProfile()
         }
@@ -260,6 +264,14 @@ class AllLawyersFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
+    private fun addCase() {
+        val nextFragment = PostCaseFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, nextFragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

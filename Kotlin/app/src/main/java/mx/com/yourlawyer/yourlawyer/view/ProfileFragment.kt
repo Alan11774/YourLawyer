@@ -129,30 +129,50 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupSpinners() {
-        setupSpinner(binding.skillsSpinner, skills) { selectedUserSkill ->
-            selectedSkills = listOf(selectedUserSkill)
-        }
-
-        setupSpinner(binding.languageSpinner, languages) { selectedUserLanguage ->
-            selectedLanguages = listOf(selectedUserLanguage)
-        }
-    }
-
-    private fun setupSpinner(spinner: Spinner, items: List<String>, onItemSelected: (String) -> Unit)  {
-        val adapter = ArrayAdapter(binding.root.context, android.R.layout.simple_spinner_dropdown_item, items)
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = parent?.getItemAtPosition(position) as String
-                onItemSelected(selectedItem)
+        SpinnerUtils.setupSpinner(
+            binding.root.context,
+            binding.skillsSpinner,
+            R.array.law_categories
+        ){ selectedItem ->
+            if (!selectedItem.contains("Selecciona")) {
+                selectedSkills = listOf(selectedItem)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                message("Ningún elemento seleccionado")
-            }
         }
+        SpinnerUtils.setupSpinner(
+            binding.root.context,
+            binding.languageSpinner,
+            R.array.languages_categories
+        ){ selectedItem ->
+            if (!selectedItem.contains("Selecciona")) {
+                selectedLanguages = listOf(selectedItem)
+            }
+
+        }
+//        setupSpinner(binding.skillsSpinner, skills) { selectedUserSkill ->
+//            selectedSkills = listOf(selectedUserSkill)
+//        }
+//
+//        setupSpinner(binding.languageSpinner, languages) { selectedUserLanguage ->
+//            selectedLanguages = listOf(selectedUserLanguage)
+//        }
     }
+
+//    private fun setupSpinner(spinner: Spinner, items: List<String>, onItemSelected: (String) -> Unit)  {
+//        val adapter = ArrayAdapter(binding.root.context, android.R.layout.simple_spinner_dropdown_item, items)
+//        spinner.adapter = adapter
+//
+//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                val selectedItem = parent?.getItemAtPosition(position) as String
+//                onItemSelected(selectedItem)
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                message("Ningún elemento seleccionado")
+//            }
+//        }
+//    }
 
     private fun saveProfileToFirebase() {
         val userEmail = auth.currentUser?.email
@@ -251,7 +271,6 @@ class ProfileFragment : Fragment() {
                     binding.nameEditText.setText(profileObj.name)
                     binding.lastNameEditText.setText(profileObj.lastName)
                     binding.descriptionEditText.setText(profileObj.userDescription)
-
                     profileObj.skills?.firstOrNull()?.let { skill ->
                         val skillIndex = skills.indexOf(skill)
                         if (skillIndex != -1) {
