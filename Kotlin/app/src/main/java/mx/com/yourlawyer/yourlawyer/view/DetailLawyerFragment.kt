@@ -73,7 +73,10 @@ class DetailLawyerFragment : Fragment() {
     }
 
     private fun contactAction() {
-
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ChatContactFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun contractAction() {
