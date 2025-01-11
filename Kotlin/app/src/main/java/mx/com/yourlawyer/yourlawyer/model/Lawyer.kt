@@ -14,5 +14,7 @@ data class Lawyer(
     val profileViews: Int,
     val userDescription: String,
     val skills: List<String>,
-    val hourlyRate: Double
+    val hourlyRate: Double,
+    val location: String,
+    val language: String
 )

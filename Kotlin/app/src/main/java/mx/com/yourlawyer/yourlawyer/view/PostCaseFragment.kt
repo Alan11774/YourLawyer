@@ -1,6 +1,8 @@
 package mx.com.yourlawyer.yourlawyer.view
 
 import alertDialog
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,10 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import loadImage
 import message
 import mx.com.yourlawyer.yourlawyer.R
 import mx.com.yourlawyer.yourlawyer.controller.UserViewModel
 import mx.com.yourlawyer.yourlawyer.databinding.FragmentPostCaseBinding
+import mx.com.yourlawyer.yourlawyer.model.CaseDetails
+import saveUri
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -57,17 +62,34 @@ class PostCaseFragment : Fragment() {
     private fun setupUI() {
         val calendar = Calendar.getInstance()
         val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-        val postedDate = dateFormat.format(calendar.time)
+        postedDate = dateFormat.format(calendar.time)
         binding.postedByLabel.text = "Publicado por : ${email} el dia ${postedDate}"
-        binding.caseImageView.setImageResource(R.drawable.empty_image_resource)
 
+        binding.caseImageView.setImageResource(R.drawable.empty_image_resource)
 
        setupSpinners()
 
-        binding.publishButton.setOnClickListener {
-            verifyFields()
+        binding.publishButton.setOnClickListener { verifyFields() }
+        binding.uploadImageButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            data?.data?.let { imageUri ->
+                // Load the image using Glide
+                loadImage(imageUri, binding.caseImageView, binding.root.context, R.drawable.person_resource)
+                selectedImageUri = imageUri
+
+            }
+        }
     }
 
     private fun verifyFields(){
@@ -89,20 +111,20 @@ class PostCaseFragment : Fragment() {
                 tag1SelectedOption, tag2lectedOption, tag3SelectedOption
             )
             val allFieldsFilled = variable.all { it.isNotBlank() }
-            if (allFieldsFilled){
-                alertDialog(binding.root.context,
-                    "Publicación","Todos los campos llenados",
-                    "Ok",
-                    onPositiveButtonClick = {
-                        requireActivity().supportFragmentManager.popBackStack()
-                    }
-                    )
-                message("Todos los campos llenados")
+            if (allFieldsFilled and (selectedImageUri != Uri.EMPTY)){
                 publishInfo(list = variable)
 
 
             }else{
                 message(getString(R.string.llena_todos_los_campos))
+                alertDialog(
+                    binding.root.context,
+                    getString(R.string.error), getString(R.string.por_favor_a_ade_una_imagen_y_llena_todos_los_campos),
+                    "Ok",
+                    onPositiveButtonClick = {
+
+                    }
+                )
 
             }
         }
@@ -110,6 +132,97 @@ class PostCaseFragment : Fragment() {
     }
 
     private fun publishInfo(list: List<String>){
+            if (email.isNullOrEmpty()) {
+                message("No se encontró el usuario autenticado")
+                return
+            }
+
+            // Datos a actualizar
+            val updatedData = hashMapOf<String, Any?>(
+                "caseId" to "Case999",
+                "imageURL" to selectedImageUri,
+                "title" to binding.titleEditText.text.toString(),
+                "description" to binding.descriptionEditText.text.toString(),
+                "category" to categorySelectedOption,
+                "postedBy" to email,
+                "postedDate" to postedDate,
+                "budget" to binding.budgetLabel.text.toString(),
+                "location" to binding.caseLocationLabel.text.toString(),
+                "status" to binding.urgency.text.toString(),
+                "details" to CaseDetails(
+                    tags = listOf(tag1SelectedOption, tag2lectedOption, tag3SelectedOption),
+                    requirements = listOf(requirements1SelectedOption, requirements2SelectedOption),
+                    urgency = binding.urgency.text.toString()
+                )
+
+            ).filterValues { it != null } // Eliminar valores nulos
+
+            // Referencia al documento del perfil
+            val profileDocRef = db.collection("users")
+                .document(email)
+                .collection("postedCases").document()
+            profileDocRef.get()
+                .addOnSuccessListener { document ->
+                    if (document.exists()) {
+                        // Si el documento ya existe, actualiza los datos
+                        profileDocRef.update(updatedData)
+                            .addOnSuccessListener {
+//                                val updatedProfile = profileObj.copy(
+//                                    name = binding.nameEditText.text.toString(),
+//                                    lastName = binding.lastNameEditText.text.toString(),
+//                                    userDescription = binding.descriptionEditText.text.toString(),
+//                                    skills = selectedSkills,
+//                                    language = selectedLanguages
+//                                )
+//                                userViewModel.setUserProfile(updatedProfile)
+
+                                alertDialog(binding.root.context,
+                                    getString(R.string.actualizaci_n_exitosa),
+                                    getString(R.string.se_ha_actualizado_tu_caso),
+                                    "Ok",
+                                    onPositiveButtonClick = {
+                                        requireActivity().supportFragmentManager.popBackStack()
+                                    }
+                                )
+                            }
+                            .addOnFailureListener { e ->
+                                alertDialog(
+                                    binding.root.context,
+                                    getString(R.string.error),
+                                    getString(R.string.error_al_postear_el_caso_revisa_tu_conexion_a_internet_o_intentalo_mas_tarde),
+                                    "Ok",
+                                    onPositiveButtonClick = {
+                                    }
+                                )
+                            }
+                    } else {
+                        // Si el documento no existe, crea uno nuevo
+                        profileDocRef.set(updatedData)
+                            .addOnSuccessListener {
+                                alertDialog(binding.root.context,
+                                    getString(R.string.publicaci_n_exitosa),
+                                    getString(R.string.se_ha_publicado_tu_caso),
+                                    "Ok",
+                                    onPositiveButtonClick = {
+                                        requireActivity().supportFragmentManager.popBackStack()
+                                    }
+                                )
+                            }
+                            .addOnFailureListener { e ->
+                                alertDialog(
+                                    binding.root.context,
+                                    getString(R.string.error),
+                                    getString(R.string.error_al_postear_el_caso_revisa_tu_conexion_a_internet_o_intentalo_mas_tarde),
+                                    "Ok",
+                                    onPositiveButtonClick = {
+                                    }
+                                )
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    message(getString(R.string.error_al_verificar_el_perfil, e.message))
+                }
 
     }
 
@@ -119,7 +232,7 @@ class PostCaseFragment : Fragment() {
             binding.mySpinner,
             R.array.law_categories
         ){ selectedOption ->
-            if (!selectedOption.contains("Selecciona")){
+            if (!selectedOption.contains(getString(R.string.selecciona))){
                 categorySelectedOption = selectedOption
             }
         }
@@ -129,7 +242,7 @@ class PostCaseFragment : Fragment() {
             binding.spinnerRequirements1,
             R.array.requerimientos_cliente
         ){ selectedOption ->
-            if (!selectedOption.contains("Selecciona")){
+            if (!selectedOption.contains(getString(R.string.selecciona))){
                 requirements1SelectedOption = selectedOption
             }
         }
@@ -138,7 +251,7 @@ class PostCaseFragment : Fragment() {
             binding.spinnerRequirements2,
             R.array.requerimientos_cliente
         ){ selectedOption ->
-            if (!selectedOption.contains("Selecciona")){
+            if (!selectedOption.contains(getString(R.string.selecciona))){
                 requirements2SelectedOption = selectedOption
             }
         }
@@ -147,7 +260,7 @@ class PostCaseFragment : Fragment() {
             binding.spinnerTag1,
             R.array.tag_categories
         ){ selectedOption ->
-            if (!selectedOption.contains("Selecciona")){
+            if (!selectedOption.contains(getString(R.string.selecciona))){
                 tag1SelectedOption = selectedOption
             }
         }
@@ -156,7 +269,7 @@ class PostCaseFragment : Fragment() {
             binding.spinnerTag2,
             R.array.tag_categories
         ){ selectedOption ->
-            if (!selectedOption.contains("Selecciona")){
+            if (!selectedOption.contains(getString(R.string.selecciona))){
                 tag2lectedOption = selectedOption
             }
         }
@@ -165,11 +278,12 @@ class PostCaseFragment : Fragment() {
             binding.spinnerTag3,
             R.array.tag_categories
         ){ selectedOption ->
-            if (!selectedOption.contains("Selecciona")){
+            if (!selectedOption.contains(getString(R.string.selecciona))){
                 tag3SelectedOption = selectedOption
             }
         }
 
     }
+
 
 }

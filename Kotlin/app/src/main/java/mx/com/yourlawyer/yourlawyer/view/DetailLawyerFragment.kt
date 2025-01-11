@@ -42,7 +42,7 @@ class DetailLawyerFragment : Fragment() {
         //getCaseStatus()
         // Configurar listeners para los botones
         binding.contactButton.setOnClickListener { contactAction() }
-        binding.contactButton.setOnClickListener { contractAction() }
+        binding.contractButton.setOnClickListener { contractAction() }
 
         return binding.root
     }
@@ -60,12 +60,12 @@ class DetailLawyerFragment : Fragment() {
                 ratingLabel.text = "⭐ ${ lawyerProfile.rating}"
                 categoryLabel.text = lawyerProfile.description
                 descriptionLabel.text = lawyerProfile.userDescription
-                lawyerLocationLabel.text = "Mexico,CDMX"
-                priceHourLabel.text = lawyerProfile.hourlyRate.toString()
-                contractNumberLabel.text = lawyerProfile.numberOfHirings.toString()
-                language.text = "Español"
-                profileViewsLabel.text = lawyerProfile.profileViews.toString()
-                projectsWorkedLabel.text = lawyerProfile.projectsWorkedOn.toString()
+                lawyerLocationLabel.text = "Ubicación: ${lawyerProfile.location}"
+                priceHourLabel.text = "Precio por hora: ${lawyerProfile.hourlyRate.toString()}"
+                contractNumberLabel.text = "Numero de contrataciones: ${ lawyerProfile.numberOfHirings.toString() }"
+                language.text = "Lenguage: ${lawyerProfile.language}"
+                profileViewsLabel.text = "Vistas al perfil: ${ lawyerProfile.profileViews.toString() }"
+                projectsWorkedLabel.text = "Numero de casos trabajados: ${lawyerProfile.projectsWorkedOn.toString()}"
                 skills1.text = lawyerProfile.skills[0]
                 skills2.text = lawyerProfile.skills[1]
             }
@@ -77,7 +77,10 @@ class DetailLawyerFragment : Fragment() {
     }
 
     private fun contractAction() {
-
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, CheckoutFragment())
+            .addToBackStack(null)
+            .commit()
     }
 
 

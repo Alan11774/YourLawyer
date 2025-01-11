@@ -260,16 +260,16 @@
                     android:id="@+id/contactButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contacto"
-                    android:backgroundTint="@color/blue"
+                    android:text="@string/contacto"
+                    android:backgroundTint="@color/green"
                     android:textColor="@android:color/white" />
                 <!-- Botón de contratar -->
                 <Button
                     android:id="@+id/contractButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Contratar"
-                    android:backgroundTint="@color/green"
+                    android:text="@string/contratar"
+                    android:backgroundTint="@color/blue"
                     android:textColor="@android:color/white" />
                 <!-- Botón de contacto -->
 

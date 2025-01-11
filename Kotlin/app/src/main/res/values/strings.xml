@@ -151,6 +151,15 @@
     <string name="nada_seleccionado_en_el_spinner">Nada seleccionado en el Spinner</string>
     <string name="seleccionaste">Seleccionaste: %1$s</string>
     <string name="llena_todos_los_campos">Llena todos los campos</string>
+    <string name="por_favor_a_ade_una_imagen_y_llena_todos_los_campos">Por favor añade una imagen y llena todos los campos</string>
+    <string name="error">Error</string>
+    <string name="error_al_postear_el_caso_revisa_tu_conexion_a_internet_o_intentalo_mas_tarde">Error al postear el caso, Revisa tu conexion a internet o intentalo mas tarde</string>
+    <string name="actualizaci_n_exitosa">Actualización  Exitosa</string>
+    <string name="se_ha_actualizado_tu_caso">Se ha actualizado tu caso!!!</string>
+    <string name="publicaci_n_exitosa">Publicación Exitosa</string>
+    <string name="se_ha_publicado_tu_caso">Se ha publicado tu caso!!!</string>
+    <string name="selecciona">Selecciona</string>
+    <string name="contratar">Contratar</string>
 
     <string-array name="law_categories">
         <item>Selecciona tu categoria</item>

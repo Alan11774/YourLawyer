@@ -149,30 +149,8 @@ class ProfileFragment : Fragment() {
             }
 
         }
-//        setupSpinner(binding.skillsSpinner, skills) { selectedUserSkill ->
-//            selectedSkills = listOf(selectedUserSkill)
-//        }
-//
-//        setupSpinner(binding.languageSpinner, languages) { selectedUserLanguage ->
-//            selectedLanguages = listOf(selectedUserLanguage)
-//        }
     }
 
-//    private fun setupSpinner(spinner: Spinner, items: List<String>, onItemSelected: (String) -> Unit)  {
-//        val adapter = ArrayAdapter(binding.root.context, android.R.layout.simple_spinner_dropdown_item, items)
-//        spinner.adapter = adapter
-//
-//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                val selectedItem = parent?.getItemAtPosition(position) as String
-//                onItemSelected(selectedItem)
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                message("Ningún elemento seleccionado")
-//            }
-//        }
-//    }
 
     private fun saveProfileToFirebase() {
         val userEmail = auth.currentUser?.email
