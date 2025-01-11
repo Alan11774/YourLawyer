@@ -160,6 +160,9 @@
     <string name="se_ha_publicado_tu_caso">Se ha publicado tu caso!!!</string>
     <string name="selecciona">Selecciona</string>
     <string name="contratar">Contratar</string>
+    <string name="tu_pago_ha_sido_cancelado">Tu pago ha sido cancelado</string>
+    <string name="pago_cancelado">Pago cancelado</string>
+    <string name="mx">MX</string>
 
     <string-array name="law_categories">
         <item>Selecciona tu categoria</item>
