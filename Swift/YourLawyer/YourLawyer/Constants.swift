@@ -7,9 +7,32 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 //public let lawyersApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/lawyers"
 public let lawyersApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/all/lawyers"
+public let categoryLawyers = ["Selecciona tu categoría", "Derecho Penal", "Derecho Laboral", "Derecho Familiar", "Derecho Administrativo", "Derecho Civil", "Derecho Comercial", "Derecho Constitucional", "Derecho de la Familia", "Derecho de la Justicia", "Derecho de la Constitución"
+
+]
+public let requirements = [
+    "Presupuesto detallado",
+    "Cronograma del caso",
+    "Informes periódicos sobre el avance del caso",
+    "Acceso a toda la documentación del caso",
+    "Explicaciones claras y sencillas sobre el proceso legal",
+    "Disponibilidad para responder preguntas",
+    "Representación en todas las audiencias",
+    "Asesoramiento personalizado",
+    "Confidencialidad absoluta",
+    "Comunicación efectiva y oportuna",
+    "Defensa de mis intereses de manera agresiva",
+    "Búsqueda de una solución negociada si es posible",
+    "Prioridad en mi caso",
+    "Facilidad para contactar al abogado",
+    "Flexibilidad en los horarios de atención",
+    "Garantía de resultados",
+    "Referencias de clientes anteriores"
+]
 
 class Utils {
     class func showMessage(_ message: String) {
@@ -88,6 +111,35 @@ extension UIView {
         } else {
             return nil
         }
+    }
+}
+
+
+@MainActor func loadImage(uri: Any, imageView: UIImageView, placeholderResId: UIImage? = nil, scaleType: String = "circleCrop") {
+    if let url = uri as? URL {
+        // Si es una URL, utiliza Kingfisher para cargar la imagen
+        var options: KingfisherOptionsInfo = []
+        
+        switch scaleType {
+        case "circleCrop":
+            options.append(.processor(RoundCornerImageProcessor(cornerRadius: .greatestFiniteMagnitude)))
+        case "centerCrop":
+            options.append(.scaleFactor(UIScreen.main.scale))
+        default:
+            fatalError("Invalid scale type: \(scaleType)")
+        }
+        
+        imageView.kf.setImage(
+            with: url,
+            placeholder: placeholderResId,
+            options: options
+        )
+    } else if let image = uri as? UIImage {
+        // Si es un UIImage, asigna directamente la imagen al UIImageView
+        imageView.image = image
+        
+    } else {
+        print("Invalid URI: \(uri)")
     }
 }
 

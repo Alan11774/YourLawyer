@@ -41,6 +41,7 @@
                     <connections>
                         <segue destination="630-bE-Vp4" kind="showDetail" identifier="profileSegue" id="6NP-Pb-BvH"/>
                         <segue destination="W4A-yX-ygs" kind="presentation" identifier="detailLawyerSegue" id="DYz-jR-EKB"/>
+                        <segue destination="wXI-tr-lKx" kind="presentation" identifier="postCaseSegue" id="ejb-eg-kHj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UzF-PT-PGb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -115,6 +116,21 @@
             </objects>
             <point key="canvasLocation" x="4405" y="-121"/>
         </scene>
+        <!--Post Case View Controller-->
+        <scene sceneID="3Zh-XM-Zkc">
+            <objects>
+                <viewController id="wXI-tr-lKx" customClass="PostCaseViewController" customModule="YourLawyer" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vMy-W5-1yQ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="sa7-Hd-jN0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="umt-Jh-VjC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3042" y="881"/>
+        </scene>
         <!--Contract View Controller-->
         <scene sceneID="D6Y-ca-QDc">
             <objects>
@@ -132,7 +148,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="d0w-Gu-qcO"/>
+        <segue reference="bnJ-9x-Pa1"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

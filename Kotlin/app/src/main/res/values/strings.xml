@@ -64,14 +64,14 @@
     <string name="Categoria">Categorias de abogados</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="your_lawyer_sign_in_title">Your Lawyer</string>
-    <string name="please_enter_your_email_password_to_access"><![CDATA[Please enter your email & password to access]]></string>
-    <string name="email_address">email address</string>
-    <string name="password">password</string>
-    <string name="remember_me">Remember me</string>
-    <string name="forget_password">Forget password?</string>
-    <string name="sign_in">Sign In</string>
-    <string name="don_t_have_an_account_sign_up">Don’t have an account? Sign up</string>
+    <string name="your_lawyer_sign_in_title">YourLawyer</string>
+    <string name="please_enter_your_email_password_to_access"><![CDATA[Por favor ingresa tu correo y contraseña]]></string>
+    <string name="email_address">Correo</string>
+    <string name="password">Contraseña</string>
+    <string name="remember_me">Recordar sesión?</string>
+    <string name="forget_password">¿Olvido su contraseña?</string>
+    <string name="sign_in">Ingresar</string>
+    <string name="don_t_have_an_account_sign_up">¿No tienes cuenta? Registrarse</string>
     <string name="permission_required">Permission required</string>
     <string name="is_needed_user_permission_for_location_access">Is needed User permission for location access</string>
     <string name="ok">Ok</string>
@@ -89,7 +89,7 @@
     <string name="please_enter_a_valid_email_address">Please enter a valid email address</string>
     <string name="cancel">Cancel</string>
     <string name="mail_is_needed">Mail is needed</string>
-    <string name="mail_has_not_the_correct_format">Mail has not the correct format</string>
+    <string name="mail_has_not_the_correct_format">El email no tiene el formato correcto</string>
     <string name="password_is_needed">Password is needed</string>
     <string name="password_needs_at_least_6_characters">Password needs at least 6 characters</string>
     <string name="error_invalid_email">ERROR_INVALID_EMAIL</string>

@@ -2,8 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.YourLawyer" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/white</item>
-    </style>
+         <item name="colorPrimary">@color/black</item>
 
+
+    </style>
     <style name="Theme.YourLawyer" parent="Base.Theme.YourLawyer" />
 </resources>

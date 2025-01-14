@@ -69,7 +69,7 @@ fun alertDialog(context: Context, title: String, message: String,
                 onPositiveButtonClick: (() -> Unit)? = null,
                 onNegativeButtonClick: (() -> Unit)? = null
 ) {
-    val builder = AlertDialog.Builder(context)
+    val builder = AlertDialog.Builder(context,R.style.CustomAlertDialogTheme)
     builder.setTitle(title)
     builder.setMessage(message)
 

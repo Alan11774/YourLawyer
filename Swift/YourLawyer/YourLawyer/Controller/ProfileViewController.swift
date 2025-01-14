@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .center
+        imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.lightGray.cgColor
@@ -97,6 +97,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
+            
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -108,9 +109,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
             
-            
-//            profileImageView.heightAnchor.constraint(equalToConstant: 10),
-//            profileImageView.widthAnchor.constraint(equalTo: profileImageView.heightAnchor)
             
         ])
     }
