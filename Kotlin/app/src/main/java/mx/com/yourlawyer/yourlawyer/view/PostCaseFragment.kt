@@ -167,14 +167,7 @@ class PostCaseFragment : Fragment() {
                         // Si el documento ya existe, actualiza los datos
                         profileDocRef.update(updatedData)
                             .addOnSuccessListener {
-//                                val updatedProfile = profileObj.copy(
-//                                    name = binding.nameEditText.text.toString(),
-//                                    lastName = binding.lastNameEditText.text.toString(),
-//                                    userDescription = binding.descriptionEditText.text.toString(),
-//                                    skills = selectedSkills,
-//                                    language = selectedLanguages
-//                                )
-//                                userViewModel.setUserProfile(updatedProfile)
+
 
                                 alertDialog(binding.root.context,
                                     getString(R.string.actualizaci_n_exitosa),

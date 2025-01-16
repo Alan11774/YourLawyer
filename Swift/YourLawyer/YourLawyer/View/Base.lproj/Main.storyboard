@@ -141,10 +141,28 @@
                         <viewLayoutGuide key="safeArea" id="Qm9-at-asq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <connections>
+                        <segue destination="GOw-dT-bnK" kind="presentation" identifier="stripeSegue" id="lHY-qF-PGj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Nz-Wj-Alr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4438" y="654"/>
+        </scene>
+        <!--Stripe View Controller-->
+        <scene sceneID="Isw-PV-CPO">
+            <objects>
+                <viewController id="GOw-dT-bnK" customClass="StripeViewController" customModule="YourLawyer" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n5F-D4-fu2">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="n7b-2b-K3T"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g2s-cO-7bh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5830" y="630"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

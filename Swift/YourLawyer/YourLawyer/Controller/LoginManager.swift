@@ -83,17 +83,3 @@ class LoginManager {
     
 }
 
-
-    //        @objc func appleBtnTouch() {
-    //            if !networkMonitor.isConnected {
-    //                showNoConnectionAlert()
-    //                return
-    //            }
-    //
-    //            let provider = ASAuthorizationAppleIDProvider()
-    //            let request = provider.createRequest()
-    //            request.requestedScopes = [.fullName, .email]
-    //            let authController = ASAuthorizationController(authorizationRequests: [request])
-    //            authController.presentationContextProvider = self
-    //            authController.performRequests()
-    //        }
