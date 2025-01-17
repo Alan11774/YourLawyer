@@ -31,6 +31,13 @@ class ContractViewController: UIViewController {
 	private var continueButton = UIButton(type: .system)
 	private var cancelButton = UIButton(type: .system)
     
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "stripeSegue" {
+			if let stripeVC = segue.destination as? StripeViewController {
+				stripeVC.lawyer = lawyer
+			}
+		}
+	}
     
     override func viewDidLoad() {
         super.viewDidLoad()

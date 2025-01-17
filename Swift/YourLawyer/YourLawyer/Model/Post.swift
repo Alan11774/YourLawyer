@@ -7,6 +7,10 @@
 
 import Foundation
 
+
+//****************************************************************
+// Backend para hacer post HTTP obtiene claves de secret y ephemeral
+//****************************************************************
 func performPostRequest(
 	urlString: String,
 	headers: [String: String],

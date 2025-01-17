@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Case: Codable {
+struct Case: Decodable {
     let caseId: String
     let imageURL: String
     let title: String
@@ -21,8 +21,12 @@ struct Case: Codable {
     let details: CaseDetails
 }
 
-struct CaseDetails: Codable {
+struct CaseDetails: Decodable {
     let tags: [String]
     let requirements: [String]
     let urgency: String
+}
+
+struct CasesResponse: Decodable {
+	let cases: [Case]
 }

@@ -18,9 +18,14 @@ class StripeViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
+		// Verificación del objeto para usarlo de forma asyncronaaa
+		guard let lawyer = lawyer else {
+			print("Error: Lawyer no inicializado.")
+			return
+		}
 		
 		// Configurar Stripe (obtener llaves y configurar PaymentSheet)
-		initializeStripe()
+		initializeStripe(for: lawyer)
 		
 		// Botón para realizar el pago
 		let payButton = UIButton(type: .system)
@@ -56,24 +61,65 @@ class StripeViewController: UIViewController {
 		paymentSheet?.present(from: self) { paymentResult in
 			switch paymentResult {
 			case .completed:
-				Utils.showMessage("Gracias por tu compra.")
-				self.navigateToDetailLawyerView()
+				self.returnMessage(title: "Pago Exitoso", message: "Gracias por tu compra. Haz contratado a \(self.lawyer?.name ?? "")")
+
 			case .canceled:
-				Utils.showMessage("Tu pago ha sido cancelado.")
+				self.returnMessage(title: "Pago Cancelado", message: "Tu pago ha sido cancelado.")
 			case .failed(let error):
-				Utils.showMessage(error.localizedDescription)
+				self.returnMessage(title: "Error en el pago", message: error.localizedDescription)
 			}
 		}
 	}
 	
-	private func navigateToDetailLawyerView() {
-		// Navegar a otra vista después del pago exitoso
-		let detailViewController = DetailLawyerViewController() // Reemplaza con tu controlador de detalle
-		navigationController?.pushViewController(detailViewController, animated: true)
+//	private func navigateToDetailLawyerView() {
+		private func navigateToDetailLawyerView() {
+			guard let navigationController = self.navigationController else {
+				print("Error: No hay un UINavigationController disponible.")
+				return
+			}
+
+			// Recupera la vista inicial (si deseas mantenerla)
+			let allLawyersViewController = navigationController.viewControllers.first(where: { $0 is AllLawyersViewController })
+
+			// Crea la nueva pila con el controlador destino
+			var newViewControllers: [UIViewController] = []
+			if let allLawyersViewController = allLawyersViewController {
+				newViewControllers.append(allLawyersViewController) // Mantén AllLawyersViewController
+			}
+			let detailViewController = DetailLawyerViewController()
+			detailViewController.lawyer = lawyer
+			newViewControllers.append(detailViewController)
+
+			// Reemplaza la pila de vistas
+			navigationController.setViewControllers(newViewControllers, animated: true)
+		}
+//	}
+	
+	private func fetchHourlyRateLawyer(_ lawyer:Lawyer, completion: @escaping (Bool) -> Void){
+		DispatchQueue.global().async{
+			let isValid = lawyer.hourlyRate > 0
+			DispatchQueue.main.async{
+				completion(isValid)
+			}
+		}
 	}
 	
-	private func fetchStripeKeys(completion: @escaping (Bool) -> Void) {
-		// Obtener la llave ephemeral
+	//******************************************************************************
+	// Llaves ty monto a pagar por abogado.
+	//******************************************************************************
+	private func fetchStripeKeys(for lawyer:Lawyer ,completion: @escaping (Bool) -> Void) {
+		let hourlyRate = lawyer.hourlyRate
+		guard  hourlyRate > 0 else {
+			print("Error: hourlyRate no está disponible o es inválido.")
+			completion(false)
+			return
+		}
+		
+		// Convertir hourlyRate a centavos (Stripe usa la menor unidad de la moneda)
+		let amountInCents = Int(hourlyRate * 100) // Convertir Double a Int para evitar decimales
+		let amountString = "\(amountInCents)"
+		
+			// Obtener la llave ephemeral
 		createEphemeralKey(for: customerID) { result in
 			switch result {
 			case .success(let data):
@@ -85,7 +131,7 @@ class StripeViewController: UIViewController {
 					return
 				}
 				
-				createPaymentIntent(amount: "2000", currency: "mxn") { result in
+				createPaymentIntent(amount: amountString, currency: "mxn") { result in
 					switch result {
 					case .success(let data):
 						if let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
@@ -105,8 +151,13 @@ class StripeViewController: UIViewController {
 		}
 	}
 	
-	private func initializeStripe() {
-		fetchStripeKeys { success in
+	//******************************************************************************
+	// Usa Completion Handlers para el setup de las keys
+	// Para opbjetivos del diplomado , las llaves se extraen de un mismo usuario.
+	//******************************************************************************
+	
+	private func initializeStripe(for lawyer: Lawyer) {
+		fetchStripeKeys(for: lawyer) { success in
 			guard success else {
 				print("Error al obtener las llaves")
 				return
@@ -117,5 +168,14 @@ class StripeViewController: UIViewController {
 				self.stripeDefault()
 			}
 		}
+	}
+	
+	private func returnMessage(title:String,message:String){
+		let alertController = UIAlertController(title: title, message: message,preferredStyle: .alert)
+		let alertAction = UIAlertAction(title: "Ok", style: .default){_ in
+			self.dismiss(animated: true)
+		}
+		alertController.addAction(alertAction)
+		self.present(alertController,animated: true, completion:nil)
 	}
 }
