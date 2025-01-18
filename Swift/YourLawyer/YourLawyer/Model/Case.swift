@@ -9,7 +9,7 @@ import Foundation
 
 struct Case: Decodable {
     let caseId: String
-    let imageURL: String
+    let imageURL: String?
     let title: String
     let description: String
     let category: String
