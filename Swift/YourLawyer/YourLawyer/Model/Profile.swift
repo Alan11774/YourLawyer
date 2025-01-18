@@ -19,3 +19,12 @@ struct Profile: Codable {
     let language : [String]
     let hourlyRate: String
 }
+
+
+class ProfileManager {
+	static let shared = ProfileManager()
+	
+	var signedInProfile: Profile?
+	
+	private init() {} // Una sola instancia
+}

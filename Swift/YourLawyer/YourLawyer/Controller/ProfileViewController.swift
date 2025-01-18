@@ -48,7 +48,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
 //    var profile : Profile?
     private let db = Firestore.firestore()
     let email = Auth.auth().currentUser?.email ?? ""
-    let userRole = "Cliente"
+	let userRole = ProfileManager.shared.signedInProfile?.userRole
     
     private let skills = ["Derecho Penal", "Derecho Administrativo", "Derecho Civil", "Derecho Comercial", "Derecho Laboral", "Derecho Constitucional", "Derecho de la Familia", "Derecho de la Justicia", "Derecho de la Constitución", "Derecho de la Constitución"]
     private let languages = ["Español", "Inglés", "Francés", "Portugués", "Alemán", "Italiano", "Japonés", "China", "Coreano", "Indonesia", "Filipino", "Arabés", "Ruso", "Turco", "Polaco", "Chino", "Japonés", "Coreano", "Indonesia", "Filipino", "Arabés", "Ruso", "Turco", "Polaco"]
@@ -217,7 +217,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             email: email,
             name: nameTextField.text ?? "",
             lastName: lastNameTextField.text ?? "",
-            userRole: userRole,
+			userRole: userRole ?? "",
             imageURL: nil,
             userDescription: descriptionTextView.text ?? "",
             skills: selectedSkills,

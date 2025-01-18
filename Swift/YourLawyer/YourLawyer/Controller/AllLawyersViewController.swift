@@ -26,20 +26,35 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
     private let addCase = UIButton()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
 
-    
+	var userRole: String = ""
     // Data Source
     private var lawyers: [Lawyer] = []
     private var filteredLawyers: [Lawyer] = []
+	
+	private var cases: [Case] = []
+	private var filteredCases: [Case] = []
         
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupUI()
-
-        fetchLawyers()
-        tableView.register(AllLawyersTableViewCell.self, forCellReuseIdentifier: "AllLawyersTableViewCell")
+		observeUserRole()
+        
         
     }
+	//*************************************************************************************
+	// Logic for Clien and Lawyer sign up 
+	//*************************************************************************************
+	private func observeUserRole() {
+		if (ProfileManager.shared.signedInProfile?.userRole == "Abogado"){
+			setupUI()
+			fetchLawyers()
+			tableView.register(AllLawyersTableViewCell.self, forCellReuseIdentifier: "AllLawyersTableViewCell")
+		}else{
+			setupUI()
+			fetchCases()
+		}
+
+	}
     
     private func setupUI() {
         
@@ -167,17 +182,25 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-               if segue.identifier == "detailLawyerSegue" {
-                   if let indexPath = tableView.indexPathForSelectedRow {
-                       let lawyer = lawyers[indexPath.row]
-//                       let destinationVC = segue.destination as! DetailLawyerViewController // Sender encapsulado
-                       LawyerManager.shared.selectedLawyer = lawyer // Singleton
-//                       destinationVC.lawyer = lawyer
-                   }
-               }
-           }
+	
+	
+	//*************************************************************************************
+	// Send information for next view controller
+	//*************************************************************************************
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		   if segue.identifier == "detailLawyerSegue" {
+			   if let indexPath = tableView.indexPathForSelectedRow {
+				   let lawyer = lawyers[indexPath.row]
+				   LawyerManager.shared.selectedLawyer = lawyer // Singleton
+			   }
+		   }
+	   }
+
+	//*************************************************************************************
+	// Delegates for table views
+	//*************************************************************************************
+	
     
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             self.performSegue(withIdentifier: "detailLawyerSegue", sender: nil)
@@ -206,71 +229,113 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
 
             return cell
         }
+	//*************************************************************************************
+	// Obtain apiari information.
+	//*************************************************************************************
+	
+	func fetchCases() {
+		activityIndicator.startAnimating()
+		CasesService.shared.fetchCases { [weak self] result in
+			DispatchQueue.main.async {
+				switch result {
+				case .success(let cases):
+					self?.cases = cases
+					self?.filteredCases = cases
+					self?.tableView.reloadData()
+					self?.resultsLabel.text = "\(self?.filteredCases.count ?? 0) Resultados encontrados"
+					self?.activityIndicator.stopAnimating()
+				case .failure(let error):
+					print("Error al obtener casos: \(error)")
+					self?.activityIndicator.stopAnimating()
+				}
+			}
+		}
+	}
+	
+	
+	private func fetchLawyers() {
+		activityIndicator.startAnimating()
+		LawyersService.shared.fetchLawyers { [weak self] result in
+			DispatchQueue.main.async {
+				switch result {
+				case .success(let lawyers):
+					self?.lawyers = lawyers
+					self?.filteredLawyers = lawyers // Mostrar todos inicialmente
+					self?.tableView.reloadData()
+					self?.resultsLabel.text = "\(self?.filteredLawyers.count ?? 0) Resultados encontrados"
+					self?.activityIndicator.stopAnimating()
+				case .failure(let error):
+					print("Error al obtener abogados: \(error)")
+					self?.activityIndicator.stopAnimating()
+				}
+			}
+		}
+	}
 
-        private func fetchLawyers() {
-            activityIndicator.startAnimating()
-            LawyersService.shared.fetchLawyers { [weak self] result in
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success(let lawyers):
-                        self?.lawyers = lawyers
-                        self?.filteredLawyers = lawyers // Mostrar todos inicialmente
-                        self?.tableView.reloadData()
-                        self?.resultsLabel.text = "\(self?.filteredLawyers.count ?? 0) Resultados encontrados"
-                        self?.activityIndicator.stopAnimating()
-                    case .failure(let error):
-                        print("Error al obtener abogados: \(error)")
-                        self?.activityIndicator.stopAnimating()
-                    }
-                }
-            }
-        }
+	//*************************************************************************************
+	// Filter search
+	//*************************************************************************************
+	
+	@objc private func searchFilter() {
+		guard let searchText = searchTextField.text, !searchText.isEmpty else {
+			// Mostrar todos los abogados si no hay texto de búsqueda
+			filteredLawyers = lawyers
+			resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados"
+			tableView.reloadData()
+			return
+		}
 
-        @objc private func searchFilter() {
-            guard let searchText = searchTextField.text, !searchText.isEmpty else {
-                // Mostrar todos los abogados si no hay texto de búsqueda
-                filteredLawyers = lawyers
-                resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados"
-                tableView.reloadData()
-                return
-            }
+		// Filtrar los abogados según el texto ingresado
+		filteredLawyers = lawyers.filter { lawyer in
+			lawyer.name.lowercased().contains(searchText.lowercased()) ||
+			lawyer.description.lowercased().contains(searchText.lowercased())
+		}
 
-            // Filtrar los abogados según el texto ingresado
-            filteredLawyers = lawyers.filter { lawyer in
-                lawyer.name.lowercased().contains(searchText.lowercased()) ||
-                lawyer.description.lowercased().contains(searchText.lowercased())
-            }
-
-            // Actualizar etiqueta de resultados
-            resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
-            tableView.reloadData()
-        }
+		// Actualizar etiqueta de resultados
+		resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
+		tableView.reloadData()
+	}
+	
+	
+	//*************************************************************************************
+	// Add Case button
+	//*************************************************************************************
     
     @objc private func handleAddCase() {
         self.performSegue(withIdentifier: "postCaseSegue", sender: nil)
     }
     
-        @objc private func handleLogout() {
-            
-            let alert = UIAlertController(title: "Cerrar sesión", message: "¿Estás seguro de que desea cerrar sesión?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
+	
+	
+	//*************************************************************************************
+	// Logout
+	//*************************************************************************************
+	@objc private func handleLogout() {
+		
+		let alert = UIAlertController(title: "Cerrar sesión", message: "¿Estás seguro de que desea cerrar sesión?", preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { _ in
 
-                    LoginManager.shared.logout{ result  in
-                        switch result {
-                        case .success:
-                            Utils.showMessage("Sesion cerrada Exitosamente")
-                            self.dismiss(animated: true)
-                        case .failure(let error):
-                            Utils.showMessage("Ocurrio un error al cerrar la sesión \(error.localizedDescription)")
-                    }
-                    
-                }
-                
-            }))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel))
-            present(alert,animated: true)
+				LoginManager.shared.logout{ result  in
+					switch result {
+					case .success:
+						ProfileManager.shared.signedInProfile = nil
+						Utils.showMessage("Sesion cerrada Exitosamente")
+						self.dismiss(animated: true)
+					case .failure(let error):
+						Utils.showMessage("Ocurrio un error al cerrar la sesión \(error.localizedDescription)")
+				}
+				
+			}
+			
+		}))
+		alert.addAction(UIAlertAction(title: "No", style: .cancel))
+		present(alert,animated: true)
 
-      }
+	}
+	
+	//*************************************************************************************
+	// User Profile View
+	//*************************************************************************************
     
     @objc private func profileView(){
         self.performSegue(withIdentifier: "profileSegue", sender: nil)

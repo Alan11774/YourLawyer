@@ -30,3 +30,11 @@ struct CaseDetails: Decodable {
 struct CasesResponse: Decodable {
 	let cases: [Case]
 }
+
+class CaseManager {
+	static let shared = CaseManager()
+	
+	var selectedCase: Case?
+	
+	private init() {} // Una sola instancia
+}

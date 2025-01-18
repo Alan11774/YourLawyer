@@ -8,6 +8,7 @@
 import UIKit
 import AuthenticationServices
 import GoogleSignIn
+import FirebaseFirestore
 import FirebaseAuth
 import FirebaseCore
 
@@ -26,6 +27,8 @@ protocol CustomLoginDelegate: AnyObject {
 
 
 class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthorizationControllerPresentationContextProviding {
+	
+
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return self.view.window!
@@ -81,7 +84,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         view.addSubview(logoImageView)
 
         // Title Label
-        titleLabel.text = "Belaw"
+        titleLabel.text = "YourLawyer"
         titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -278,21 +281,21 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
 // Hanlde Google login to Login Interface
 // *********************************************************************
     
-    @objc func handleGoogleLogin() {
-        LoginManager.shared.loginWithGoogle(presenting: self){ result in
-            DispatchQueue.main.async {
-                switch result {
-                 case .success(let user):
-                     print("Usuario autenticado: \(user.email ?? "Sin email")")
-                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
-                     self.delegate?.didCompleteLogin()
-                 case .failure(let error):
-                    Utils.showMessage("Error: \(error.localizedDescription)")
-                 }
-            }
-            
-        }
-    }
+	@objc func handleGoogleLogin() {
+		LoginManager.shared.loginWithGoogle(presenting: self){ result in
+			DispatchQueue.main.async {
+				switch result {
+				 case .success(let user):
+					 print("Usuario autenticado: \(user.email ?? "Sin email")")
+					 UserDefaults.standard.set(true, forKey: "isLoggedIn")
+					 self.delegate?.didCompleteLogin()
+				 case .failure(let error):
+					Utils.showMessage("Error: \(error.localizedDescription)")
+				 }
+			}
+			
+		}
+	}
         
     
 // *********************************************************************
@@ -349,5 +352,16 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
             self.delegate?.didCompleteLogin()
         }
     }
-    
+	
+	func userProfile(email:String){
+		UserProfileService.shared.fetchUserProfile(email: email) { result in
+			switch result {
+			case .success(let profile):
+				ProfileManager.shared.signedInProfile = profile
+				print("Perfil obtenido: \(profile)")
+			case .failure(let error):
+				print("Error al obtener el perfil: \(error.localizedDescription)")
+			}
+		}
+	}
 }

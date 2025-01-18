@@ -11,6 +11,7 @@ import FirebaseAuth
 import AuthenticationServices
 import FirebaseCore
 
+
 class LoginManager {
     static let shared = LoginManager()
     

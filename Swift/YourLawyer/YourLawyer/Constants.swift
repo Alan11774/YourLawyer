@@ -11,6 +11,7 @@ import Kingfisher
 
 //public let lawyersApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/lawyers"
 public let lawyersApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/all/lawyers"
+public let casesApiUrl = "https://private-56712-yourlawyer1.apiary-mock.com/all/cases"
 
 public let creditCardGif = "https://cdn-icons-gif.flaticon.com/12147/12147278.gif"
 
