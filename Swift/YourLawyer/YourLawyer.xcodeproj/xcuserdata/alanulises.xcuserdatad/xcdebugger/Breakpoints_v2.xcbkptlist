@@ -18,36 +18,6 @@
             endingLineNumber = "42"
             landmarkName = "initializeProfile(completion:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "86D959BD-5F9D-4641-BB64-E3BFBA251A39 - c8cc9ff74e511649"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourLawyer.LoginInterface.initializeProfile(completion: () -&gt; ()) -&gt; ()"
-                  moduleName = "YourLawyer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Controller/LoginInterface.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42">
-               </Location>
-               <Location
-                  uuid = "86D959BD-5F9D-4641-BB64-E3BFBA251A39 - ad09ae6bf166c5b1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;YourLawyer.Profile, Swift.Error&gt;) -&gt; () in YourLawyer.LoginInterface.initializeProfile(completion: () -&gt; ()) -&gt; ()"
-                  moduleName = "YourLawyer.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/alanulises/Library/CloudStorage/OneDrive-Personal/Documentos/Codes/ProyectoFinal/YourLawyer/Swift/YourLawyer/YourLawyer/Controller/LoginInterface.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "44"
-                  endingLineNumber = "44">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
