@@ -59,10 +59,10 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
 	private func observeUserRole() {
 		userRole = ProfileManager.shared.signedInProfile?.userRole ?? "No Initilized"
 		print("User Role: \(userRole)")
-		if (userRole == "Abogado"){
+		if (userRole == "Cliente"){
 			fetchLawyers()
 			tableView.register(AllLawyersTableViewCell.self, forCellReuseIdentifier: "AllLawyersTableViewCell")
-		}else if userRole == "Cliente"{
+		}else if userRole == "Abogado"{
 			fetchCases()
 			tableView.register(AllCasesTableViewCell.self, forCellReuseIdentifier: "AllCasesTableViewCell")
 		}
@@ -202,18 +202,18 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
 	//*************************************************************************************
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		   if segue.identifier == "detailLawyerSegue" {
-			   if let indexPath = tableView.indexPathForSelectedRow {
-				   let lawyer = lawyers[indexPath.row]
-				   LawyerManager.shared.selectedLawyer = lawyer // Singleton
-			   }
-		   }else if segue.identifier == "detailCaseSegue"{
-			   if let indexPath = tableView.indexPathForSelectedRow{
-				   let selectedCase = cases[indexPath.row]
-				   CaseManager.shared.selectedCase = selectedCase
-			   }
-		   }
-	   }
+		if segue.identifier == "detailLawyerSegue" {
+			if let indexPath = tableView.indexPathForSelectedRow {
+				let lawyer = filteredLawyers[indexPath.row] // Usar la lista filtrada
+				LawyerManager.shared.selectedLawyer = lawyer // Singleton
+			}
+		} else if segue.identifier == "detailCaseSegue" {
+			if let indexPath = tableView.indexPathForSelectedRow {
+				let selectedCase = filteredCases[indexPath.row] // Usar la lista filtrada
+				CaseManager.shared.selectedCase = selectedCase
+			}
+		}
+	}
 
 	//*************************************************************************************
 	// Delegates for table views
@@ -221,61 +221,59 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
 	
     
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-			if userRole == "Cliente" {
+			if userRole == "Abogado" {
 				self.performSegue(withIdentifier: "detailCaseSegue", sender: nil)
-			} else if userRole == "Abogado" {
+			} else if userRole == "Cliente" {
 				self.performSegue(withIdentifier: "detailLawyerSegue", sender: nil)
 			}
         }
         // MARK: - UITableViewDataSource
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-			var listCount :Int = 0
-			if userRole == "Cliente" {
-				listCount = cases.count
-			} else if userRole == "Abogado" {
-				listCount = lawyers.count
-			}
-			return listCount
-//            return filteredLawyers.count // Mostrar solo los abogados filtrados
-        }
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		if userRole == "Abogado" {
+			return filteredCases.count
+		} else if userRole == "Cliente" {
+			return filteredLawyers.count
+		}
+		return 0
+	}
 
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-			if userRole == "Cliente" {
-				 guard let cell = tableView.dequeueReusableCell(withIdentifier: "AllCasesTableViewCell", for: indexPath) as? AllCasesTableViewCell else {
-					 return UITableViewCell()
-				 }
-
-				 let caseItem = filteredCases[indexPath.row]
-				 cell.descriptionLabel.text = caseItem.title
-				 cell.budgetLabel.text = caseItem.budget
-
-				 if let imageUrlString = caseItem.imageURL, let imageUrl = URL(string: imageUrlString) {
-					 cell.profileImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholderImage"))
-				 } else {
-					 cell.profileImageView.image = UIImage(named: "photo")
-				 }
-
-				 return cell
-			} else if userRole == "Abogado" {
-				guard let cell = tableView.dequeueReusableCell(withIdentifier: "AllLawyersTableViewCell", for: indexPath) as? AllLawyersTableViewCell else {
-					return UITableViewCell()
-				}
-
-				let lawyer = filteredLawyers[indexPath.row]
-				cell.titleLabel.text = lawyer.name
-				cell.subtitleLabel.text = lawyer.description
-
-				if let imageUrlString = lawyer.imageURL, let imageUrl = URL(string: imageUrlString) {
-					cell.profileImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "person.crop.circle.fill"))
-				} else {
-					cell.profileImageView.image = UIImage(named: "person.crop.circle.fill")
-				}
-
-				return cell
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if userRole == "Abogado" {
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: "AllCasesTableViewCell", for: indexPath) as? AllCasesTableViewCell else {
+				return UITableViewCell()
 			}
 
-			return UITableViewCell()
-        }
+			let caseItem = filteredCases[indexPath.row]
+			cell.descriptionLabel.text = caseItem.title
+			cell.budgetLabel.text = caseItem.budget
+
+			if let imageUrlString = caseItem.imageURL, let imageUrl = URL(string: imageUrlString) {
+				cell.profileImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "placeholderImage"))
+			} else {
+				cell.profileImageView.image = UIImage(named: "photo")
+			}
+
+			return cell
+		} else if userRole == "Cliente" {
+			guard let cell = tableView.dequeueReusableCell(withIdentifier: "AllLawyersTableViewCell", for: indexPath) as? AllLawyersTableViewCell else {
+				return UITableViewCell()
+			}
+
+			let lawyer = filteredLawyers[indexPath.row]
+			cell.titleLabel.text = lawyer.name
+			cell.subtitleLabel.text = lawyer.description
+
+			if let imageUrlString = lawyer.imageURL, let imageUrl = URL(string: imageUrlString) {
+				cell.profileImageView.kf.setImage(with: imageUrl, placeholder: UIImage(named: "person.crop.circle.fill"))
+			} else {
+				cell.profileImageView.image = UIImage(named: "person.crop.circle.fill")
+			}
+
+			return cell
+		}
+
+		return UITableViewCell()
+	}
 	//*************************************************************************************
 	// Obtain apiari information.
 	//*************************************************************************************
@@ -325,44 +323,34 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
 	
 	@objc private func searchFilter() {
 		guard let searchText = searchTextField.text, !searchText.isEmpty else {
-			// Mostrar todos los abogados si no hay texto de búsqueda
-			if (userRole == "Abogado"){
-				
+			// Mostrar todos si no hay texto de búsqueda
+			if userRole == "Cliente" {
 				filteredLawyers = lawyers
 				resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados"
-			}else if(userRole == "Cliente"){
+			} else if userRole == "Abogado" {
 				filteredCases = cases
 				resultsLabel.text = "\(filteredCases.count) Resultados encontrados"
 			}
-			
 			tableView.reloadData()
 			return
 		}
 
-		if (userRole == "Abogado"){
-			
+		if userRole == "Cliente" {
 			filteredLawyers = lawyers.filter { lawyer in
 				lawyer.name.lowercased().contains(searchText.lowercased()) ||
 				lawyer.description.lowercased().contains(searchText.lowercased())
 			}
-
-			// Actualizar etiqueta de resultados
 			resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
-		}else if(userRole == "Cliente"){
+		} else if userRole == "Abogado" {
 			filteredCases = cases.filter { filterCase in
 				filterCase.title.lowercased().contains(searchText.lowercased()) ||
 				filterCase.budget.lowercased().contains(searchText.lowercased())
 			}
-
-			// Actualizar etiqueta de resultados
-			resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
+			resultsLabel.text = "\(filteredCases.count) Resultados encontrados para '\(searchText)'"
 		}
-
-		// Filtrar los abogados según el texto ingresado
 
 		tableView.reloadData()
 	}
-	
 	
 	//*************************************************************************************
 	// Add Case button

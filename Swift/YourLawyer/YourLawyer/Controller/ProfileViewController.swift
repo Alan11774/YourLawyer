@@ -136,6 +136,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
 
         addImageButton = createButton(title: "Añadir Imagen", action: #selector(addImageTapped))
         stackView.addArrangedSubview(addImageButton)
+		
+		stackView.addArrangedSubview(createTitleLabel(text: "email: \(ProfileManager.shared.signedInProfile?.email ?? "Email no encontrado")"))
+		
+		stackView.addArrangedSubview(createTitleLabel(text: ProfileManager.shared.signedInProfile?.userRole ?? "Tipo de usuario no enocntrado"))
         
         nameTextField = createTextField(placeholder: "Nombre")
         lastNameTextField = createTextField(placeholder: "Apellido")
