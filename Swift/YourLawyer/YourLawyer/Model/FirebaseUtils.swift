@@ -52,7 +52,89 @@ class UserProfileService {
 				completion(.success(userProfile))
 			}
 	}
-	
-	
+//	
+//	func fetchCase(email: String, caseId: String, completion: @escaping (Result<Case, Error>) -> Void) {
+//			let caseDocRef = db.collection("users")
+//				.document(email)
+//				.collection("cases")
+//				.document(caseId)
+//			
+//			caseDocRef.getDocument { (document, error) in
+//				if let error = error {
+//					completion(.failure(error))
+//					return
+//				}
+//
+//				guard let document = document, document.exists, let data = document.data() else {
+//					let error = NSError(domain: "UserProfileService", code: 404, userInfo: [NSLocalizedDescriptionKey: "El caso no existe en la base de datos."])
+//					completion(.failure(error))
+//					return
+//				}
+//				
+//				// Parseamos los datos del caso
+//				let fetchedCase = Case(
+//					caseId: caseId,
+//					budget: data["budget"] as? String ?? "",
+//					proposedBudget: data["proposedBudget"] as? String ?? "",
+//					title: data["title"] as? String ?? "",
+//					description: data["caseDescription"] as? String ?? "",
+//					requirements: data["requirements"] as? [String] ?? [],
+//					tags: data["tags"] as? [String] ?? [],
+//					status: data["status"] as? String ?? "",
+//					postedBy: data["clientEmail"] as? String ?? "",
+//					lawyerEmail: data["lawyerEmail"] as? String ?? ""
+//				)
+//				
+//				completion(.success(fetchedCase))
+//			}
+//		}
+//		
+//		// Método para publicar o actualizar un caso en Firestore
+//		func postCase(email: String, caseData: Case, completion: @escaping (Result<String, Error>) -> Void) {
+//			let updatedData: [String: Any?] = [
+//				"caseId": caseData.caseId,
+//				"budget": caseData.budget,
+//				"proposedBudget": caseData.proposedBudget,
+//				"title": caseData.title,
+//				"caseDescription": caseData.description,
+//				"requirements": caseData.requirements,
+//				"tags": caseData.tags,
+//				"status": caseData.status,
+//				"clientEmail": caseData.postedBy,
+//				"lawyerEmail": caseData.lawyerEmail
+//			].compactMapValues { $0 }
+//			
+//			let caseDocRef = db.collection("users")
+//				.document(email)
+//				.collection("cases")
+//				.document(caseData.caseId)
+//			
+//			caseDocRef.getDocument { (document, error) in
+//				if let error = error {
+//					completion(.failure(error))
+//					return
+//				}
+//				
+//				if let document = document, document.exists {
+//					// Si el documento ya existe, actualiza los datos
+//					caseDocRef.updateData(updatedData as [AnyHashable : Any]) { error in
+//						if let error = error {
+//							completion(.failure(error))
+//						} else {
+//							completion(.success("Caso actualizado exitosamente"))
+//						}
+//					}
+//				} else {
+//					// Si el documento no existe, crea uno nuevo
+//					caseDocRef.setData(updatedData as [String : Any]) { error in
+//						if let error = error {
+//							completion(.failure(error))
+//						} else {
+//							completion(.success("Caso creado exitosamente"))
+//						}
+//					}
+//				}
+//			}
+//		}
 	
 }
