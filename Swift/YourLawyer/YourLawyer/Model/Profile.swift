@@ -14,10 +14,10 @@ struct Profile: Codable {
     let lastName :String
     let userRole: String
     let imageURL: String?
-    let userDescription: String
-    let skills: [String]
-    let language : [String]
-    let hourlyRate: String
+    let userDescription: String?
+    let skills: [String]?
+    let language : [String]?
+    let hourlyRate: String?
 }
 
 

@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class SignUpViewController: UIViewController {
 
@@ -144,43 +145,70 @@ class SignUpViewController: UIViewController {
     @objc func toggleCheckbox() {
         termsCheckbox.isSelected.toggle()
     }
-    
-    @objc func signUpAction() {
-        
-        self.activityIndicator.startAnimating()
-        
-        if !termsCheckbox.isSelected {
-            self.activityIndicator.stopAnimating()
-            Utils.showMessage("Selecciona los terminos y condiciones.")
-            return
-        }
-        
-        guard let email = emailField.text, !email.isEmpty,
-              let password = passwordField.text, !password.isEmpty else {
-            self.activityIndicator.stopAnimating()
-            Utils.showMessage("Por favor, completa todos los campos.")
-            return
-        }
+	
+	@objc func signUpAction() {
+		
+		self.activityIndicator.startAnimating()
 
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                self.activityIndicator.stopAnimating()
-                Utils.showMessage("Error al registrar: \(error.localizedDescription)")
-            } else {
-                var userRole : String
-                if self.typeSegmentedControl.selectedSegmentIndex == 0{
-                    userRole = "Cliente"
-                }else{
-                    userRole = "Abogado"
-                }
-                let profile = Profile(
-                    email: email, name: self.firstNameLabel.text ?? "", lastName: self.lastNameLabel.text ?? "",userRole: userRole, imageURL: nil, userDescription: "", skills: [""], language: [""], hourlyRate: ""
-                )
-                print("name \(profile.name)")
-                self.activityIndicator.stopAnimating()
-                Utils.showMessage("Usuario registrado exitosamente. Por favor, inicia sesión.")
-                self.performSegue(withIdentifier: "loginOKSignUp", sender: nil)
-            }
-        }
-    }
+		
+		if !termsCheckbox.isSelected {
+			self.activityIndicator.stopAnimating()
+			Utils.showMessage("Selecciona los términos y condiciones.")
+			return
+		}
+
+		
+		guard let email = emailField.text, !email.isEmpty,
+			  let password = passwordField.text, !password.isEmpty,
+			  let firstName = firstNameField.text, !firstName.isEmpty,
+			  let lastName = lastNameField.text, !lastName.isEmpty else {
+			self.activityIndicator.stopAnimating()
+			Utils.showMessage("Por favor, completa todos los campos.")
+			return
+		}
+
+		
+		Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+			self.activityIndicator.stopAnimating()
+			
+			if let error = error {
+				Utils.showMessage("Error al registrar: \(error.localizedDescription)")
+				return
+			}
+
+			
+			let userRole = self.typeSegmentedControl.selectedSegmentIndex == 0 ? "Cliente" : "Abogado"
+
+			// Crear el documento en Firestore
+			let db = Firestore.firestore()
+			let userProfile: [String: Any] = [
+				"name": firstName,
+				"lastName": lastName,
+				"email": email,
+				"hourlyRate": "", // Campo vacío
+				"language": [String](), // Lista vacía
+				"skills": [String](), // Lista vacía
+				"userRole": userRole,
+				"userDescription": "" // Campo vacío
+			]
+
+			db.collection("users")
+				.document(email)
+				.collection("profile")
+				.document("userInformation")
+				.setData(userProfile) { error in
+				if let error = error {
+					Utils.showMessage("Error al guardar los datos del usuario: \(error.localizedDescription)")
+				} else {
+					let alertController = UIAlertController(title: "Registro Exitoso", message: "Usuario registrado exitosamente. Por favor, inicia sesión.",preferredStyle: .alert)
+					let alertAction = UIAlertAction(title: "Ok", style: .default){_ in
+						self.dismiss(animated: true)
+					}
+					alertController.addAction(alertAction)
+					self.present(alertController,animated: true, completion:nil)
+					
+				}
+			}
+		}
+	}
 }

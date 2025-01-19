@@ -48,6 +48,8 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
     let signInButton = UIButton()
     let signUpLabel = UILabel()
     let signUpButton = UIButton()
+    let resetPasswordButton = UIButton()
+    let cancelPasswordButton = UIButton()
     let activityIndicator = UIActivityIndicatorView(style: .large)
     
     let networkMonitor = NetworkReachability.shared
@@ -160,6 +162,23 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
         signUpButton.translatesAutoresizingMaskIntoConstraints = false
         signUpButton.addTarget(self, action: #selector(signUpAction), for: .touchUpInside)
         view.addSubview(signUpButton)
+		
+		// Password
+		resetPasswordButton.setTitle("Reestablecer contraseña", for: .normal)
+		resetPasswordButton.backgroundColor = UIColor.systemBlue
+		resetPasswordButton.translatesAutoresizingMaskIntoConstraints = false
+		resetPasswordButton.isHidden = true
+		resetPasswordButton.layer.cornerRadius = 10
+		resetPasswordButton.addTarget(self, action: #selector(resetPasswordCheck), for: .touchUpInside)
+        view.addSubview(resetPasswordButton)
+		// Password
+		cancelPasswordButton.setTitle("Cancelar", for: .normal)
+		cancelPasswordButton.backgroundColor = UIColor.systemRed
+		cancelPasswordButton.translatesAutoresizingMaskIntoConstraints = false
+		cancelPasswordButton.isHidden = true
+		cancelPasswordButton.layer.cornerRadius = 10
+		cancelPasswordButton.addTarget(self, action: #selector(cancelReset), for: .touchUpInside)
+        view.addSubview(cancelPasswordButton)
         
         activityIndicator.color = .gray
         activityIndicator.style = .medium
@@ -234,7 +253,18 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
 
             // Sign Up Button
             signUpButton.leadingAnchor.constraint(equalTo: signUpLabel.trailingAnchor, constant: 5),
-            signUpButton.centerYAnchor.constraint(equalTo: signUpLabel.centerYAnchor)
+            signUpButton.centerYAnchor.constraint(equalTo: signUpLabel.centerYAnchor),
+			
+			// Reset Password
+			resetPasswordButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 20),
+			resetPasswordButton.leadingAnchor.constraint(equalTo: passwordField.leadingAnchor),
+			resetPasswordButton.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor),
+			resetPasswordButton.heightAnchor.constraint(equalToConstant: 50),
+			// Sign In Button
+			cancelPasswordButton.topAnchor.constraint(equalTo: resetPasswordButton.bottomAnchor, constant: 20),
+			cancelPasswordButton.leadingAnchor.constraint(equalTo: passwordField.leadingAnchor),
+			cancelPasswordButton.trailingAnchor.constraint(equalTo: passwordField.trailingAnchor),
+			cancelPasswordButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
     
@@ -317,8 +347,63 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
 // Sign Up , register user
 // *********************************************************************
     @objc private func forgetPasswordAction() {
-        print("Forget Password")
+
+		passwordField.isHidden = true
+		rememberMeCheckbox.isHidden = true
+		forgetPasswordButton.isHidden = true
+		appleIDBtn.isHidden = true
+		googleBtn.isHidden = true
+		signInButton.isHidden = true
+		signUpLabel.isHidden = true
+		signUpButton.isHidden = true
+		
+		resetPasswordButton.isHidden = false
+		cancelPasswordButton.isHidden = false
+			
     }
+	
+	@objc private func resetPasswordCheck(){
+		guard let email = emailField.text, !email.isEmpty else {
+					Utils.showMessage("Por favor, ingresa tu correo electrónico.")
+					return
+				}
+
+				activityIndicator.startAnimating()
+
+				Auth.auth().sendPasswordReset(withEmail: email) { error in
+					self.activityIndicator.stopAnimating()
+					
+					if let error = error {
+						Utils.showMessage("Error al enviar el correo de restablecimiento: \(error.localizedDescription)")
+					} else {
+						Utils.showMessage("Correo de restablecimiento enviado. Por favor, revisa tu bandeja de entrada.")
+//								rememberMeCheckbox.isHidden = false
+						self.passwordField.isHidden = false
+						self.forgetPasswordButton.isHidden = false
+						self.appleIDBtn.isHidden = false
+						self.googleBtn.isHidden = false
+						self.signInButton.isHidden = false
+						self.signUpLabel.isHidden = false
+						self.signUpButton.isHidden = false
+						
+						self.resetPasswordButton.isHidden = true
+						self.cancelPasswordButton.isHidden = true
+					}
+				}
+	}
+	@objc private func cancelReset(){
+		passwordField.isHidden = false
+		rememberMeCheckbox.isHidden = false
+		forgetPasswordButton.isHidden = false
+		appleIDBtn.isHidden = false
+		googleBtn.isHidden = false
+		signInButton.isHidden = false
+		signUpLabel.isHidden = false
+		signUpButton.isHidden = false
+		
+		resetPasswordButton.isHidden = true
+		cancelPasswordButton.isHidden = true
+	}
 //*********************************************************************
 // Sign Up , register user
 // *********************************************************************
@@ -343,7 +428,7 @@ class CustomLoginViewController: UIViewController, UITextFieldDelegate, ASAuthor
             return
         }
         
-        // si está loggeado con Google
+        // Google Login
         GIDSignIn.sharedInstance.restorePreviousSignIn { usuario, error in
             guard let perfil = usuario else { return }
             print("usuario: \(perfil.profile?.name ?? ""), correo: \(perfil.profile?.email ?? "")")

@@ -172,8 +172,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 lastNameTextField.textColor = .black
                 descriptionTextView.text = profile.userDescription
                 descriptionTextView.textColor = .black
-                skillsDropdown.setTitle(profile.skills.joined(separator: ", "), for: .normal)
-                languageDropdown.setTitle(profile.language.joined(separator: ", "), for: .normal)
+                skillsDropdown.setTitle(profile.skills?.joined(separator: ", "), for: .normal)
+                languageDropdown.setTitle(profile.language?.joined(separator: ", "), for: .normal)
                 hourlyRateTextField.text = profile.hourlyRate
                 hourlyRateTextField.textColor = .black
                 
