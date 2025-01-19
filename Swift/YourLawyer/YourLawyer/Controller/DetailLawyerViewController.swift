@@ -32,7 +32,16 @@ class DetailLawyerViewController: UIViewController {
     private let contractButton = UIButton(type: .system)
     
     
+	let networkMonitor = NetworkReachability.shared
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+			// Verificar conexión a internet
+		if !networkMonitor.isConnected {
+			Utils.showMessage("No tienes conexión a internet. Verifica tu red.")
+		}
+	}
     override func viewDidLoad() {
         super.viewDidLoad()
         lawyer = LawyerManager.shared.selectedLawyer

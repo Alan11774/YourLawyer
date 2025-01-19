@@ -15,6 +15,18 @@ class StripeViewController: UIViewController {
 	private var ephemeralKeySecret: String = ""
 	private var stripeClientSecret: String = ""
 	
+	
+	let networkMonitor = NetworkReachability.shared
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+			// Verificar conexión a internet
+		if !networkMonitor.isConnected {
+			Utils.showMessage("No tienes conexión a internet. Verifica tu red.")
+		}
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white

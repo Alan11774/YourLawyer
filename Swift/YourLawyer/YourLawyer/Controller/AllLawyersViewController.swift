@@ -33,7 +33,18 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
 	
 	private var cases: [Case] = []
 	private var filteredCases: [Case] = []
-        
+	
+	let networkMonitor = NetworkReachability.shared
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+			// Verificar conexión a internet
+		if !networkMonitor.isConnected {
+			Utils.showMessage("No tienes conexión a internet. Verifica tu red.")
+		}
+	}
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -129,6 +140,7 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
         // Configurar botón de filtro
         filterButton.setTitle("Price low to high", for: .normal)
         filterButton.setTitleColor(.systemBlue, for: .normal)
+		filterButton.isHidden = true
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(filterButton)
         
@@ -314,20 +326,40 @@ class AllLawyersViewController: UIViewController, UITableViewDataSource, UITable
 	@objc private func searchFilter() {
 		guard let searchText = searchTextField.text, !searchText.isEmpty else {
 			// Mostrar todos los abogados si no hay texto de búsqueda
-			filteredLawyers = lawyers
-			resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados"
+			if (userRole == "Abogado"){
+				
+				filteredLawyers = lawyers
+				resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados"
+			}else if(userRole == "Cliente"){
+				filteredCases = cases
+				resultsLabel.text = "\(filteredCases.count) Resultados encontrados"
+			}
+			
 			tableView.reloadData()
 			return
 		}
 
-		// Filtrar los abogados según el texto ingresado
-		filteredLawyers = lawyers.filter { lawyer in
-			lawyer.name.lowercased().contains(searchText.lowercased()) ||
-			lawyer.description.lowercased().contains(searchText.lowercased())
+		if (userRole == "Abogado"){
+			
+			filteredLawyers = lawyers.filter { lawyer in
+				lawyer.name.lowercased().contains(searchText.lowercased()) ||
+				lawyer.description.lowercased().contains(searchText.lowercased())
+			}
+
+			// Actualizar etiqueta de resultados
+			resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
+		}else if(userRole == "Cliente"){
+			filteredCases = cases.filter { filterCase in
+				filterCase.title.lowercased().contains(searchText.lowercased()) ||
+				filterCase.budget.lowercased().contains(searchText.lowercased())
+			}
+
+			// Actualizar etiqueta de resultados
+			resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
 		}
 
-		// Actualizar etiqueta de resultados
-		resultsLabel.text = "\(filteredLawyers.count) Resultados encontrados para '\(searchText)'"
+		// Filtrar los abogados según el texto ingresado
+
 		tableView.reloadData()
 	}
 	

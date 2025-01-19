@@ -34,16 +34,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         return stackView
     }()
     
-    private var profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.lightGray.cgColor
-        imageView.image = UIImage(systemName: "person.circle") // Icono por defecto
-        return imageView
-    }()
+    private var profileImageView = UIImageView()
+    
     
 //    var profile : Profile?
     private let db = Firestore.firestore()
@@ -64,9 +56,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     private var selectedLanguages: [String] = []
     private var hourlyRateTextField: UITextField!
     private var saveButton: UIButton!
-    
+	let networkMonitor = NetworkReachability.shared
 
-
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+			// Verificar conexión a internet
+		if !networkMonitor.isConnected {
+			Utils.showMessage("No tienes conexión a internet. Verifica tu red.")
+		}
+	}
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +80,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
+		
+		profileImageView.translatesAutoresizingMaskIntoConstraints = false
+		profileImageView.contentMode = .scaleAspectFit
+		profileImageView.clipsToBounds = true
+		profileImageView.layer.cornerRadius = 50
+		profileImageView.image = UIImage(systemName: "person.circle") // Icono por defecto
+		contentView.addSubview(profileImageView)
+		
+		
         contentView.addSubview(stackView)
     }
     
@@ -103,8 +111,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+			
+			profileImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+			profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+			profileImageView.widthAnchor.constraint(equalToConstant: 100),
+			profileImageView.heightAnchor.constraint(equalToConstant: 100),
             
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+			stackView.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
@@ -120,10 +133,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     private func setupUIElements() {
         stackView.addArrangedSubview(createTitleLabel(text: "Configuración de Perfil"))
-        
-        stackView.addArrangedSubview(profileImageView)
-        profileImageView.layer.cornerRadius = 60
-        
+
         addImageButton = createButton(title: "Añadir Imagen", action: #selector(addImageTapped))
         stackView.addArrangedSubview(addImageButton)
         
@@ -150,8 +160,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     /// Fech Users for previous configgurations
     ///********************************************************************************************
     private func fetchUserProfile(){
-        fetchProfileFromFirebase(email: email) { [self] profile in
-            if let profile = profile {
+
+			if let profile = ProfileManager.shared.signedInProfile {
                 nameTextField.text = profile.name
                 nameTextField.textColor = .black
                 lastNameTextField.text = profile.lastName
@@ -167,43 +177,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 print("No se pudo obtener el perfil.")
             }
         }
-    }
-    
-    private func fetchProfileFromFirebase(email: String, completion: @escaping (Profile?) -> Void) {
-        
-        // Referencia al documento dentro de la colección
-//        db.collection("profiles").document("cliente").collection(email).getDocuments { snapshot, error in
-        db.collection("users").document(email).collection("profile").getDocuments { snapshot, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    print("Error al obtener el perfil: \(error.localizedDescription)")
-                    completion(nil)
-                    return
-                }
-                
-                guard let documents = snapshot?.documents, let data = documents.first?.data() else {
-                    print("No se encontró el perfil para el usuario con email: \(email)")
-                    completion(nil)
-                    return
-                }
-                
-                do {
-                    // Convertir los datos obtenidos a JSON
-                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
-                    
-                    // Decodificar el JSON en el modelo `Profile`
-                    let profile = try JSONDecoder().decode(Profile.self, from: jsonData)
-                    
-                    // Retornar el perfil decodificado
-                    completion(profile)
-                } catch {
-                    print("Error al decodificar el perfil: \(error.localizedDescription)")
-                    completion(nil)
-                }
-            }
-        }
-    }
-    
+
         ///********************************************************************************************
         /// Post Users  configuration
         ///********************************************************************************************
@@ -244,6 +218,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                             Utils.showMessage("Error al guardar el perfil en Firebase: \(error.localizedDescription)")
                         } else {
                             Utils.showMessage("Perfil guardado/actualizado exitosamente en Firebase.")
+							ProfileManager.shared.signedInProfile = profile
                         }
                     }
                 }
