@@ -45,6 +45,8 @@
         android:layout_below="@id/linearLayoutHeader"
         android:layout_margin="16dp"
         android:hint="@string/ingresa_un_texto_para_buscar"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/black"
         android:background="@drawable/edit_text_background"
         android:padding="12dp" />
 
@@ -66,6 +68,7 @@
         android:layout_below="@id/searchButton"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:textColor="@color/black"
         android:text="@string/resultados_encontrados"
         android:textStyle="bold" />
 
@@ -80,6 +83,7 @@
         android:visibility="invisible"
         android:text="@string/price_low_to_high"
         android:textColor="@color/blue" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tableView"
