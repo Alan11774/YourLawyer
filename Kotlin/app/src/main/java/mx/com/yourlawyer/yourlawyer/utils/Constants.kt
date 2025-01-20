@@ -15,9 +15,9 @@ object Constants {
 
     // Se generan antes de la prueba
 
-    const val ephemeralKeySecret = "ek_test_YWNjdF8xUWZ1NTBGYkhBSzlNQ2pWLGJxR1FwR3hXS0gyc04yQ3p6bGRDY1pSWEF5MFg1elo_00JIZGFT0k"
+    const val ephemeralKeySecret = "ek_test_YWNjdF8xUWZ1NTBGYkhBSzlNQ2pWLFp5UG9sYVhhd01jR2ZvSXQxemU5ZkROMllmN3JKRUI_00Daymtviw"
 
-    const val stripeClientSecret = "pi_3QjAU5FbHAK9MCjV0vOTrLbU_secret_L7GSuc0XzHxxOIRW7YwtIA8qS"
+    const val stripeClientSecret = "pi_3QjAXFFbHAK9MCjV0OX6xrjN_secret_I43mHn1N8lS38YrZkXHJMCsuK"
 
 
     //backendRoutes
