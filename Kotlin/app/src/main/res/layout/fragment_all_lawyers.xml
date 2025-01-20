@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/linearLayoutHeader"
         android:layout_margin="16dp"
-        android:hint="Ingresa un texto para buscar"
+        android:hint="@string/ingresa_un_texto_para_buscar"
         android:background="@drawable/edit_text_background"
         android:padding="12dp" />
 
@@ -56,7 +56,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/blue"
-        android:text="Buscar"
+        android:text="@string/buscar"
         android:textColor="@android:color/white" />
 
     <TextView
@@ -66,7 +66,7 @@
         android:layout_below="@id/searchButton"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Resultados encontrados"
+        android:text="@string/resultados_encontrados"
         android:textStyle="bold" />
 
     <Button
@@ -77,7 +77,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/white"
-        android:text="Price low to high"
+        android:visibility="invisible"
+        android:text="@string/price_low_to_high"
         android:textColor="@color/blue" />
 
     <androidx.recyclerview.widget.RecyclerView

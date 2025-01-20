@@ -31,7 +31,7 @@
                 android:id="@+id/lawyerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="juan"
+                android:text="@string/juan"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -43,7 +43,7 @@
                 android:id="@+id/ratingLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="rating"
+                android:text="@string/rating"
                 android:textSize="16sp"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="center"
@@ -53,7 +53,7 @@
                 android:id="@+id/categoryLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Derecho Civil"
+                android:text="@string/derecho_civil"
                 android:textSize="16sp"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="center"
@@ -64,7 +64,7 @@
                 android:id="@+id/descriptionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción breve del abogado"
+                android:text="@string/descripci_n_breve_del_abogado"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:gravity="center"
@@ -89,7 +89,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Información detallada sobre el abogado."
+                        android:text="@string/informaci_n_detallada_sobre_el_abogado"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -109,7 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Precio x hora"
+                        android:text="@string/precio_x_hora"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -128,7 +128,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Numero de Contrataciones Realizadas"
+                        android:text="@string/numero_de_contrataciones_realizadas"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -147,7 +147,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Idiomas"
+                        android:text="@string/idiomas"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -166,7 +166,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="vistas de perfil"
+                        android:text="@string/vistas_de_perfil"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -185,7 +185,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Numero de proyectos trabajados"
+                        android:text="@string/numero_de_proyectos_trabajados"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -194,7 +194,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Habilidades:"
+                    android:text="@string/habilidades"
                     android:gravity="center"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -216,7 +216,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="Derecho Penal"
+                        android:text="@string/derecho_penal"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
 
@@ -237,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="Derecho Laboral"
+                        android:text="@string/derecho_laboral"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
 
@@ -252,7 +252,7 @@
                     android:textStyle="bold"
                     android:visibility="gone"
                     android:gravity="center"
-                    android:text="Budget Proposed Range: "
+                    android:text="@string/budget_proposed_range"
                     android:textSize="20sp"
                     android:layout_marginBottom="16dp" />
                 <!-- Botón de contratar -->

@@ -30,7 +30,7 @@
                 android:id="@+id/uploadImageButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Upload Image"
+                android:text="@string/cargar_imagen"
                 android:backgroundTint="@color/blue"
                 android:textColor="@android:color/white" />
             <!-- Botón de contacto -->

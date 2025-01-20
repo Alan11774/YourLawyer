@@ -16,7 +16,7 @@
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:contentDescription="imageReference"
+        android:contentDescription="@string/imagereference"
         android:foregroundGravity="center"
         android:layout_width="wrap_content"
         android:layout_height="250dp"/>
@@ -26,7 +26,7 @@
         android:id="@+id/descriptionLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description"
+        android:text="@string/description"
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/black"
@@ -40,7 +40,7 @@
         android:id="@+id/budgetLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Budget"
+        android:text="@string/budget"
         android:textColor="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

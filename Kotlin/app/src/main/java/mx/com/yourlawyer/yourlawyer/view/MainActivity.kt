@@ -276,23 +276,3 @@ class MainActivity : AppCompatActivity() {
             }
     }
 }
-
-//            if (!validateFields()) return@setOnClickListener
-//            binding.progressBar.visibility = View.VISIBLE
-//            firebaseAuth.createUserWithEmailAndPassword(email,contrasenia).addOnCompleteListener { authResult ->
-//                if(authResult.isSuccessful){
-//                    message(getString(R.string.user_succesfully_registred))
-//
-//                    //Correo de verificación
-//                    firebaseAuth.currentUser?.sendEmailVerification()?.addOnSuccessListener{
-//                        message("${getString(R.string.email_has_been_sent_to)}$email")
-//                    }?.addOnFailureListener{
-//                        message(getString(R.string.error_has_been_occurred_sending_the_mail))
-//                    }
-//                    actionLoginSuccessful()
-//                }else{
-//                    binding.progressBar.visibility = View.GONE
-//                    handleErrors(authResult)
-//                }
-//
-//            }

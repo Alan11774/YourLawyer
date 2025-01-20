@@ -37,7 +37,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="8dp"
                 android:textColor="@color/black"
-                android:text="Nombre del Abogado"
+                android:text="@string/nombre_del_abogado"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -65,7 +65,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColorHint="@color/black"
-                android:hint="Escribe tu mensaje..."
+                android:hint="@string/escribe_tu_mensaje"
                 android:padding="8dp" />
 
             <ImageButton
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/send_resource"
-                android:contentDescription="Enviar"
+                android:contentDescription="@string/enviar"
                 android:background="?attr/selectableItemBackgroundBorderless" />
         </LinearLayout>
     </LinearLayout>

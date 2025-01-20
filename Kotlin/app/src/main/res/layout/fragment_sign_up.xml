@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="YourLawyer"
+            android:text="@string/yourlawyer"
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Encuentra el abogado a tu medida!"
+            android:text="@string/encuentra_el_abogado_a_tu_medida"
             android:textAlignment="center"
             android:textSize="14sp"
             android:paddingTop="8dp"
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Nombre"
+            android:text="@string/nombre"
             android:textStyle="bold" />
 
         <EditText
@@ -43,13 +43,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
-            android:hint="Nombre*" />
+            android:hint="@string/nombre_hint" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Apellido"
+            android:text="@string/apellido"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -58,13 +58,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
-            android:hint="Apellido*" />
+            android:hint="@string/apellido_hint" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Email"
+            android:text="@string/email"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -73,13 +73,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
-            android:hint="Correo electrónico*" />
+            android:hint="@string/correo_electr_nico" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Contraseña"
+            android:text="@string/contrase_a"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -88,14 +88,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
-            android:hint="Ingresa tu contraseña*"
+            android:hint="@string/ingresa_tu_contrase_a"
             android:inputType="textPassword" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="Escoge una opción"
+            android:text="@string/escoge_una_opci_n"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
 
@@ -110,14 +110,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Busco un Abogado" />
+                android:text="@string/busco_un_abogado" />
 
             <RadioButton
                 android:id="@+id/lawyerOption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Soy Abogado" />
+                android:text="@string/soy_abogado" />
         </RadioGroup>
 
         <LinearLayout
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="He leído los términos y condiciones"
+                android:text="@string/he_le_do_los_t_rminos_y_condiciones"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
@@ -144,7 +144,7 @@
             android:id="@+id/joinButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Únete Ahora"
+            android:text="@string/nete_ahora"
             android:backgroundTint="@color/blue"
             android:textColor="@android:color/white"
             android:layout_marginTop="16dp" />

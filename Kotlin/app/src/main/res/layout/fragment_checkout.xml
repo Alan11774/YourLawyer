@@ -28,7 +28,7 @@
                 android:id="@+id/lawyerNameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Contratando a: Nombre del Abogado"
+                android:text="@string/contratando_a_nombre_del_abogado"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -39,7 +39,7 @@
                 android:id="@+id/serviceDescriptionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción del servicio:"
+                android:text="@string/descripci_n_del_servicio"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="8dp" />
@@ -48,7 +48,7 @@
                 android:id="@+id/serviceDetailsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="El abogado brindará asesoramiento en el caso seleccionado."
+                android:text="@string/el_abogado_brindar_asesoramiento_en_el_caso_seleccionado"
                 android:textSize="14sp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp" />
@@ -58,7 +58,7 @@
                 android:id="@+id/serviceCostLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Costo: $1000 MXN"
+                android:text="@string/costo_1000_mxn"
                 android:textSize="16sp"
                 android:background="@drawable/edit_text_background"
                 android:textColor="@color/green"
@@ -70,7 +70,7 @@
                 android:id="@+id/paymentMethodLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ingresa tus datos bancarios"
+                android:text="@string/ingresa_tus_datos_bancarios"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -83,7 +83,7 @@
                 android:id="@+id/checkoutButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Continuar con el pago"
+                android:text="@string/continuar_con_el_pago"
                 android:backgroundTint="@color/blue"
                 android:textColor="@android:color/white"
                 android:layout_marginBottom="16dp" />
@@ -93,7 +93,7 @@
                 android:id="@+id/cancelButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancelar"
+                android:text="@string/cancelar"
                 android:backgroundTint="@color/red"
                 android:textColor="@android:color/white" />
 

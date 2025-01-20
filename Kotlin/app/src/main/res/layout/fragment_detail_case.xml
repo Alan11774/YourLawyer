@@ -31,7 +31,7 @@
                 android:id="@+id/titleLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre del Caso"
+                android:text="@string/nombre_del_caso"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -43,7 +43,7 @@
                 android:id="@+id/categoryLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Categoria"
+                android:text="@string/categoria"
                 android:textSize="16sp"
                 android:textColor="@android:color/darker_gray"
                 android:gravity="center"
@@ -54,7 +54,7 @@
                 android:id="@+id/descriptionLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción breve del abogado"
+                android:text="@string/descripci_n_breve_del_abogado"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:gravity="center"
@@ -79,7 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Información detallada sobre el abogado."
+                        android:text="@string/informaci_n_detallada_sobre_el_abogado"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -99,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Presupuesto"
+                        android:text="@string/presupuesto"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -118,7 +118,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Posteado por : juan mecanico el dia 19/02/2024"
+                        android:text="@string/posteado_por_juan_mecanico_el_dia_19_02_2024"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -137,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:text="Urgencia"
+                        android:text="@string/urgencia"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
                 </LinearLayout>
@@ -146,7 +146,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Entregables:"
+                    android:text="@string/entregables"
                     android:gravity="center"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -168,7 +168,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="Derecho Penal"
+                        android:text="@string/derecho_penal"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
 
@@ -189,7 +189,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textStyle="bold"
-                        android:text="Derecho Penal"
+                        android:text="@string/derecho_penal"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
 
@@ -198,7 +198,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tags:"
+                    android:text="@string/tags"
                     android:gravity="left"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp"
@@ -220,7 +220,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/blue"
                         android:textStyle="italic"
-                        android:text="tag1"
+                        android:text="@string/tag1"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
 
@@ -241,7 +241,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/blue"
                         android:textStyle="italic"
-                        android:text="tag2"
+                        android:text="@string/tag2"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
 
@@ -262,7 +262,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/blue"
                         android:textStyle="italic"
-                        android:text="tag3"
+                        android:text="@string/tag3"
                         android:textSize="14sp"
                         android:layout_marginBottom="16dp" />
 
@@ -276,7 +276,7 @@
                     android:textStyle="bold"
                     android:visibility="gone"
                     android:gravity="center"
-                    android:text="Budget Proposed Range: "
+                    android:text="@string/budget_proposed_range"
                     android:textSize="20sp"
                     android:layout_marginBottom="16dp" />
                 <!-- Botón de contratar -->
@@ -284,7 +284,7 @@
                     android:id="@+id/applyButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Aplicar"
+                    android:text="@string/aplicar"
                     android:backgroundTint="@color/blue"
                     android:textColor="@android:color/white" />
                 <!-- Botón de contacto -->
@@ -301,7 +301,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
-                    android:text="Please enter your budget "
+                    android:text="@string/please_enter_your_budget"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
                 <TextView
@@ -310,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:text="Budget Range: "
+                    android:text="@string/budget_range"
                     android:textSize="14sp"
                     android:layout_marginBottom="16dp" />
 
