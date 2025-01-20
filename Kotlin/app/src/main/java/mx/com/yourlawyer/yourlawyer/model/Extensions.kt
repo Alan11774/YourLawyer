@@ -72,7 +72,6 @@ fun alertDialog(context: Context, title: String, message: String,
     val builder = AlertDialog.Builder(context,R.style.CustomAlertDialogTheme)
     builder.setTitle(title)
     builder.setMessage(message)
-
     builder.setPositiveButton(positiveButton) { _, _ ->
         onPositiveButtonClick?.invoke()
 

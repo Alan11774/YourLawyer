@@ -10,12 +10,14 @@ object Constants {
     const val stripeKeySecret = "sk_test_51Qfu50FbHAK9MCjVv91jWhhxe71POQSql7DGOfGs3t2EQIbiEZTguAqGsYV8VagwDqnJLbsYNrNTT5WmcN95dpw700hAnmoB6Z"
 
     const val customerID= "cus_RZ6a59X4B957OP"
+    const val ephemeralURL = "https://api.stripe.com/v1/ephemeral_keys"
+    const val clientSecretURL = "https://api.stripe.com/v1/payment_intents"
 
     // Se generan antes de la prueba
 
-    const val ephemeralKeySecret = "ek_test_YWNjdF8xUWZ1NTBGYkhBSzlNQ2pWLHVhdGJ4U0Y2ZzFLTkdCOWYweWpxSnA5SWNHREhDdjA_00DEjA3Xpm"
+    const val ephemeralKeySecret = "ek_test_YWNjdF8xUWZ1NTBGYkhBSzlNQ2pWLGJxR1FwR3hXS0gyc04yQ3p6bGRDY1pSWEF5MFg1elo_00JIZGFT0k"
 
-    const val stripeClientSecret = "pi_3Qg9lAFbHAK9MCjV0mLMkrbV_secret_71Qo8j5McXqZaWmKorZQE4vPz"
+    const val stripeClientSecret = "pi_3QjAU5FbHAK9MCjV0vOTrLbU_secret_L7GSuc0XzHxxOIRW7YwtIA8qS"
 
 
     //backendRoutes

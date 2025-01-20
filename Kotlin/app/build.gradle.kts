@@ -98,4 +98,6 @@ dependencies {
 
     // Stripe
     implementation(libs.stripe.android)
+    // Para realizar el Post Http
+    implementation(libs.okhttp.v4120)
 }
